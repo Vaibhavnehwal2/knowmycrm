@@ -83,3 +83,10 @@ export interface Partner {
   regions: string[];
   notes: string;
 }
+
+export interface Industry {
+  name: string;
+  slug: string;
+  category: string;
+  summary: string;
+}
