@@ -8,7 +8,7 @@ interface BrandIconProps {
   className?: string;
 }
 
-export function BrandIcon({ iconName, name, className = \"h-6 w-6\" }: BrandIconProps) {
+export function BrandIcon({ iconName, name, className = "h-6 w-6" }: BrandIconProps) {
   const path = iconName ? getIconSvg(iconName) : null;
   const color = iconName ? getIconHex(iconName) : '#6B7280';
 
@@ -22,9 +22,9 @@ export function BrandIcon({ iconName, name, className = \"h-6 w-6\" }: BrandIcon
 
   return (
     <svg
-      role=\"img\"
-      viewBox=\"0 0 24 24\"
-      xmlns=\"http://www.w3.org/2000/svg\"
+      role="img"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
       className={className}
       fill={color}
     >
@@ -32,4 +32,3 @@ export function BrandIcon({ iconName, name, className = \"h-6 w-6\" }: BrandIcon
     </svg>
   );
 }
-"
