@@ -1,7 +1,8 @@
-import { CRMProfile, ERPProfile, Industry } from '@/types';
+import { CRMProfile, ERPProfile, Industry, Service } from '@/types';
 import crmData from '@/data/crm.json';
 import erpData from '@/data/erp.json';
 import industriesData from '@/data/industries.json';
+import servicesData from '@/data/services.json';
 
 export function getAllCRMs(): CRMProfile[] {
   return crmData as CRMProfile[];
@@ -34,4 +35,12 @@ export function getIndustriesByCategory(category: string): Industry[] {
 export function getUniqueCategories(): string[] {
   const categories = industriesData.map((ind: any) => ind.category);
   return Array.from(new Set(categories)).sort();
+}
+
+export function getAllServices(): Service[] {
+  return servicesData as Service[];
+}
+
+export function getServiceBySlug(slug: string): Service | undefined {
+  return servicesData.find((svc: any) => svc.slug === slug) as Service | undefined;
 }
