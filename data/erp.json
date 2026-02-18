@@ -1,0 +1,352 @@
+[
+  {
+    "name": "SAP (S/4HANA or Business One)",
+    "slug": "sap-erp",
+    "tagline": "Deep ERP for SAP-standard operations",
+    "icon": "sap",
+    "bestFor": [
+      "Manufacturing, distribution, and complex supply chains",
+      "Large enterprises with multi-entity, multi-country operations",
+      "Industries requiring deep process rigor and compliance",
+      "Organizations committed to SAP ecosystem long-term"
+    ],
+    "chooseWhen": [
+      "Your operations are complex (MRP, WMS, advanced finance)",
+      "You need industry-specific modules (automotive, pharma, etc.)",
+      "Global operations require multi-currency, multi-legal entity",
+      "You have budget and IT capacity for SAP implementation",
+      "CRM integration with SAP is strategically important"
+    ],
+    "avoidWhen": [
+      "You're a small or mid-sized business (< 100 employees)",
+      "Budget is limited or ROI timeline is short",
+      "Processes are simple and don't need SAP depth",
+      "You lack internal SAP expertise or strong partner"
+    ],
+    "implementationReality": [
+      "Plan 12–24 months for S/4HANA; 6–12 for Business One",
+      "High TCO; requires certified SAP partner",
+      "Training and change management are critical",
+      "Best when SAP depth matches operational complexity"
+    ],
+    "crmIntegrationPatterns": [
+      "Native integration with SAP Sales Cloud or C4C",
+      "Quote-to-order flow with pricing, discounts, approvals",
+      "Customer master data sync from ERP to CRM",
+      "Order status, inventory, and invoicing visibility in CRM"
+    ],
+    "partnerQuestions": [
+      "Show us your SAP certification and project history",
+      "How do you handle CRM-ERP integration (Sales Cloud or third-party)?",
+      "Walk through quote-to-cash and order fulfillment flow",
+      "What's your approach to data migration and cutover?",
+      "How do you structure ongoing support and admin?"
+    ],
+    "filters": {
+      "teamSize": ["200+"],
+      "complexity": "high",
+      "bestForTags": ["manufacturing", "enterprise", "supply-chain"],
+      "ecosystem": "SAP"
+    }
+  },
+  {
+    "name": "Microsoft Dynamics 365 Business Central",
+    "slug": "business-central",
+    "tagline": "Microsoft-first ERP for finance + operations",
+    "icon": "microsoftdynamics365",
+    "bestFor": [
+      "SMB to mid-market in manufacturing, wholesale, services",
+      "Organizations embedded in Microsoft ecosystem",
+      "Teams wanting ERP with Power Platform extensibility",
+      "Finance + operations without extreme complexity"
+    ],
+    "chooseWhen": [
+      "You use Microsoft 365, Azure, and want unified stack",
+      "Your operations need ERP but not SAP-level depth",
+      "Team is 50–500 and growing",
+      "Power Platform (Power BI, Automate) is strategic",
+      "You want modern cloud ERP with strong support"
+    ],
+    "avoidWhen": [
+      "Your stack is non-Microsoft (Google, AWS, Salesforce)",
+      "You need ultra-lightweight accounting tool (consider QBO)",
+      "Operations are extremely complex (consider D365 F&O)",
+      "Budget is very tight"
+    ],
+    "implementationReality": [
+      "Plan 4–8 months for standard setup",
+      "Microsoft partner required; moderate complexity",
+      "Training is manageable for Microsoft-familiar teams",
+      "Best when Microsoft ecosystem ROI is clear"
+    ],
+    "crmIntegrationPatterns": [
+      "Seamless integration with Dynamics 365 Sales",
+      "Quote-to-cash flow with native connectors",
+      "Customer, product, and pricing sync",
+      "Can integrate with non-Microsoft CRMs via API/middleware"
+    ],
+    "partnerQuestions": [
+      "Show CRM integration (Dynamics Sales or third-party)",
+      "Walk through quote-to-order and invoicing flow",
+      "How do you handle inventory management and financials?",
+      "What's your Power Platform customization approach?",
+      "Show us data migration and go-live process"
+    ],
+    "filters": {
+      "teamSize": ["51-200", "200+"],
+      "complexity": "medium",
+      "bestForTags": ["microsoft", "mid-market", "manufacturing"],
+      "ecosystem": "Microsoft"
+    }
+  },
+  {
+    "name": "Dynamics 365 Finance & Operations",
+    "slug": "dynamics-365-fo",
+    "tagline": "Enterprise operations for complex orgs",
+    "icon": "microsoftdynamics365",
+    "bestFor": [
+      "Large enterprises with complex operations",
+      "Manufacturing, retail, or services at scale",
+      "Multi-entity, multi-country operations",
+      "Organizations wanting Microsoft enterprise ERP"
+    ],
+    "chooseWhen": [
+      "Your operations are too complex for Business Central",
+      "You need advanced manufacturing, WMS, or supply chain",
+      "Multi-entity consolidation and global finance are critical",
+      "Microsoft ecosystem is your strategic platform",
+      "Budget supports enterprise ERP implementation"
+    ],
+    "avoidWhen": [
+      "Team is < 200 or operations are straightforward",
+      "Business Central meets 90% of needs",
+      "Budget is constrained",
+      "You're not committed to Microsoft ecosystem"
+    ],
+    "implementationReality": [
+      "Plan 12–24 months for enterprise rollout",
+      "High complexity; requires experienced Microsoft partner",
+      "Significant training and change management",
+      "Best for enterprises with clear ROI on complexity"
+    ],
+    "crmIntegrationPatterns": [
+      "Deep integration with Dynamics 365 Sales",
+      "Unified customer and product data model",
+      "Quote-to-cash with CPQ and order management",
+      "Can integrate with Salesforce or other CRMs via middleware"
+    ],
+    "partnerQuestions": [
+      "Show CRM-ERP integration for quote-to-cash",
+      "Walk through manufacturing or supply chain workflows",
+      "How do you handle global finance and consolidation?",
+      "What's your approach to customization vs. configuration?",
+      "Show data migration strategy and risk mitigation"
+    ],
+    "filters": {
+      "teamSize": ["200+"],
+      "complexity": "high",
+      "bestForTags": ["enterprise", "microsoft", "manufacturing"],
+      "ecosystem": "Microsoft"
+    }
+  },
+  {
+    "name": "Oracle NetSuite",
+    "slug": "netsuite",
+    "tagline": "Cloud ERP for scaling multi-entity orgs",
+    "icon": "netsuite",
+    "bestFor": [
+      "Mid-market to enterprise scaling across geographies",
+      "Multi-subsidiary operations with consolidated financials",
+      "E-commerce, wholesale, or services businesses",
+      "Cloud-native ERP for modern operations"
+    ],
+    "chooseWhen": [
+      "You're scaling rapidly and need multi-entity support",
+      "Cloud ERP is a strategic requirement",
+      "E-commerce integration is important",
+      "You want unified financials, CRM, and operations",
+      "Budget supports mid-market to enterprise ERP"
+    ],
+    "avoidWhen": [
+      "You're a small business (< 50 employees)",
+      "On-premise ERP is required for compliance",
+      "Budget is tight or TCO is a primary concern",
+      "Manufacturing operations are extremely complex"
+    ],
+    "implementationReality": [
+      "Plan 6–12 months for implementation",
+      "NetSuite partner required; moderate to high complexity",
+      "Training and customization important for adoption",
+      "Best for scaling businesses with clear growth trajectory"
+    ],
+    "crmIntegrationPatterns": [
+      "Built-in CRM module (basic capabilities)",
+      "Can integrate with Salesforce, HubSpot, or others",
+      "Quote-to-cash flow within NetSuite or via integration",
+      "Customer and order data centralized in NetSuite"
+    ],
+    "partnerQuestions": [
+      "Show CRM integration (native or external)",
+      "Walk through multi-subsidiary and consolidation",
+      "How do you handle e-commerce integration?",
+      "What's your approach to customization (SuiteScript)?",
+      "Show data migration and go-live strategy"
+    ],
+    "filters": {
+      "teamSize": ["51-200", "200+"],
+      "complexity": "medium",
+      "bestForTags": ["mid-market", "cloud", "e-commerce"],
+      "ecosystem": "Oracle"
+    }
+  },
+  {
+    "name": "Odoo",
+    "slug": "odoo",
+    "tagline": "Modular ERP with customization flexibility",
+    "icon": "odoo",
+    "bestFor": [
+      "SMB to mid-market wanting open-source flexibility",
+      "Organizations needing modular approach (CRM, inventory, MRP, etc.)",
+      "Teams with technical capacity for customization",
+      "Cost-conscious businesses open to community or partner support"
+    ],
+    "chooseWhen": [
+      "You want ERP + CRM in modular platform",
+      "Customization and extensibility are important",
+      "Budget is moderate and you value flexibility",
+      "You have technical team or trusted Odoo partner",
+      "Operations need ERP but not enterprise-grade complexity"
+    ],
+    "avoidWhen": [
+      "You need enterprise-grade support and SLAs",
+      "Heavy industry-specific processes (consider SAP)",
+      "You lack technical capacity for customization",
+      "You prefer opinionated, low-maintenance systems"
+    ],
+    "implementationReality": [
+      "Plan 3–6 months; partner recommended",
+      "Customization flexible but requires dev capacity",
+      "Community version is free; Enterprise adds support",
+      "Best when customization ROI is clear"
+    ],
+    "crmIntegrationPatterns": [
+      "Built-in CRM module (decent for SMB)",
+      "Unified platform for CRM, sales, and operations",
+      "Quote-to-order within Odoo ecosystem",
+      "Can integrate with external CRMs via API"
+    ],
+    "partnerQuestions": [
+      "Show CRM and ERP modules working together",
+      "Walk through quote-to-cash and inventory flow",
+      "What's your customization approach (Studio vs. dev)?",
+      "How do you handle upgrades and version management?",
+      "Show data migration and training plan"
+    ],
+    "filters": {
+      "teamSize": ["11-50", "51-200"],
+      "complexity": "medium",
+      "bestForTags": ["smb", "mid-market", "open-source"],
+      "ecosystem": "Odoo"
+    }
+  },
+  {
+    "name": "Tally / QuickBooks / Xero",
+    "slug": "accounting-tools",
+    "tagline": "Accounting touchpoints often integrated to CRM",
+    "icon": "quickbooks",
+    "bestFor": [
+      "Small businesses with straightforward accounting needs",
+      "Teams wanting simple invoicing and expense tracking",
+      "CRM-to-accounting sync for basic financials",
+      "Low complexity operations (services, consulting, small retail)"
+    ],
+    "chooseWhen": [
+      "Your operations are simple and don't need full ERP",
+      "Accounting is straightforward (invoicing, expenses, reconciliation)",
+      "Budget is tight and you want low-cost solution",
+      "Team is < 50 and processes are standard",
+      "CRM integration needs are basic (deals → invoices)"
+    ],
+    "avoidWhen": [
+      "You need inventory management, MRP, or supply chain",
+      "Multi-entity or multi-currency is complex",
+      "Operations require deep ERP workflows",
+      "You're scaling beyond 50+ employees rapidly"
+    ],
+    "implementationReality": [
+      "Setup in days to weeks; minimal complexity",
+      "Training is minimal; high adoption",
+      "Not designed for complex operations",
+      "Best as accounting layer, not full ERP"
+    ],
+    "crmIntegrationPatterns": [
+      "Sync customers and invoices from CRM to accounting",
+      "Deal closure triggers invoice creation",
+      "Basic revenue and payment tracking",
+      "Integration via Zapier, native connectors, or API"
+    ],
+    "partnerQuestions": [
+      "Show CRM integration for deal-to-invoice flow",
+      "How do you handle multi-currency (if needed)?",
+      "What's your data migration approach?",
+      "Show reporting and reconciliation workflows",
+      "How do you support scaling beyond accounting?"
+    ],
+    "filters": {
+      "teamSize": ["1-10", "11-50"],
+      "complexity": "light",
+      "bestForTags": ["smb", "accounting", "services"],
+      "ecosystem": "Independent"
+    }
+  },
+  {
+    "name": "Zoho Books / Inventory",
+    "slug": "zoho-books-inventory",
+    "tagline": "Lightweight finance/inventory touchpoints",
+    "icon": "zoho",
+    "bestFor": [
+      "SMBs using Zoho CRM wanting unified suite",
+      "Teams needing basic accounting + inventory",
+      "Multi-currency and international operations (SMB scale)",
+      "Cost-effective alternative to QBO or Xero"
+    ],
+    "chooseWhen": [
+      "You're already using Zoho CRM or other Zoho apps",
+      "Accounting and inventory needs are moderate",
+      "Multi-currency is important but scale is SMB",
+      "Budget is tight and Zoho ecosystem is acceptable",
+      "You want unified platform without heavy ERP"
+    ],
+    "avoidWhen": [
+      "You need full ERP capabilities (MRP, WMS, advanced finance)",
+      "Your CRM is non-Zoho and integration is complex",
+      "Operations are scaling beyond Zoho's capabilities",
+      "You prefer best-in-class tools over suite convenience"
+    ],
+    "implementationReality": [
+      "Setup in 2–4 weeks; DIY-friendly",
+      "Training is minimal; good for Zoho users",
+      "Limited depth compared to full ERP",
+      "Best for SMBs comfortable with Zoho UX"
+    ],
+    "crmIntegrationPatterns": [
+      "Native integration with Zoho CRM",
+      "Quote-to-invoice flow within Zoho suite",
+      "Customer and product sync across apps",
+      "Unified reporting across CRM and Books"
+    ],
+    "partnerQuestions": [
+      "Show CRM-to-Books integration for invoicing",
+      "Walk through inventory management workflows",
+      "How do you handle multi-currency and tax compliance?",
+      "What's your data migration approach?",
+      "Show reporting across Zoho suite"
+    ],
+    "filters": {
+      "teamSize": ["1-10", "11-50", "51-200"],
+      "complexity": "light",
+      "bestForTags": ["smb", "zoho", "accounting"],
+      "ecosystem": "Zoho"
+    }
+  }
+]
