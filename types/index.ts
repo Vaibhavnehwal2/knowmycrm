@@ -90,3 +90,20 @@ export interface Industry {
   category: string;
   summary: string;
 }
+
+export interface Service {
+  name: string;
+  slug: string;
+  summary: string;
+  outcomes: string[];
+  whatThisIs: string[];
+  deliverables: string[];
+  bestFor: string[];
+  howItWorks: string[];
+  inputsNeeded: string[];
+  timeline: string;
+  faqs: Array<{
+    q: string;
+    a: string;
+  }>;
+}
