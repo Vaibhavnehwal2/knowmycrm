@@ -1,0 +1,75 @@
+[
+  { "name": "Professional Services", "slug": "professional-services", "category": "Services", "summary": "Consulting, advisory, and project-based delivery businesses." },
+  { "name": "IT Services & System Integrators", "slug": "it-services", "category": "Services", "summary": "Delivery teams managing deals, projects, and renewals." },
+  { "name": "Software & SaaS", "slug": "software-saas", "category": "Technology", "summary": "Product-led and sales-led growth with subscriptions and renewals." },
+  { "name": "Agencies (Marketing/Creative)", "slug": "agencies", "category": "Services", "summary": "Pipeline → proposals → delivery → retainer management." },
+  { "name": "Legal Services", "slug": "legal-services", "category": "Services", "summary": "Matters, client onboarding, billing, compliance documentation." },
+  { "name": "Accounting & Tax Firms", "slug": "accounting-tax", "category": "Services", "summary": "Client pipelines, deadlines, document collection, renewals." },
+  { "name": "HR & Staffing", "slug": "hr-staffing", "category": "Services", "summary": "Candidate pipelines, client accounts, placements, contracts." },
+  { "name": "Training & Coaching", "slug": "training-coaching", "category": "Services", "summary": "Lead capture, scheduling, cohorts, follow-ups, renewals." },
+
+  { "name": "Manufacturing (Discrete)", "slug": "manufacturing-discrete", "category": "Manufacturing", "summary": "Products, BOMs, dealers, quoting, orders, warranty/service." },
+  { "name": "Manufacturing (Process)", "slug": "manufacturing-process", "category": "Manufacturing", "summary": "Batch processes, QC, compliance, procurement, inventory." },
+  { "name": "Automotive & Mobility", "slug": "automotive", "category": "Manufacturing", "summary": "Dealers, aftersales, warranty, service ops, parts visibility." },
+  { "name": "Industrial Equipment & Machinery", "slug": "industrial-equipment", "category": "Manufacturing", "summary": "CPQ-style quoting, approvals, service contracts, spare parts." },
+  { "name": "Electronics & High-Tech Manufacturing", "slug": "electronics-hitech", "category": "Manufacturing", "summary": "Complex SKUs, channel sales, RMA/service workflows." },
+  { "name": "Aerospace & Defense", "slug": "aerospace-defense", "category": "Manufacturing", "summary": "Strict compliance, long sales cycles, audit trails." },
+  { "name": "Pharmaceuticals", "slug": "pharmaceuticals", "category": "Life Sciences", "summary": "Compliance-heavy sales/service, partner networks, traceability." },
+  { "name": "Medical Devices", "slug": "medical-devices", "category": "Life Sciences", "summary": "Account-based selling, service, installations, recalls." },
+  { "name": "Chemicals", "slug": "chemicals", "category": "Manufacturing", "summary": "Regulatory, pricing approvals, distribution, safety docs." },
+  { "name": "Food & Beverage Manufacturing", "slug": "food-beverage", "category": "Manufacturing", "summary": "Batch/QC, distributors, traceability touchpoints." },
+  { "name": "Consumer Goods (CPG/FMCG)", "slug": "cpg-fmcg", "category": "Manufacturing", "summary": "Retail/distributor selling, promotions, field execution." },
+
+  { "name": "Wholesale & Distribution", "slug": "wholesale-distribution", "category": "Commerce", "summary": "Catalogs, pricing, inventory visibility, order status." },
+  { "name": "Retail (Brick & Mortar)", "slug": "retail", "category": "Commerce", "summary": "Customer service, loyalty, inventory, omnichannel ops." },
+  { "name": "E-commerce & D2C", "slug": "ecommerce-d2c", "category": "Commerce", "summary": "Orders, support, returns, marketing automation, CX." },
+  { "name": "Marketplaces", "slug": "marketplaces", "category": "Commerce", "summary": "Vendor onboarding, catalog governance, disputes/support." },
+
+  { "name": "Logistics & Warehousing (3PL)", "slug": "logistics-3pl", "category": "Logistics", "summary": "Shipments, SLAs, claims, tracking, billing integration." },
+  { "name": "Transportation & Fleet", "slug": "transportation-fleet", "category": "Logistics", "summary": "Dispatch, service tickets, asset/fleet maintenance." },
+  { "name": "Freight Forwarding", "slug": "freight-forwarding", "category": "Logistics", "summary": "Documentation-heavy ops, approvals, status, claims." },
+  { "name": "Shipping & Maritime", "slug": "shipping-maritime", "category": "Logistics", "summary": "Long lifecycle ops, compliance, complex stakeholder comms." },
+
+  { "name": "Construction", "slug": "construction", "category": "Construction & Real Estate", "summary": "Bids, projects, subcontractors, change orders, invoicing." },
+  { "name": "Real Estate (Sales/Leasing)", "slug": "real-estate", "category": "Construction & Real Estate", "summary": "Lead routing, site visits, booking, contracts." },
+  { "name": "Property Management", "slug": "property-management", "category": "Construction & Real Estate", "summary": "Maintenance cases, vendor dispatch, tenant communication." },
+  { "name": "Facilities Management", "slug": "facilities-management", "category": "Construction & Real Estate", "summary": "Tickets, SLAs, assets, approvals, vendor workflows." },
+
+  { "name": "Healthcare Providers (Hospitals/Clinics)", "slug": "healthcare-providers", "category": "Healthcare", "summary": "Patient/service processes, referrals, compliance workflows." },
+  { "name": "Healthcare Services", "slug": "healthcare-services", "category": "Healthcare", "summary": "Scheduling, case workflows, billing touchpoints." },
+  { "name": "HealthTech", "slug": "healthtech", "category": "Healthcare", "summary": "B2B/B2C growth, onboarding, support, compliance." },
+
+  { "name": "Banking", "slug": "banking", "category": "Financial Services", "summary": "Regulated workflows, KYC, approvals, audit trails." },
+  { "name": "Insurance", "slug": "insurance", "category": "Financial Services", "summary": "Claims, policies, service workflows, document trails." },
+  { "name": "Wealth & Asset Management", "slug": "wealth-asset-management", "category": "Financial Services", "summary": "Relationship management, compliance, service." },
+  { "name": "FinTech", "slug": "fintech", "category": "Financial Services", "summary": "Onboarding, risk flows, support, integrations." },
+
+  { "name": "Telecommunications", "slug": "telecommunications", "category": "Telecom & Media", "summary": "Multi-product, support tickets, provisioning touchpoints." },
+  { "name": "Media & Publishing", "slug": "media-publishing", "category": "Telecom & Media", "summary": "Subscriptions, ads sales, renewals, support." },
+  { "name": "Entertainment & Events", "slug": "entertainment-events", "category": "Telecom & Media", "summary": "Ticketing, sponsor sales, ops workflows." },
+
+  { "name": "Education (K-12)", "slug": "education-k12", "category": "Education", "summary": "Admissions, communications, service workflows." },
+  { "name": "Higher Education", "slug": "higher-education", "category": "Education", "summary": "Admissions, alumni, program workflows, service." },
+  { "name": "EdTech", "slug": "edtech", "category": "Education", "summary": "Growth funnels, onboarding, retention, support." },
+
+  { "name": "Hospitality (Hotels/Resorts)", "slug": "hospitality", "category": "Travel & Hospitality", "summary": "Bookings, service, loyalty, ops handoffs." },
+  { "name": "Travel & Tourism", "slug": "travel-tourism", "category": "Travel & Hospitality", "summary": "Itineraries, support, partner coordination." },
+  { "name": "Airlines", "slug": "airlines", "category": "Travel & Hospitality", "summary": "Complex service workflows and high volume CX." },
+
+  { "name": "Energy & Utilities", "slug": "energy-utilities", "category": "Energy", "summary": "Field ops, service tickets, compliance, asset management." },
+  { "name": "Oil & Gas", "slug": "oil-gas", "category": "Energy", "summary": "Enterprise governance, safety/compliance, complex ops." },
+  { "name": "Renewables", "slug": "renewables", "category": "Energy", "summary": "Projects, assets, service/warranty, partner networks." },
+
+  { "name": "Agriculture & Agribusiness", "slug": "agriculture-agribusiness", "category": "Agriculture", "summary": "Procurement, traceability touchpoints, ops workflows." },
+  { "name": "Food Exporters", "slug": "food-exporters", "category": "Agriculture", "summary": "Documentation, approvals, shipment status, claims." },
+  { "name": "Textile & Apparel", "slug": "textile-apparel", "category": "Manufacturing", "summary": "SKUs, sourcing, inventory, export workflows." },
+
+  { "name": "Mining & Metals", "slug": "mining-metals", "category": "Industrial", "summary": "Compliance-heavy, assets, procurement, enterprise reporting." },
+  { "name": "Public Sector / Government", "slug": "public-sector", "category": "Public", "summary": "Case management, approvals, audit trails, procurement." },
+  { "name": "Nonprofit & NGOs", "slug": "nonprofit-ngo", "category": "Public", "summary": "Donor management, programs, grants, reporting." },
+
+  { "name": "Security Services", "slug": "security-services", "category": "Services", "summary": "Scheduling, workforce ops, customer contracts, billing." },
+  { "name": "Home Services", "slug": "home-services", "category": "Services", "summary": "Scheduling, dispatch, quotes, service tickets." },
+
+  { "name": "Other / Not sure", "slug": "other", "category": "Other", "summary": "If none match, select this and we'll handle it in fitment." }
+]
