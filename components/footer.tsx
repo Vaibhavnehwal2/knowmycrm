@@ -38,6 +38,11 @@ export function Footer() {
                   Services
                 </Link>
               </li>
+              <li>
+                <Link href="/partners" className="text-sm text-gray-600 hover:text-primary transition-colors">
+                  Partners
+                </Link>
+              </li>
             </ul>
           </div>
           
