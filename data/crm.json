@@ -1,0 +1,402 @@
+[
+  {
+    "name": "Salesforce",
+    "slug": "salesforce",
+    "tagline": "Platform-grade CRM for complex workflows and scale",
+    "icon": "salesforce",
+    "bestFor": [
+      "Complex multi-stage sales processes with governance",
+      "Custom objects, approval chains, and territory management",
+      "Integration-heavy environments (ERP, BI, custom tools)",
+      "Enterprise-scale with multiple business units"
+    ],
+    "chooseWhen": [
+      "You need custom workflows, approvals, or pricing rules that standard CRMs can't handle",
+      "Your sales process requires custom objects beyond leads/contacts/deals",
+      "You plan to integrate deeply with ERP, accounting, or custom apps",
+      "You need multi-currency, multi-entity, or complex reporting",
+      "Your team will grow beyond 50+ sales users in 12 months"
+    ],
+    "avoidWhen": [
+      "Your sales process is straightforward lead → deal → close",
+      "Budget is tight and simpler tools meet 90% of needs",
+      "You lack internal admin capacity for ongoing configuration",
+      "Team is < 20 and workflows are standard"
+    ],
+    "implementationReality": [
+      "Plan 3–6 months for proper setup (data model, workflows, integrations)",
+      "Budget for certified partner; DIY setups often fail",
+      "Expect customization and ongoing admin overhead",
+      "ROI comes from automation + data governance at scale, not just CRM basics"
+    ],
+    "erpTouchpoints": [
+      "Quote-to-cash: pricing, discounts, approvals flow to ERP for order creation",
+      "Customer master data sync (accounts, billing addresses)",
+      "Order status visibility from ERP into Salesforce",
+      "Revenue recognition and invoicing coordination"
+    ],
+    "demoQuestions": [
+      "Show us custom approval workflows for pricing exceptions",
+      "How do you handle multi-currency deals and forecasting?",
+      "Walk through integration with our ERP for quote-to-order flow",
+      "Show custom reporting across standard and custom objects",
+      "Demonstrate territory management and role-based access"
+    ],
+    "filters": {
+      "teamSize": ["51-200", "200+"],
+      "complexity": "high",
+      "bestForTags": ["enterprise", "complex-workflows", "platform"],
+      "ecosystem": "Salesforce"
+    }
+  },
+  {
+    "name": "HubSpot",
+    "slug": "hubspot",
+    "tagline": "Fast adoption for inbound GTM + unified growth stack",
+    "icon": "hubspot",
+    "bestFor": [
+      "Inbound-led GTM with marketing automation",
+      "Teams prioritizing adoption speed over deep customization",
+      "Unified platform for marketing, sales, service, and operations",
+      "SMB to mid-market with standard B2B sales processes"
+    ],
+    "chooseWhen": [
+      "Marketing and sales need a shared platform (no CRM/MAP silos)",
+      "You want fast setup and high user adoption",
+      "Your sales process is relatively standard (no heavy governance)",
+      "You value modern UX and low training overhead",
+      "Budget allows for growth tiers as you scale"
+    ],
+    "avoidWhen": [
+      "You need deep workflow customization or custom objects at scale",
+      "Your sales process requires complex approvals or pricing rules",
+      "You're heavily invested in Microsoft or Salesforce ecosystem",
+      "ERP integration is mission-critical and highly custom"
+    ],
+    "implementationReality": [
+      "Can go live in 4–8 weeks with standard setup",
+      "Easy for teams to learn; high adoption rates",
+      "Customization depth is limited compared to Salesforce",
+      "Best for teams that fit HubSpot's opinionated workflows"
+    ],
+    "erpTouchpoints": [
+      "Account and contact sync (often via middleware)",
+      "Deal closure triggers order creation in ERP",
+      "Revenue and invoicing data may need external sync",
+      "Limited native ERP connectors; custom integration required"
+    ],
+    "demoQuestions": [
+      "Show marketing-to-sales handoff and lead scoring",
+      "Walk through deal pipeline and forecasting",
+      "How do you handle quote generation and approvals?",
+      "Demonstrate integration with our accounting/ERP system",
+      "Show service ticket workflows and customer portal"
+    ],
+    "filters": {
+      "teamSize": ["11-50", "51-200"],
+      "complexity": "medium",
+      "bestForTags": ["inbound", "smb", "mid-market", "marketing-sales"],
+      "ecosystem": "HubSpot"
+    }
+  },
+  {
+    "name": "Dynamics 365 Sales",
+    "slug": "dynamics-365-sales",
+    "tagline": "Best when Microsoft is your operating layer",
+    "icon": "microsoftdynamics365",
+    "bestFor": [
+      "Organizations deeply embedded in Microsoft ecosystem",
+      "Integration with Outlook, Teams, and Power Platform",
+      "Mid-market to enterprise with moderate complexity",
+      "Teams wanting AI-driven insights and relationship intelligence"
+    ],
+    "chooseWhen": [
+      "You use Microsoft 365, Teams, and Azure heavily",
+      "You want native integration with Outlook and SharePoint",
+      "Power Platform extensibility is strategically important",
+      "You need moderate customization without Salesforce complexity",
+      "Microsoft CSP partner relationship is already strong"
+    ],
+    "avoidWhen": [
+      "Your stack is non-Microsoft (Google, Salesforce, AWS)",
+      "You need a simple, opinionated CRM (consider HubSpot)",
+      "Budget is tight and you don't leverage Microsoft ecosystem",
+      "You're looking for best-in-class CRM without ecosystem lock-in"
+    ],
+    "implementationReality": [
+      "Setup takes 2–4 months; Microsoft partner required",
+      "Customization via Power Platform (low-code)",
+      "Integration with ERP (Business Central or F&O) is strong",
+      "Adoption tied to Microsoft 365 familiarity"
+    ],
+    "erpTouchpoints": [
+      "Seamless with Business Central or Dynamics 365 F&O",
+      "Quote-to-cash flow with native connectors",
+      "Customer and product catalog sync",
+      "Unified data model across CRM and ERP"
+    ],
+    "demoQuestions": [
+      "Show native Outlook and Teams integration",
+      "Walk through Power Automate workflows for approvals",
+      "How does AI relationship insights work?",
+      "Demonstrate integration with Business Central",
+      "Show mobile app and offline capabilities"
+    ],
+    "filters": {
+      "teamSize": ["51-200", "200+"],
+      "complexity": "medium",
+      "bestForTags": ["microsoft", "enterprise", "mid-market"],
+      "ecosystem": "Microsoft"
+    }
+  },
+  {
+    "name": "Zoho CRM",
+    "slug": "zoho-crm",
+    "tagline": "Value-focused CRM with broader suite potential",
+    "icon": "zoho",
+    "bestFor": [
+      "SMBs prioritizing cost-effectiveness",
+      "Teams wanting CRM + broader suite (Zoho Books, Desk, etc.)",
+      "Moderate customization with workflows and blueprints",
+      "International teams needing multi-currency and localization"
+    ],
+    "chooseWhen": [
+      "Budget is a primary constraint but you need solid CRM features",
+      "You're open to Zoho ecosystem (Books, Inventory, Desk)",
+      "You need basic customization and automation",
+      "Team size is < 100 and sales process is moderately complex",
+      "You want fast setup without heavy partner dependency"
+    ],
+    "avoidWhen": [
+      "You need deep platform-grade customization",
+      "Your ERP is SAP, Oracle, or another enterprise system",
+      "You require best-in-class integration ecosystem",
+      "You prioritize UX and modern interface over cost"
+    ],
+    "implementationReality": [
+      "Can go live in 4–6 weeks with standard setup",
+      "DIY-friendly for SMBs; partner optional",
+      "Customization is decent but not Salesforce-level",
+      "Best value for teams comfortable with Zoho's UX"
+    ],
+    "erpTouchpoints": [
+      "Strong integration with Zoho Books and Zoho Inventory",
+      "Third-party ERP connectors available but may need middleware",
+      "Quote-to-invoice flow works well within Zoho suite",
+      "Custom API integration required for non-Zoho ERPs"
+    ],
+    "demoQuestions": [
+      "Show workflow automation and blueprint processes",
+      "Walk through multi-currency deals and forecasting",
+      "How does integration with Zoho Books work?",
+      "Demonstrate custom modules and field creation",
+      "Show AI assistant (Zia) capabilities"
+    ],
+    "filters": {
+      "teamSize": ["1-10", "11-50", "51-200"],
+      "complexity": "medium",
+      "bestForTags": ["smb", "value", "multi-currency"],
+      "ecosystem": "Zoho"
+    }
+  },
+  {
+    "name": "Pipedrive",
+    "slug": "pipedrive",
+    "tagline": "Pipeline-first simplicity for sales teams",
+    "icon": "pipedrive",
+    "bestFor": [
+      "Small to mid-size sales teams focused on pipeline visibility",
+      "Simple, repeatable sales processes",
+      "Teams prioritizing ease of use and fast adoption",
+      "Outbound sales motion with clear stages"
+    ],
+    "chooseWhen": [
+      "Your sales process is straightforward and stage-based",
+      "Team is < 50 and needs minimal training",
+      "You want visual pipeline management without bloat",
+      "Budget is moderate and you value simplicity over features",
+      "CRM admin burden should be minimal"
+    ],
+    "avoidWhen": [
+      "You need custom objects, workflows, or approvals",
+      "Marketing automation is a core requirement",
+      "Your sales process is complex or governance-heavy",
+      "Deep ERP integration is mission-critical"
+    ],
+    "implementationReality": [
+      "Can go live in 1–2 weeks; very fast setup",
+      "Minimal training required; high adoption",
+      "Limited customization by design",
+      "Best for teams that fit the Pipedrive model"
+    ],
+    "erpTouchpoints": [
+      "Basic integrations via Zapier or native connectors",
+      "Deal closure can trigger external workflows",
+      "Not designed for deep ERP sync",
+      "Best for simple quote-to-close without heavy ERP coupling"
+    ],
+    "demoQuestions": [
+      "Show pipeline management and drag-and-drop deal flow",
+      "Walk through activity tracking and reminders",
+      "How do you handle email integration and tracking?",
+      "Demonstrate reporting and forecasting",
+      "Show mobile app for field sales"
+    ],
+    "filters": {
+      "teamSize": ["1-10", "11-50"],
+      "complexity": "light",
+      "bestForTags": ["smb", "pipeline", "outbound"],
+      "ecosystem": "Independent"
+    }
+  },
+  {
+    "name": "Freshsales",
+    "slug": "freshsales",
+    "tagline": "Modern CRM with productivity and automation",
+    "icon": "freshworks",
+    "bestFor": [
+      "SMB to mid-market teams wanting modern UX",
+      "Sales and support in unified platform (Freshworks suite)",
+      "AI-powered lead scoring and automation",
+      "Teams needing phone, email, and chat integration"
+    ],
+    "chooseWhen": [
+      "You want a modern CRM with good UX at mid-tier pricing",
+      "Sales and support integration is important",
+      "Built-in phone and email are valuable",
+      "You need basic AI and automation without complexity",
+      "Team is < 100 and growing"
+    ],
+    "avoidWhen": [
+      "You need deep customization or platform extensibility",
+      "Your stack is heavily Microsoft or Salesforce",
+      "Complex workflows and approvals are core",
+      "ERP integration is highly custom"
+    ],
+    "implementationReality": [
+      "Setup in 2–4 weeks; partner optional",
+      "Easy to use; good adoption rates",
+      "Moderate customization; not platform-grade",
+      "Best for standard sales processes with light automation"
+    ],
+    "erpTouchpoints": [
+      "Basic integrations via Zapier or API",
+      "Deal data can sync to accounting systems",
+      "Not designed for deep ERP workflows",
+      "Best for simple revenue handoff"
+    ],
+    "demoQuestions": [
+      "Show AI-based lead scoring and deal insights",
+      "Walk through built-in phone and email features",
+      "How does Freddy AI assist sales reps?",
+      "Demonstrate integration with Freshdesk",
+      "Show mobile app and workflow automation"
+    ],
+    "filters": {
+      "teamSize": ["11-50", "51-200"],
+      "complexity": "medium",
+      "bestForTags": ["smb", "mid-market", "ai", "productivity"],
+      "ecosystem": "Freshworks"
+    }
+  },
+  {
+    "name": "SAP Sales Cloud",
+    "slug": "sap-sales-cloud",
+    "tagline": "Strong for SAP-centric enterprises",
+    "icon": "sap",
+    "bestFor": [
+      "Enterprises with SAP ERP footprint",
+      "Complex B2B sales with deep ERP integration",
+      "Industries with heavy compliance and process rigor",
+      "Large global teams needing unified SAP ecosystem"
+    ],
+    "chooseWhen": [
+      "You're already running SAP S/4HANA or SAP ERP",
+      "Integration with SAP ecosystem is strategically critical",
+      "You need enterprise-grade governance and auditability",
+      "Industry-specific processes are important (e.g., manufacturing)",
+      "Budget supports SAP licensing and implementation"
+    ],
+    "avoidWhen": [
+      "You're not in SAP ecosystem (consider Salesforce or Dynamics)",
+      "Budget is constrained or team is < 100",
+      "You want fast, lightweight CRM",
+      "SAP complexity outweighs benefits for your use case"
+    ],
+    "implementationReality": [
+      "Plan 6–12 months for enterprise rollout",
+      "Requires SAP-certified partner and internal IT support",
+      "High TCO; best when SAP ecosystem ROI is clear",
+      "Adoption depends on SAP familiarity and training"
+    ],
+    "erpTouchpoints": [
+      "Deep native integration with SAP S/4HANA",
+      "Quote-to-cash fully integrated with SAP ERP",
+      "Master data, pricing, and inventory sync",
+      "Unified reporting across CRM and ERP"
+    ],
+    "demoQuestions": [
+      "Show integration with SAP S/4HANA for quote-to-order",
+      "Walk through customer master data sync",
+      "How do you handle complex pricing and approvals?",
+      "Demonstrate industry-specific workflows (if applicable)",
+      "Show mobile and offline capabilities"
+    ],
+    "filters": {
+      "teamSize": ["200+"],
+      "complexity": "high",
+      "bestForTags": ["enterprise", "sap", "manufacturing"],
+      "ecosystem": "SAP"
+    }
+  },
+  {
+    "name": "Oracle Sales",
+    "slug": "oracle-sales",
+    "tagline": "Best when Oracle footprint is core",
+    "icon": "oracle",
+    "bestFor": [
+      "Enterprises with Oracle ERP, database, and cloud infrastructure",
+      "Complex sales processes requiring deep integration",
+      "Large global organizations with multiple business units",
+      "Industries with heavy data and analytics needs"
+    ],
+    "chooseWhen": [
+      "You're running Oracle ERP Cloud or E-Business Suite",
+      "Oracle ecosystem is your strategic platform",
+      "You need enterprise CRM with deep customization",
+      "Data analytics and Oracle BI integration is critical",
+      "Licensing and support are already Oracle-based"
+    ],
+    "avoidWhen": [
+      "You're not in Oracle ecosystem",
+      "Budget is limited or team is < 100",
+      "You want modern UX and fast adoption",
+      "Oracle complexity doesn't match your needs"
+    ],
+    "implementationReality": [
+      "Plan 6–12 months; Oracle partner required",
+      "High complexity and TCO",
+      "Best when Oracle ecosystem ROI is proven",
+      "Training and change management are critical"
+    ],
+    "erpTouchpoints": [
+      "Native integration with Oracle ERP Cloud",
+      "Unified data model for CRM and ERP",
+      "Quote-to-cash automation with Oracle Financials",
+      "Deep integration with Oracle Analytics"
+    ],
+    "demoQuestions": [
+      "Show integration with Oracle ERP Cloud",
+      "Walk through configure-price-quote (CPQ) workflows",
+      "How does Oracle Analytics integrate with CRM data?",
+      "Demonstrate account hierarchy and partner management",
+      "Show mobile and AI-driven insights"
+    ],
+    "filters": {
+      "teamSize": ["200+"],
+      "complexity": "high",
+      "bestForTags": ["enterprise", "oracle", "analytics"],
+      "ecosystem": "Oracle"
+    }
+  }
+]
