@@ -1,1 +1,35 @@
-"use client";\n\nimport { getIconSvg, getIconHex } from '@/lib/icons';\n\ninterface BrandIconProps {\n  iconName?: string;\n  name: string;\n  className?: string;\n}\n\nexport function BrandIcon({ iconName, name, className = \"h-6 w-6\" }: BrandIconProps) {\n  const path = iconName ? getIconSvg(iconName) : null;\n  const color = iconName ? getIconHex(iconName) : '#6B7280';\n\n  if (!path) {\n    return (\n      <div className={`${className} flex items-center justify-center bg-gray-200 rounded text-xs font-bold text-gray-600`}>\n        {name.charAt(0)}\n      </div>\n    );\n  }\n\n  return (\n    <svg\n      role=\"img\"\n      viewBox=\"0 0 24 24\"\n      xmlns=\"http://www.w3.org/2000/svg\"\n      className={className}\n      fill={color}\n    >\n      <path d={path} />\n    </svg>\n  );\n}\n"
+"use client";
+
+import { getIconSvg, getIconHex } from '@/lib/icons';
+
+interface BrandIconProps {
+  iconName?: string;
+  name: string;
+  className?: string;
+}
+
+export function BrandIcon({ iconName, name, className = \"h-6 w-6\" }: BrandIconProps) {
+  const path = iconName ? getIconSvg(iconName) : null;
+  const color = iconName ? getIconHex(iconName) : '#6B7280';
+
+  if (!path) {
+    return (
+      <div className={`${className} flex items-center justify-center bg-gray-200 rounded text-xs font-bold text-gray-600`}>
+        {name.charAt(0)}
+      </div>
+    );
+  }
+
+  return (
+    <svg
+      role=\"img\"
+      viewBox=\"0 0 24 24\"
+      xmlns=\"http://www.w3.org/2000/svg\"
+      className={className}
+      fill={color}
+    >
+      <path d={path} />
+    </svg>
+  );
+}
+"
