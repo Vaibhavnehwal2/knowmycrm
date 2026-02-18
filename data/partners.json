@@ -1,0 +1,93 @@
+[
+  {
+    "name": "Accenture",
+    "website": "https://www.accenture.com",
+    "focus": ["CRM", "ERP"],
+    "regions": ["Global"],
+    "notes": "Enterprise CRM/ERP programs, integrations, governance"
+  },
+  {
+    "name": "Deloitte",
+    "website": "https://www.deloitte.com",
+    "focus": ["CRM", "ERP"],
+    "regions": ["Global"],
+    "notes": "Transformation + implementation delivery at scale"
+  },
+  {
+    "name": "PwC",
+    "website": "https://www.pwc.com",
+    "focus": ["CRM", "ERP"],
+    "regions": ["Global"],
+    "notes": "Advisory + implementation, controls and compliance"
+  },
+  {
+    "name": "KPMG",
+    "website": "https://kpmg.com",
+    "focus": ["CRM", "ERP"],
+    "regions": ["Global"],
+    "notes": "Process + systems implementation, enterprise programs"
+  },
+  {
+    "name": "EY",
+    "website": "https://www.ey.com",
+    "focus": ["CRM", "ERP"],
+    "regions": ["Global"],
+    "notes": "Operations modernization + systems delivery"
+  },
+  {
+    "name": "Capgemini",
+    "website": "https://www.capgemini.com",
+    "focus": ["CRM", "ERP"],
+    "regions": ["Global"],
+    "notes": "Systems integration + delivery teams across regions"
+  },
+  {
+    "name": "IBM Consulting",
+    "website": "https://www.ibm.com/consulting",
+    "focus": ["CRM", "ERP"],
+    "regions": ["Global"],
+    "notes": "Enterprise consulting + integration-heavy implementations"
+  },
+  {
+    "name": "Cognizant",
+    "website": "https://www.cognizant.com",
+    "focus": ["CRM", "ERP"],
+    "regions": ["Global", "India", "North America", "Europe"],
+    "notes": "Delivery at scale + managed services"
+  },
+  {
+    "name": "Infosys",
+    "website": "https://www.infosys.com",
+    "focus": ["CRM", "ERP"],
+    "regions": ["Global", "India", "Europe", "North America"],
+    "notes": "Implementation + integration + support models"
+  },
+  {
+    "name": "Wipro",
+    "website": "https://www.wipro.com",
+    "focus": ["CRM", "ERP"],
+    "regions": ["Global", "India", "Europe", "North America"],
+    "notes": "Delivery + long-term support and managed services"
+  },
+  {
+    "name": "Tata Consultancy Services (TCS)",
+    "website": "https://www.tcs.com",
+    "focus": ["CRM", "ERP"],
+    "regions": ["Global", "India", "Europe", "North America"],
+    "notes": "Large delivery capability for multi-country rollouts"
+  },
+  {
+    "name": "Slalom",
+    "website": "https://www.slalom.com",
+    "focus": ["CRM"],
+    "regions": ["North America", "Europe"],
+    "notes": "Mid-enterprise transformation + adoption focus"
+  },
+  {
+    "name": "Perficient",
+    "website": "https://www.perficient.com",
+    "focus": ["CRM", "ERP"],
+    "regions": ["North America"],
+    "notes": "Digital transformation + implementation services"
+  }
+]
