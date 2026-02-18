@@ -1,0 +1,191 @@
+[
+  {
+    "name": "CRM/ERP Fitment",
+    "slug": "crm-erp-fitment",
+    "summary": "Turn your workflows and constraints into a clear requirements snapshot that makes shortlisting easy and defensible.",
+    "outcomes": [
+      "Requirements snapshot (sales/service/ops)",
+      "Integration touchpoints mapped (ERP/accounting, website, WhatsApp, BI)",
+      "Risk flags + priorities defined"
+    ],
+    "whatThisIs": [
+      "A structured discovery focused on how your business actually runs.",
+      "We capture processes, approvals, reporting KPIs, data rules, and integration needs.",
+      "Output is a clear fitment document that becomes the base for shortlisting and demos."
+    ],
+    "deliverables": [
+      "Workflow map (sales + service + operations)",
+      "Reporting/KPI list (must-have dashboards)",
+      "Integration map (systems + data flow)",
+      "Data rules (ownership, required fields, quality checks)",
+      "Constraints (budget, timeline, internal capacity)",
+      "Fitment summary (what matters most, what to avoid)"
+    ],
+    "bestFor": [
+      "Teams selecting their first CRM/ERP",
+      "Teams re-implementing after adoption issues",
+      "Businesses where ERP/accounting touchpoints matter"
+    ],
+    "howItWorks": [
+      "Quick intake (Wizard + short call)",
+      "Workflow + integration discovery",
+      "Draft requirements snapshot",
+      "Review + finalize priorities and constraints",
+      "Ready-to-use document for shortlisting & demos"
+    ],
+    "inputsNeeded": [
+      "Current tools (CRM/ERP/spreadsheets) if any",
+      "Your process steps (high level is enough)",
+      "Integrations you must have",
+      "Key reports you need weekly/monthly"
+    ],
+    "timeline": "Typically 3–7 days depending on complexity.",
+    "faqs": [
+      {
+        "q": "Do we need to know technical details?",
+        "a": "No. You explain your workflows and outcomes. We translate them into requirements."
+      },
+      {
+        "q": "Is this vendor-neutral?",
+        "a": "Yes. Fitment is based on your needs and constraints, not sponsorships."
+      }
+    ]
+  },
+  {
+    "name": "Shortlist + Evaluation Pack",
+    "slug": "shortlist-evaluation-pack",
+    "summary": "Get a shortlist (3–5 options) with trade-offs, a demo script, and a scorecard so every tool is evaluated fairly.",
+    "outcomes": [
+      "Shortlist with trade-offs (3–5 options)",
+      "Demo script + evaluation scorecard",
+      "What to avoid + risk flags"
+    ],
+    "whatThisIs": [
+      "A structured shortlisting and evaluation kit based on your fitment inputs.",
+      "Instead of feature comparisons, we focus on fit, implementation reality, and long-term ownership."
+    ],
+    "deliverables": [
+      "Ranked shortlist (3–5 tools) with rationale",
+      "Trade-offs summary (what you gain vs what you give up)",
+      "Demo script (what vendors must show)",
+      "Scorecard (weighted criteria based on your priorities)",
+      "Implementation effort signals (high/medium/low)",
+      "Avoid if rules for each option"
+    ],
+    "bestFor": [
+      "Teams stuck between too many tools",
+      "Teams running repeated demos without clarity",
+      "Leaders who need a decision they can defend internally"
+    ],
+    "howItWorks": [
+      "Confirm priorities and weights",
+      "Prepare shortlist with trade-offs",
+      "Deliver demo script + scorecard",
+      "Optional: join 1–2 demos to keep them structured"
+    ],
+    "inputsNeeded": [
+      "Your priorities (speed vs governance vs ecosystem alignment)",
+      "Budget band + timeline",
+      "Must-have integrations and reports"
+    ],
+    "timeline": "Typically 3–10 days depending on scope.",
+    "faqs": [
+      {
+        "q": "Will you recommend one tool only?",
+        "a": "Usually we provide 3–5 best-fit options. If a clear winner exists, we'll state it and why."
+      },
+      {
+        "q": "Do you compare pricing precisely?",
+        "a": "We provide TCO signals and effort bands. Exact pricing is confirmed during vendor discussions."
+      }
+    ]
+  },
+  {
+    "name": "Implementation Partner Match",
+    "slug": "implementation-partner-match",
+    "summary": "Get introductions to implementation partners aligned to your platform choice, scope, industry, and timeline.",
+    "outcomes": [
+      "Partner shortlist + introductions",
+      "Due diligence checklist",
+      "Scope framing prompts"
+    ],
+    "whatThisIs": [
+      "A partner-matching step after fitment/shortlisting.",
+      "We focus on delivery capability, industry fit, integration experience, and support model."
+    ],
+    "deliverables": [
+      "Partner shortlist aligned to your scope",
+      "Intro email template + context pack",
+      "Partner due diligence checklist (references, delivery model, team composition)",
+      "Scope framing prompts to avoid scope creep",
+      "Suggested milestones for implementation"
+    ],
+    "bestFor": [
+      "Teams that don't want to gamble on implementation quality",
+      "Projects with integrations or multi-team complexity",
+      "Teams needing ongoing support/managed services"
+    ],
+    "howItWorks": [
+      "Confirm platform shortlist + scope",
+      "Match partners by capability and geography/timezone",
+      "Set up structured discovery calls",
+      "Help compare proposals using a common checklist"
+    ],
+    "inputsNeeded": [
+      "Your scope summary and timeline",
+      "Preferred geography/timezone (optional)",
+      "Budget band"
+    ],
+    "timeline": "Partner intros can start within 2–5 days.",
+    "faqs": [
+      {
+        "q": "Are these official partners?",
+        "a": "No. These are introductions to relevant firms. Final contracting remains between you and the partner."
+      }
+    ]
+  },
+  {
+    "name": "Independent Oversight (Optional)",
+    "slug": "independent-oversight",
+    "summary": "Add a governance layer during implementation to protect outcomes: scope control, QA checkpoints, and adoption readiness.",
+    "outcomes": [
+      "Better delivery governance",
+      "QA + UAT structure",
+      "Adoption + go-live readiness"
+    ],
+    "whatThisIs": [
+      "A light oversight layer that keeps implementation aligned to outcomes.",
+      "We don't replace the partner—we reduce risk and improve adoption."
+    ],
+    "deliverables": [
+      "Milestone plan and sprint governance checks",
+      "QA gates + UAT plan",
+      "Data migration readiness checklist",
+      "Role-based adoption plan (training + change management basics)",
+      "Go-live checklist + stabilization plan"
+    ],
+    "bestFor": [
+      "High-risk projects (many stakeholders, heavy workflows, integrations)",
+      "Teams with limited internal CRM/ERP ownership",
+      "Implementations where adoption is a known risk"
+    ],
+    "howItWorks": [
+      "Align success metrics early",
+      "Review scope and delivery plan",
+      "Run checkpoints per milestone",
+      "Validate UAT and go-live readiness"
+    ],
+    "inputsNeeded": [
+      "Implementation plan/proposal from partner",
+      "Your internal owner/stakeholder list",
+      "Access to demo/UAT environments (as applicable)"
+    ],
+    "timeline": "Runs alongside your implementation milestones.",
+    "faqs": [
+      {
+        "q": "Will this slow down implementation?",
+        "a": "No—done right it reduces rework and accelerates decisions."
+      }
+    ]
+  }
+]
