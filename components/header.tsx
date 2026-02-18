@@ -15,6 +15,7 @@ export function Header() {
     { name: 'Compare ERP', href: '/compare-erp' },
     { name: 'Industries', href: '/industries' },
     { name: 'Services', href: '/services' },
+    { name: 'Partners', href: '/partners' },
     { name: 'Resources', href: '/resources' },
   ];
 
