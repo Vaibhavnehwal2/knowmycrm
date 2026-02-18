@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { getAllServices } from '@/lib/data';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { ServicePathStepper } from '@/components/service-path-stepper';
 import { ArrowRight, CheckCircle } from 'lucide-react';
 
 export default function ServicesPage() {
@@ -58,6 +59,12 @@ export default function ServicesPage() {
       </section>
 
       <section className="bg-gray-50 py-16 sm:py-20">
+        <div className="container mx-auto max-w-4xl px-4 md:px-6">
+          <ServicePathStepper compact />
+        </div>
+      </section>
+
+      <section className="py-16 sm:py-20">
         <div className="container mx-auto max-w-4xl px-4 md:px-6 text-center">
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 mb-4">
             Get started with the Fit Wizard
