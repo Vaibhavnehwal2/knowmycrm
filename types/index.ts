@@ -75,3 +75,11 @@ export interface BlogPost {
   author: string;
   readTime: string;
 }
+
+export interface Partner {
+  name: string;
+  website: string;
+  focus: string[];
+  regions: string[];
+  notes: string;
+}
