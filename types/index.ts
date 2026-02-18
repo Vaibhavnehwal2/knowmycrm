@@ -72,8 +72,11 @@ export interface BlogPost {
   title: string;
   excerpt: string;
   date: string;
+  updated?: string;
   author: string;
   readTime: string;
+  category: 'Comparison' | 'Guide' | 'Industry' | 'Implementation';
+  tags: string[];
 }
 
 export interface Partner {
