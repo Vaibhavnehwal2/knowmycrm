@@ -131,15 +131,18 @@ backend:
   
   - task: "CRM Recommendation Engine - Salesforce must always be included"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/lib/fitment.ts"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
           agent: "main"
           comment: "Implemented recommendCRM function that always includes Salesforce as one of the two recommendations. Uses deterministic scoring to pick the best second CRM. Ensures exactly 3 reasons per recommendation."
+        - working: true
+          agent: "testing"
+          comment: "Successfully tested CRM recommendation engine: ✅ Always includes Salesforce in top 2 ✅ Returns exactly 2 recommendations ✅ Each recommendation has exactly 3 reasons ✅ Salesforce reasons adapt correctly for complex scenarios (CPQ, high roleComplexity, many integrations). Tested minimal inputs (HubSpot + Salesforce) and complex inputs (Salesforce first with adapted reasons). All validations passed."
   
   - task: "ERP Recommendation Engine - Top 2 by scoring"
     implemented: true
