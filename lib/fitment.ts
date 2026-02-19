@@ -662,22 +662,44 @@ export function recommendERP(data: ERPAnswers): WizardResult {
     return 'High';
   }
 
+  // Default reasons for ERP fallback
+  const getERPDefaultReasons = (slug: string): string[] => {
+    switch (slug) {
+      case 'odoo':
+        return ['Flexible modular architecture', 'Cost-effective for SMB', 'Open-source with enterprise options'];
+      case 'dynamics-365-business-central':
+        return ['Native Microsoft ecosystem integration', 'Solid SMB to mid-market fit', 'Power Platform extensibility'];
+      case 'dynamics-365-finance-operations':
+        return ['Enterprise-grade capabilities', 'Advanced manufacturing support', 'Global multi-entity features'];
+      case 'netsuite':
+        return ['Cloud-native ERP platform', 'Strong multi-subsidiary support', 'Unified business suite'];
+      case 'sap-business-one':
+        return ['SAP quality for SMB', 'Strong inventory management', 'Proven manufacturing support'];
+      case 'sap-s4hana':
+        return ['Enterprise-leading ERP platform', 'Deep industry solutions', 'Advanced analytics built-in'];
+      case 'quickbooks-tally':
+        return ['Simple accounting solution', 'Easy to set up and use', 'Cost-effective for small business'];
+      default:
+        return ['Reliable ERP solution', 'Good feature coverage', 'Proven track record'];
+    }
+  };
+
   // --- Build top 2 recommendations ---
   const sortedCandidates = [...candidates].sort((a, b) => (scores.get(b)?.score || 0) - (scores.get(a)?.score || 0));
 
   const top2: Recommendation[] = [];
   for (let i = 0; i < 2 && i < sortedCandidates.length; i++) {
     const slug = sortedCandidates[i];
-    const data = scores.get(slug)!;
+    const scoreData = scores.get(slug)!;
     const erpInfo = erps.find(e => e.slug === slug);
 
     top2.push({
       slug,
       name: erpInfo?.name || slug,
-      score: data.score,
+      score: scoreData.score,
       complexity: calculateComplexity(slug),
-      reasons: data.reasons.slice(0, 4),
-      watchouts: data.watchouts.length > 0 ? data.watchouts.slice(0, 2) : undefined,
+      reasons: ensureThreeReasons(scoreData.reasons, getERPDefaultReasons(slug)),
+      watchouts: scoreData.watchouts.length > 0 ? scoreData.watchouts.slice(0, 2) : undefined,
     });
   }
 
