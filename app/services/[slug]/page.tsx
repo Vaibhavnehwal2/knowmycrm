@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { getServiceBySlug, getAllServices } from '@/lib/data';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+// Using native HTML details/summary for zero-JS FAQ accordion
 import { ServicePathStepper } from '@/components/service-path-stepper';
 import { SidebarCTA } from '@/components/sidebar-cta';
 import { ServiceCTABlock } from '@/components/service-cta-block';
