@@ -255,8 +255,6 @@ metadata:
 
 test_plan:
   current_focus:
-    - "CRM Recommendation Engine - Salesforce must always be included"
-    - "ERP Recommendation Engine - Top 2 by scoring"
     - "Wizard CRM Path - 7 Steps + Results"
     - "Wizard Results Screen - Exactly 2 Recommendations"
   stuck_tasks: []
