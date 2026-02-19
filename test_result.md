@@ -146,15 +146,18 @@ backend:
   
   - task: "ERP Recommendation Engine - Top 2 by scoring"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/lib/fitment.ts"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
           agent: "main"
           comment: "Implemented recommendERP function that scores and picks top 2 ERPs based on business inputs. Ensures exactly 3 reasons per recommendation."
+        - working: true
+          agent: "testing"
+          comment: "Successfully tested ERP recommendation engine: ✅ Returns exactly 2 recommendations ✅ Each recommendation has exactly 3 reasons ✅ Manufacturing scenario correctly returns manufacturing-suitable ERPs (Dynamics 365 F&O, Business Central) ✅ Scoring system works correctly with D365 F&O (105 score) ranking higher than BC (95 score). All validations passed."
   
   - task: "Web-to-Lead Config and Adapter"
     implemented: true
