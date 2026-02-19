@@ -101,3 +101,50 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+
+user_problem_statement: "Test the KnowMyCRM marketing website API endpoint and verify the site is working properly"
+
+backend:
+  - task: "POST /api/leads endpoint - Accept lead data from different sources"
+    implemented: true
+    working: true
+    file: "/app/app/api/leads/route.ts"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "Successfully tested POST /api/leads endpoint with wizard, book, and checklist sources. All requests returned 200 status with success confirmation and leadId. Endpoint properly accepts and stores lead data in memory."
+  
+  - task: "GET /api/leads endpoint - Retrieve stored leads"
+    implemented: true
+    working: true
+    file: "/app/app/api/leads/route.ts" 
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "GET endpoint working correctly, returns success:true, count and leads array. Successfully retrieved 4 stored leads from memory with proper UUID ids and timestamps."
+
+frontend:
+
+metadata:
+  created_by: "testing_agent"
+  version: "1.0"
+  test_sequence: 1
+  run_ui: false
+
+test_plan:
+  current_focus:
+    - "POST /api/leads endpoint - Accept lead data from different sources"
+    - "GET /api/leads endpoint - Retrieve stored leads"
+  stuck_tasks: []
+  test_all: false
+  test_priority: "high_first"
+
+agent_communication:
+    - agent: "testing"
+      message: "Completed comprehensive testing of KnowMyCRM leads API endpoints. All tests passed successfully - POST /api/leads accepts data from wizard, book, and checklist sources and returns proper success responses with leadId. GET /api/leads retrieves stored data correctly. API is fully functional for lead collection."
