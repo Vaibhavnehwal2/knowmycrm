@@ -239,15 +239,17 @@ frontend:
           comment: "Screenshot verified - shows success confirmation, what happens next steps, and CTAs for Home, Compare CRMs, and Book a Call."
 
 metadata:
-  created_by: "testing_agent"
-  version: "1.0"
-  test_sequence: 1
+  created_by: "main_agent"
+  version: "1.1"
+  test_sequence: 2
   run_ui: false
 
 test_plan:
   current_focus:
-    - "POST /api/leads endpoint - Accept lead data from different sources"
-    - "GET /api/leads endpoint - Retrieve stored leads"
+    - "CRM Recommendation Engine - Salesforce must always be included"
+    - "ERP Recommendation Engine - Top 2 by scoring"
+    - "Wizard CRM Path - 7 Steps + Results"
+    - "Wizard Results Screen - Exactly 2 Recommendations"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
@@ -255,3 +257,5 @@ test_plan:
 agent_communication:
     - agent: "testing"
       message: "Completed comprehensive testing of KnowMyCRM leads API endpoints. All tests passed successfully - POST /api/leads accepts data from wizard, book, and checklist sources and returns proper success responses with leadId. GET /api/leads retrieves stored data correctly. API is fully functional for lead collection."
+    - agent: "main"
+      message: "Implemented complete Fit Wizard feature with Salesforce Web-to-Lead integration. Key components: 1) /wizard page with CRM/ERP branching and 7 steps each, 2) /lib/fitment.ts with recommendation engines ensuring Salesforce always in CRM top 2 and exactly 3 reasons per recommendation, 3) /lib/webToLeadConfig.ts for SF Web-to-Lead config, 4) /components/wizard/web-to-lead-submit.tsx for form submission, 5) /wizard/success page. Need testing to verify: CRM always includes Salesforce, ERP returns top 2 by score, wizard flow saves to localStorage, results show exactly 2 cards with 3 reasons each."
