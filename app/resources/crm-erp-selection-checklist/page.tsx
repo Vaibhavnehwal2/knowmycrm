@@ -1,76 +1,11 @@
 "use client";
 
-import { useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { SalesforceWebToLead } from '@/components/forms/SalesforceWebToLead';
 import { CheckCircle2, Download, ArrowRight } from 'lucide-react';
 
 export default function ChecklistLandingPage() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    company: '',
-  });
-  const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      const response = await fetch('/api/leads', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          source: 'checklist',
-          ...formData,
-        }),
-      });
-
-      if (response.ok) {
-        setSubmitted(true);
-      }
-    } catch (error) {
-      console.error('Error submitting form:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (submitted) {
-    return (
-      <div className="container mx-auto px-4 py-16 lg:px-8 lg:py-24">
-        <div className="mx-auto max-w-2xl text-center">
-          <div className="mb-6 flex justify-center">
-            <CheckCircle2 className="h-16 w-16 text-green-600" />
-          </div>
-          <h1 className="text-4xl font-bold tracking-tight text-gray-900 mb-4">
-            Thank you!
-          </h1>
-          <p className="text-lg text-gray-600 mb-8">
-            Your checklist download will be available soon. We'll send it to your email.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/wizard">
-              <Button size="lg">
-                Start Fit Wizard <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-            <Link href="/book">
-              <Button variant="outline" size="lg">
-                Book a Call
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="flex flex-col">
       <section className="container mx-auto px-4 py-16 lg:px-8 lg:py-24">
@@ -142,55 +77,17 @@ export default function ChecklistLandingPage() {
 
           {/* Right: Form */}
           <div>
-            <Card>
-              <CardHeader>
-                <CardTitle>Download Checklist</CardTitle>
-                <CardDescription>
-                  Enter your details to get the checklist sent to your email.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Name *</Label>
-                    <Input
-                      id="name"
-                      required
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="John Doe"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email *</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      required
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="john@company.com"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="company">Company *</Label>
-                    <Input
-                      id="company"
-                      required
-                      value={formData.company}
-                      onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                      placeholder="Company Name"
-                    />
-                  </div>
-
-                  <Button type="submit" className="w-full" disabled={loading}>
-                    {loading ? 'Submitting...' : 'Download Checklist'}
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
+            <SalesforceWebToLead
+              variant="checklist"
+              title="Download Checklist"
+              description="Enter your details to get the checklist sent to your email."
+              submitLabel="Download Checklist"
+              kmcPayload={{
+                source: 'checklist',
+                asset: 'crm-erp-selection-checklist',
+                intent: 'download_checklist',
+              }}
+            />
 
             <div className="mt-6 text-center text-sm text-gray-600">
               Prefer to get a personalized shortlist?{' '}
