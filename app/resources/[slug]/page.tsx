@@ -5,6 +5,10 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft, Calendar, Clock } from 'lucide-react';
 import { compileMDX } from 'next-mdx-remote/rsc';
 
+export const dynamic = 'force-static';
+export const dynamicParams = false;
+export const revalidate = 86400;
+
 export async function generateStaticParams() {
   const posts = getAllPosts();
   return posts.map((post) => ({

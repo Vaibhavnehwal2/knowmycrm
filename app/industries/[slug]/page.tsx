@@ -6,6 +6,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ArrowRight, CheckCircle } from 'lucide-react';
 
+export const dynamic = 'force-static';
+export const dynamicParams = false;
+export const revalidate = 86400;
+
 export async function generateStaticParams() {
   const industries = getAllIndustries();
   return industries.map((industry) => ({

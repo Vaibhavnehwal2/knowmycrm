@@ -7,6 +7,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ArrowRight, CheckCircle2, XCircle, AlertCircle } from 'lucide-react';
 
+export const dynamic = 'force-static';
+export const dynamicParams = false;
+export const revalidate = 86400;
+
 export async function generateStaticParams() {
   const erps = getAllERPs();
   return erps.map((erp) => ({

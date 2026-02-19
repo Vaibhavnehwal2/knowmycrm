@@ -10,6 +10,10 @@ import { ServiceCTABlock } from '@/components/service-cta-block';
 import { InlineMiniCTA } from '@/components/inline-mini-cta';
 import { ArrowRight, CheckCircle, Clock } from 'lucide-react';
 
+export const dynamic = 'force-static';
+export const dynamicParams = false;
+export const revalidate = 86400;
+
 export async function generateStaticParams() {
   const services = getAllServices();
   return services.map((service) => ({
