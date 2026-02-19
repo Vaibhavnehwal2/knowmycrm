@@ -225,18 +225,21 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
               {service.faqs && service.faqs.length > 0 && (
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900 mb-6">Frequently Asked Questions</h2>
-                  <Accordion type="single" collapsible className="w-full">
+                  <div className="space-y-4">
                     {service.faqs.map((faq, idx) => (
-                      <AccordionItem key={idx} value={`item-${idx}`} className="border rounded-lg px-6 mb-4 bg-white">
-                        <AccordionTrigger className="text-left hover:no-underline">
-                          <span className="font-semibold">{faq.q}</span>
-                        </AccordionTrigger>
-                        <AccordionContent className="text-gray-600 pt-2">
+                      <details key={idx} className="group border rounded-lg bg-white">
+                        <summary className="flex cursor-pointer items-center justify-between px-6 py-4 text-left font-semibold text-gray-900 hover:bg-gray-50 [&::-webkit-details-marker]:hidden">
+                          {faq.q}
+                          <svg className="h-5 w-5 shrink-0 text-gray-500 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </summary>
+                        <div className="px-6 pb-4 text-gray-600">
                           {faq.a}
-                        </AccordionContent>
-                      </AccordionItem>
+                        </div>
+                      </details>
                     ))}
-                  </Accordion>
+                  </div>
                 </div>
               )}
 
