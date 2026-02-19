@@ -355,24 +355,48 @@ export function recommendCRM(data: CRMAnswers): WizardResult {
   const secondData = scores.get(secondPick)!;
   const secondCRM = crms.find(c => c.slug === secondPick);
 
-  // Build Salesforce recommendation
+  // Default reasons for fallback
+  const sfDefaultReasons = [
+    'Industry-leading CRM platform with comprehensive capabilities',
+    'Extensive AppExchange ecosystem for extensions',
+    'Robust API and integration options',
+  ];
+  
+  const getDefaultReasons = (slug: string): string[] => {
+    switch (slug) {
+      case 'hubspot':
+        return ['Modern, intuitive user interface', 'All-in-one marketing and sales platform', 'Quick setup and adoption'];
+      case 'dynamics-365-sales':
+        return ['Native Microsoft ecosystem integration', 'Power Platform extensibility', 'Enterprise-grade security'];
+      case 'zoho-crm':
+        return ['Cost-effective licensing model', 'Comprehensive Zoho One suite', 'Solid customization options'];
+      case 'pipedrive':
+        return ['Visual pipeline-first approach', 'Simple and intuitive design', 'Fast setup and high adoption'];
+      case 'freshsales':
+        return ['Modern CRM with built-in AI', 'Freshworks ecosystem integration', 'Competitive pricing'];
+      default:
+        return ['Reliable CRM solution', 'Good feature set for your needs', 'Proven track record'];
+    }
+  };
+
+  // Build Salesforce recommendation (always exactly 3 reasons)
   const sfCRM = crms.find(c => c.slug === 'salesforce');
   const sfRec: Recommendation = {
     slug: 'salesforce',
     name: sfCRM?.name || 'Salesforce',
     score: sf.score,
     complexity: calculateComplexity('salesforce'),
-    reasons: sf.reasons.slice(0, 4),
+    reasons: ensureThreeReasons(sf.reasons, sfDefaultReasons),
     watchouts: sf.watchouts.length > 0 ? sf.watchouts.slice(0, 2) : undefined,
   };
 
-  // Build second recommendation
+  // Build second recommendation (always exactly 3 reasons)
   const secondRec: Recommendation = {
     slug: secondPick,
     name: secondCRM?.name || secondPick,
     score: secondData.score,
     complexity: calculateComplexity(secondPick),
-    reasons: secondData.reasons.slice(0, 4),
+    reasons: ensureThreeReasons(secondData.reasons, getDefaultReasons(secondPick)),
     watchouts: secondData.watchouts.length > 0 ? secondData.watchouts.slice(0, 2) : undefined,
   };
 
