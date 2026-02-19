@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo, useDeferredValue } from 'react';
+import { useState, useEffect, useMemo, useDeferredValue, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -14,15 +14,22 @@ import { BrandIcon } from '@/components/brand-icon';
 import { 
   ArrowRight, ArrowLeft, Check, Building2, Package, 
   Users, Globe, TrendingUp, Settings, Link2, Shield, 
-  DollarSign, Clock, Mail, CheckCircle2, AlertTriangle
+  DollarSign, Clock, Mail, CheckCircle2, AlertTriangle, Loader2
 } from 'lucide-react';
 import { 
   WizardState, initialWizardState, saveWizardState, 
   loadWizardState, clearWizardState 
 } from '@/lib/wizard-state';
 import { recommendCRM, recommendERP, type WizardResult, type Recommendation } from '@/lib/fitment';
-import { WebToLeadSubmit } from '@/components/wizard/web-to-lead-submit';
 import industriesData from '@/data/industries.json';
+
+// Salesforce Web-to-Lead Configuration
+const SF_CONFIG = {
+  formAction: 'https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00DWr00000A30k5',
+  oid: '00DWr00000A30k5',
+  retURL: 'https://knowmycrm.com/thank-you',
+  kmcPayloadFieldId: '00NWr000002xsG9',
+};
 
 // Industry options
 const industries = industriesData.map(i => ({ value: i.slug, label: i.name }));
@@ -48,19 +55,102 @@ const ERP_STEPS = [
   { title: 'Contact', icon: Mail },
 ];
 
+// Helper: Split name into first and last
+function splitName(fullName: string): { firstName: string; lastName: string } {
+  const parts = fullName.trim().split(/\s+/);
+  if (parts.length === 0 || (parts.length === 1 && parts[0] === '')) {
+    return { firstName: '', lastName: '' };
+  }
+  if (parts.length === 1) {
+    return { firstName: parts[0], lastName: 'NA' };
+  }
+  const lastName = parts.pop() || '';
+  const firstName = parts.join(' ');
+  return { firstName, lastName };
+}
+
+// Helper: Get UTM params from URL
+function getUTMParams(): Record<string, string> {
+  if (typeof window === 'undefined') return {};
+  const params = new URLSearchParams(window.location.search);
+  const utmParams: Record<string, string> = {};
+  ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach(key => {
+    const value = params.get(key);
+    if (value) utmParams[key] = value;
+  });
+  return utmParams;
+}
+
+// Helper: Get user's timezone
+function getUserTimezone(): string {
+  try {
+    return Intl.DateTimeFormat().resolvedOptions().timeZone;
+  } catch {
+    return 'UTC';
+  }
+}
+
+// Helper: Build KMC payload for wizard
+function buildWizardKMCPayload(
+  wizardType: 'crm' | 'erp',
+  answers: Record<string, any>,
+  recommendations: Recommendation[]
+): string {
+  const payload = {
+    source: 'wizard',
+    schemaVersion: '1.0',
+    pageUrl: typeof window !== 'undefined' ? window.location.href : '',
+    referrer: typeof document !== 'undefined' ? document.referrer : '',
+    timestampISO: new Date().toISOString(),
+    timezone: getUserTimezone(),
+    ...getUTMParams(),
+    wizardType,
+    answers,
+    top2: recommendations.map(r => ({
+      slug: r.slug,
+      name: r.name,
+      score: r.score,
+      complexity: r.complexity,
+      reasons: r.reasons,
+    })),
+  };
+
+  let jsonString = JSON.stringify(payload);
+  
+  // Truncate if too long (30k limit)
+  if (jsonString.length > 30000) {
+    const trimmedPayload = { ...payload, answers: { note: 'truncated due to size' } };
+    jsonString = JSON.stringify(trimmedPayload);
+  }
+  
+  return jsonString;
+}
+
 export default function WizardPage() {
   const [state, setState] = useState<WizardState>(initialWizardState);
   const [results, setResults] = useState<WizardResult | null>(null);
-  const [submitted, setSubmitted] = useState(false);
+  const [leadSubmitted, setLeadSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [industrySearch, setIndustrySearch] = useState('');
   const deferredSearch = useDeferredValue(industrySearch);
+  
+  // Refs for Salesforce form submission
+  const formRef = useRef<HTMLFormElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const iframeLoadCount = useRef(0);
 
   // Load saved state on mount
   useEffect(() => {
     const saved = loadWizardState();
     if (saved) {
       setState(saved);
+    }
+    // Check if we already submitted for this session
+    const lastEmail = localStorage.getItem('kmc_wizard_submitted_email');
+    const lastType = localStorage.getItem('kmc_wizard_submitted_type');
+    if (lastEmail && lastType) {
+      setLeadSubmitted(true);
     }
     setIsLoading(false);
   }, []);
@@ -115,63 +205,79 @@ export default function WizardPage() {
     return arr.includes(value) ? arr.filter(v => v !== value) : [...arr, value];
   };
 
-  // Calculate results
-  const calculateResults = () => {
+  // Handle iframe load for Salesforce submission
+  const handleIframeLoad = useCallback(() => {
+    iframeLoadCount.current += 1;
+    // Skip the initial load (empty iframe)
+    if (iframeLoadCount.current > 1 && isSubmitting) {
+      setIsSubmitting(false);
+      setLeadSubmitted(true);
+      // Mark as submitted in localStorage
+      const email = state.wizardType === 'crm' ? state.crmAnswers.email : state.erpAnswers.email;
+      localStorage.setItem('kmc_wizard_submitted_email', email);
+      localStorage.setItem('kmc_wizard_submitted_type', state.wizardType || '');
+      localStorage.setItem('kmc_lastLeadEmail', email);
+      localStorage.setItem('kmc_lastLeadAt', Date.now().toString());
+    }
+  }, [isSubmitting, state.wizardType, state.crmAnswers.email, state.erpAnswers.email]);
+
+  // Calculate results and submit lead
+  const calculateResultsAndSubmit = () => {
+    let result: WizardResult;
     if (state.wizardType === 'crm') {
-      const result = recommendCRM(state.crmAnswers);
-      setResults(result);
-    } else if (state.wizardType === 'erp') {
-      const result = recommendERP(state.erpAnswers);
-      setResults(result);
+      result = recommendCRM(state.crmAnswers);
+    } else {
+      result = recommendERP(state.erpAnswers);
     }
-    setState(prev => ({ ...prev, currentStep: totalSteps + 1 }));
-  };
-
-  // Submit to API
-  const handleSubmit = async () => {
-    setIsLoading(true);
-    try {
-      const payload = {
-        source: 'wizard',
-        wizardType: state.wizardType,
-        answers: state.wizardType === 'crm' ? state.crmAnswers : state.erpAnswers,
-        recommendations: results?.top2.map(r => ({
-          slug: r.slug,
-          name: r.name,
-          score: r.score,
-          complexity: r.complexity,
-          reasons: r.reasons,
-        })),
-        metadata: {
-          pageUrl: typeof window !== 'undefined' ? window.location.href : '',
-          referrer: typeof document !== 'undefined' ? document.referrer : '',
-          timestamp: new Date().toISOString(),
+    setResults(result);
+    
+    // Submit lead via Salesforce Web-to-Lead
+    if (!leadSubmitted) {
+      setIsSubmitting(true);
+      // Small delay to ensure form is ready
+      setTimeout(() => {
+        if (formRef.current) {
+          formRef.current.submit();
         }
-      };
-
-      const response = await fetch('/api/leads', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-
-      if (response.ok) {
-        setSubmitted(true);
-        clearWizardState();
-      }
-    } catch (error) {
-      console.error('Submission error:', error);
+      }, 100);
     }
-    setIsLoading(false);
+    
+    // Move to results screen
+    setState(prev => ({ ...prev, currentStep: totalSteps + 1 }));
   };
 
   // Start over
   const startOver = () => {
     clearWizardState();
+    localStorage.removeItem('kmc_wizard_submitted_email');
+    localStorage.removeItem('kmc_wizard_submitted_type');
     setState(initialWizardState);
     setResults(null);
-    setSubmitted(false);
+    setLeadSubmitted(false);
+    iframeLoadCount.current = 0;
   };
+
+  // Get contact info for form
+  const contactInfo = state.wizardType === 'crm' ? state.crmAnswers : state.erpAnswers;
+  const { firstName, lastName } = splitName(contactInfo.name);
+
+  // Pre-compute recommendations for form (needed before submit)
+  const precomputedResults = useMemo(() => {
+    if (state.currentStep !== totalSteps) return null;
+    if (state.wizardType === 'crm') {
+      return recommendCRM(state.crmAnswers);
+    } else if (state.wizardType === 'erp') {
+      return recommendERP(state.erpAnswers);
+    }
+    return null;
+  }, [state.currentStep, state.wizardType, state.crmAnswers, state.erpAnswers, totalSteps]);
+
+  // KMC Payload for the form
+  const kmcPayload = useMemo(() => {
+    const recs = results?.top2 || precomputedResults?.top2 || [];
+    const answers = state.wizardType === 'crm' ? state.crmAnswers : state.erpAnswers;
+    return buildWizardKMCPayload(state.wizardType || 'crm', answers, recs);
+  }, [state.wizardType, state.crmAnswers, state.erpAnswers, results, precomputedResults]);
 
   if (isLoading && !state.wizardType) {
     return (
@@ -188,29 +294,19 @@ export default function WizardPage() {
     );
   }
 
-  // Success Screen
-  if (submitted) {
-    return (
-      <div className="container mx-auto max-w-2xl px-4 py-16 text-center">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 mb-6">
-          <CheckCircle2 className="h-8 w-8 text-green-600" />
-        </div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">Thanks! We're on it.</h1>
-        <p className="text-lg text-gray-600 mb-8">
-          We'll email you within 24 hours with a personalized shortlist + evaluation checklist.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button onClick={startOver} variant="outline">Start New Assessment</Button>
-          <Link href="/"><Button>Back to Home</Button></Link>
-        </div>
-      </div>
-    );
-  }
-
   // Results Screen
   if (results) {
     return (
       <div className="container mx-auto max-w-5xl px-4 py-12">
+        {/* Hidden iframe for Salesforce submission */}
+        <iframe
+          ref={iframeRef}
+          name="sf_wizard_iframe"
+          className="hidden"
+          onLoad={handleIframeLoad}
+          title="Salesforce Web-to-Lead"
+        />
+        
         <div className="text-center mb-12">
           <Badge className="mb-4">{state.wizardType?.toUpperCase()} Fit Assessment</Badge>
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Your Top 2 Picks</h1>
@@ -270,29 +366,43 @@ export default function WizardPage() {
         <Card className="bg-gradient-to-r from-blue-50 to-blue-100 border-primary/20 mb-8">
           <CardContent className="py-8">
             <div className="text-center">
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Ready to move forward?</h3>
-              <p className="text-gray-600 mb-6">
-                Get a detailed shortlist pack with demo scripts and evaluation criteria.
-              </p>
+              {leadSubmitted ? (
+                <>
+                  <div className="flex items-center justify-center gap-2 text-green-600 mb-4">
+                    <CheckCircle2 className="h-6 w-6" />
+                    <span className="font-semibold">Your details have been submitted!</span>
+                  </div>
+                  <p className="text-gray-600 mb-6">
+                    We'll email you within 24 hours with the shortlist + evaluation checklist.
+                  </p>
+                </>
+              ) : isSubmitting ? (
+                <>
+                  <div className="flex items-center justify-center gap-2 text-primary mb-4">
+                    <Loader2 className="h-6 w-6 animate-spin" />
+                    <span className="font-semibold">Submitting your details...</span>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Ready to move forward?</h3>
+                  <p className="text-gray-600 mb-6">
+                    Get a detailed shortlist pack with demo scripts and evaluation criteria.
+                  </p>
+                </>
+              )}
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <WebToLeadSubmit
-                  wizardType={state.wizardType!}
-                  answers={state.wizardType === 'crm' ? state.crmAnswers : state.erpAnswers}
-                  recommendations={results.top2}
-                  contactInfo={{
-                    name: state.wizardType === 'crm' ? state.crmAnswers.name : state.erpAnswers.name,
-                    email: state.wizardType === 'crm' ? state.crmAnswers.email : state.erpAnswers.email,
-                    company: state.wizardType === 'crm' ? state.crmAnswers.company : state.erpAnswers.company,
-                    role: state.wizardType === 'crm' ? state.crmAnswers.role : state.erpAnswers.role,
-                    phone: state.wizardType === 'crm' ? state.crmAnswers.phone : state.erpAnswers.phone,
-                    website: state.wizardType === 'crm' ? state.crmAnswers.website : state.erpAnswers.website,
-                  }}
-                  onFallbackSubmit={handleSubmit}
-                  disabled={isLoading}
-                />
                 <Link href="/book">
-                  <Button size="lg" variant="outline">Book a Call</Button>
+                  <Button size="lg">Book a Call <ArrowRight className="ml-2 h-4 w-4" /></Button>
                 </Link>
+                {!leadSubmitted && !isSubmitting && (
+                  <Button size="lg" variant="outline" onClick={() => {
+                    setIsSubmitting(true);
+                    if (formRef.current) formRef.current.submit();
+                  }}>
+                    Get Shortlist + Demo Script
+                  </Button>
+                )}
               </div>
             </div>
           </CardContent>
@@ -305,6 +415,25 @@ export default function WizardPage() {
         <div className="mt-8 text-center">
           <Button variant="ghost" onClick={startOver}>Start Over</Button>
         </div>
+        
+        {/* Hidden Salesforce form for results page resubmit */}
+        <form
+          ref={formRef}
+          action={SF_CONFIG.formAction}
+          method="POST"
+          target="sf_wizard_iframe"
+          className="hidden"
+        >
+          <input type="hidden" name="oid" value={SF_CONFIG.oid} />
+          <input type="hidden" name="retURL" value={SF_CONFIG.retURL} />
+          <input type="hidden" name="first_name" value={firstName} />
+          <input type="hidden" name="last_name" value={lastName} />
+          <input type="hidden" name="email" value={contactInfo.email} />
+          <input type="hidden" name="company" value={contactInfo.company} />
+          <input type="hidden" name="phone" value={contactInfo.phone || ''} />
+          <input type="hidden" name="url" value={contactInfo.website || ''} />
+          <input type="hidden" name={SF_CONFIG.kmcPayloadFieldId} value={kmcPayload} />
+        </form>
       </div>
     );
   }
@@ -1160,6 +1289,34 @@ export default function WizardPage() {
 
   return (
     <div className="container mx-auto max-w-3xl px-4 py-8">
+      {/* Hidden iframe for Salesforce submission */}
+      <iframe
+        ref={iframeRef}
+        name="sf_wizard_iframe"
+        className="hidden"
+        onLoad={handleIframeLoad}
+        title="Salesforce Web-to-Lead"
+      />
+      
+      {/* Hidden Salesforce form */}
+      <form
+        ref={formRef}
+        action={SF_CONFIG.formAction}
+        method="POST"
+        target="sf_wizard_iframe"
+        className="hidden"
+      >
+        <input type="hidden" name="oid" value={SF_CONFIG.oid} />
+        <input type="hidden" name="retURL" value={SF_CONFIG.retURL} />
+        <input type="hidden" name="first_name" value={firstName} />
+        <input type="hidden" name="last_name" value={lastName} />
+        <input type="hidden" name="email" value={contactInfo.email} />
+        <input type="hidden" name="company" value={contactInfo.company} />
+        <input type="hidden" name="phone" value={contactInfo.phone || ''} />
+        <input type="hidden" name="url" value={contactInfo.website || ''} />
+        <input type="hidden" name={SF_CONFIG.kmcPayloadFieldId} value={kmcPayload} />
+      </form>
+      
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
@@ -1231,8 +1388,17 @@ export default function WizardPage() {
         </Button>
 
         {isLastStep ? (
-          <Button onClick={calculateResults} disabled={!canProceed()}>
-            See My Results <ArrowRight className="ml-2 h-4 w-4" />
+          <Button 
+            onClick={calculateResultsAndSubmit} 
+            disabled={!canProceed() || isSubmitting}
+          >
+            {isSubmitting ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Submitting...
+              </>
+            ) : (
+              <>See My Results <ArrowRight className="ml-2 h-4 w-4" /></>
+            )}
           </Button>
         ) : (
           <Button onClick={goNext} disabled={!canProceed()}>
