@@ -1,6 +1,5 @@
-"use client";
-
-import { getIconSvg, getIconHex } from '@/lib/icons';
+// BrandIcon component - uses static icon map to avoid bundling simple-icons
+import { getIconData } from '@/lib/icon-map';
 
 interface BrandIconProps {
   iconName?: string;
@@ -9,10 +8,10 @@ interface BrandIconProps {
 }
 
 export function BrandIcon({ iconName, name, className = "h-6 w-6" }: BrandIconProps) {
-  const path = iconName ? getIconSvg(iconName) : null;
-  const color = iconName ? getIconHex(iconName) : '#6B7280';
+  const iconData = iconName ? getIconData(iconName) : null;
 
-  if (!path) {
+  if (!iconData) {
+    // Fallback: show first letter of name
     return (
       <div className={`${className} flex items-center justify-center bg-gray-200 rounded text-xs font-bold text-gray-600`}>
         {name.charAt(0)}
@@ -26,9 +25,9 @@ export function BrandIcon({ iconName, name, className = "h-6 w-6" }: BrandIconPr
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
-      fill={color}
+      fill={iconData.hex}
     >
-      <path d={path} />
+      <path d={iconData.path} />
     </svg>
   );
 }

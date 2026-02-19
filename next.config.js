@@ -1,3 +1,10 @@
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
+
+// Detect if running in CI/container environment
+const isContainerEnv = process.env.CI === 'true' || process.env.EMERGENT_PREVIEW === 'true';
+
 const nextConfig = {
   output: 'standalone',
   images: {
@@ -5,23 +12,24 @@ const nextConfig = {
   },
   pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
   experimental: {
-    // Remove if not using Server Components
     serverComponentsExternalPackages: ['mongodb'],
   },
   webpack(config, { dev }) {
-    if (dev) {
-      // Reduce CPU/memory from file watching
+    if (dev && isContainerEnv) {
+      // Only use polling in container environments where file watching is unreliable
       config.watchOptions = {
-        poll: 2000, // check every 2 seconds
-        aggregateTimeout: 300, // wait before rebuilding
+        poll: 2000,
+        aggregateTimeout: 300,
         ignored: ['**/node_modules'],
       };
     }
     return config;
   },
+  // Dev-friendly onDemandEntries settings
+  // Higher values = pages stay in memory longer = faster navigation
   onDemandEntries: {
-    maxInactiveAge: 10000,
-    pagesBufferLength: 2,
+    maxInactiveAge: 60 * 1000, // 60 seconds (was 10 seconds)
+    pagesBufferLength: 10, // Keep 10 pages in memory (was 2)
   },
   async headers() {
     return [
@@ -39,4 +47,4 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+module.exports = withBundleAnalyzer(nextConfig);
