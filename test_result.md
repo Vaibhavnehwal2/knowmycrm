@@ -161,15 +161,18 @@ backend:
   
   - task: "Web-to-Lead Config and Adapter"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/lib/webToLeadConfig.ts"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
           agent: "main"
           comment: "Implemented Salesforce Web-to-Lead configuration with: webToLeadUrl, oid placeholder, retURL to /wizard/success, standard field mappings, formatWizardDescription function to serialize all wizard data into description field. Currently oid is empty so it falls back to dev mode (/api/leads)."
+        - working: true
+          agent: "testing"
+          comment: "Successfully tested Web-to-Lead configuration: ✅ formatWizardDescription function properly formats wizard data into structured description ✅ Includes wizard type, submission timestamp, formatted answers, and top 2 recommendations ✅ API endpoint successfully handles extended wizard payload with recommendations array ✅ Falls back correctly to /api/leads when oid is not configured. All functionality working correctly."
 
 frontend:
   - task: "Wizard Landing Page - CRM/ERP Selection"
