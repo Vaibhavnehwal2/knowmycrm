@@ -76,7 +76,7 @@ export function formatWizardDescription(
 ): string {
   const lines: string[] = [];
   
-  lines.push(`=== ${wizardType.toUpperCase()} FIT WIZARD SUBMISSION ===");
+  lines.push(`=== ${wizardType.toUpperCase()} FIT WIZARD SUBMISSION ===`);
   lines.push('');
   lines.push(`Wizard Type: ${wizardType.toUpperCase()}`);
   lines.push(`Submitted: ${new Date().toISOString()}`);
