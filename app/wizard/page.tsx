@@ -21,6 +21,7 @@ import {
   loadWizardState, clearWizardState 
 } from '@/lib/wizard-state';
 import { recommendCRM, recommendERP, type WizardResult, type Recommendation } from '@/lib/fitment';
+import { WebToLeadSubmit } from '@/components/wizard/web-to-lead-submit';
 import industriesData from '@/data/industries.json';
 
 // Industry options
