@@ -20,6 +20,19 @@ export interface WizardResult {
   notes?: string[];
 }
 
+// Helper to ensure exactly 3 reasons
+function ensureThreeReasons(reasons: string[], defaultReasons: string[]): string[] {
+  const result = [...reasons];
+  let defaultIndex = 0;
+  while (result.length < 3 && defaultIndex < defaultReasons.length) {
+    if (!result.includes(defaultReasons[defaultIndex])) {
+      result.push(defaultReasons[defaultIndex]);
+    }
+    defaultIndex++;
+  }
+  return result.slice(0, 3);
+}
+
 export interface CRMAnswers {
   // Step 1: Business Basics
   industry: string;
