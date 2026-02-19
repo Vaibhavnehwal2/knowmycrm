@@ -274,10 +274,22 @@ export default function WizardPage() {
               <p className="text-gray-600 mb-6">
                 Get a detailed shortlist pack with demo scripts and evaluation criteria.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" onClick={handleSubmit} disabled={isLoading}>
-                  {isLoading ? 'Sending...' : 'Get Shortlist + Demo Script'} <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <WebToLeadSubmit
+                  wizardType={state.wizardType!}
+                  answers={state.wizardType === 'crm' ? state.crmAnswers : state.erpAnswers}
+                  recommendations={results.top2}
+                  contactInfo={{
+                    name: state.wizardType === 'crm' ? state.crmAnswers.name : state.erpAnswers.name,
+                    email: state.wizardType === 'crm' ? state.crmAnswers.email : state.erpAnswers.email,
+                    company: state.wizardType === 'crm' ? state.crmAnswers.company : state.erpAnswers.company,
+                    role: state.wizardType === 'crm' ? state.crmAnswers.role : state.erpAnswers.role,
+                    phone: state.wizardType === 'crm' ? state.crmAnswers.phone : state.erpAnswers.phone,
+                    website: state.wizardType === 'crm' ? state.crmAnswers.website : state.erpAnswers.website,
+                  }}
+                  onFallbackSubmit={handleSubmit}
+                  disabled={isLoading}
+                />
                 <Link href="/book">
                   <Button size="lg" variant="outline">Book a Call</Button>
                 </Link>
