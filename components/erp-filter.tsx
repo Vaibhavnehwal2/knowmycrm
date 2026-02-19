@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
+import { useState, useMemo, useDeferredValue, useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
+import { PrefetchLink } from '@/components/prefetch-link';
 import { BrandIcon } from '@/components/brand-icon';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -15,15 +16,32 @@ interface ERPFilterProps {
 }
 
 export function ERPFilter({ erps }: ERPFilterProps) {
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedComplexity, setSelectedComplexity] = useState<string>('');
+  const deferredSearch = useDeferredValue(searchQuery);
+  const prefetchedTop = useRef(false);
 
-  const filteredERPs = erps.filter((erp) => {
-    const matchesSearch = erp.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      erp.tagline.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesComplexity = !selectedComplexity || erp.filters.complexity === selectedComplexity;
-    return matchesSearch && matchesComplexity;
-  });
+  // Memoize filtered results for performance
+  const filteredERPs = useMemo(() => {
+    return erps.filter((erp) => {
+      const matchesSearch = erp.name.toLowerCase().includes(deferredSearch.toLowerCase()) ||
+        erp.tagline.toLowerCase().includes(deferredSearch.toLowerCase());
+      const matchesComplexity = !selectedComplexity || erp.filters.complexity === selectedComplexity;
+      return matchesSearch && matchesComplexity;
+    });
+  }, [erps, deferredSearch, selectedComplexity]);
+
+  // Prefetch top 6 visible cards on mount
+  useEffect(() => {
+    if (!prefetchedTop.current && filteredERPs.length > 0) {
+      const topItems = filteredERPs.slice(0, 6);
+      topItems.forEach((erp) => {
+        router.prefetch(`/compare-erp/${erp.slug}`);
+      });
+      prefetchedTop.current = true;
+    }
+  }, [filteredERPs, router]);
 
   return (
     <>
@@ -77,7 +95,7 @@ export function ERPFilter({ erps }: ERPFilterProps) {
       <section className="container mx-auto px-4 pb-16 lg:px-8 lg:pb-24">
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filteredERPs.map((erp) => (
-            <Link key={erp.slug} href={`/compare-erp/${erp.slug}`}>
+            <PrefetchLink key={erp.slug} href={`/compare-erp/${erp.slug}`}>
               <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer">
                 <CardHeader>
                   <div className="flex items-center gap-3 mb-2">
@@ -100,7 +118,7 @@ export function ERPFilter({ erps }: ERPFilterProps) {
                   </p>
                 </CardContent>
               </Card>
-            </Link>
+            </PrefetchLink>
           ))}
         </div>
       </section>

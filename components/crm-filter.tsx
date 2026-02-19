@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
+import { useState, useMemo, useDeferredValue, useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
+import { PrefetchLink } from '@/components/prefetch-link';
 import { BrandIcon } from '@/components/brand-icon';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -15,15 +16,32 @@ interface CRMFilterProps {
 }
 
 export function CRMFilter({ crms }: CRMFilterProps) {
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedComplexity, setSelectedComplexity] = useState<string>('');
+  const deferredSearch = useDeferredValue(searchQuery);
+  const prefetchedTop = useRef(false);
 
-  const filteredCRMs = crms.filter((crm) => {
-    const matchesSearch = crm.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      crm.tagline.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesComplexity = !selectedComplexity || crm.filters.complexity === selectedComplexity;
-    return matchesSearch && matchesComplexity;
-  });
+  // Memoize filtered results for performance
+  const filteredCRMs = useMemo(() => {
+    return crms.filter((crm) => {
+      const matchesSearch = crm.name.toLowerCase().includes(deferredSearch.toLowerCase()) ||
+        crm.tagline.toLowerCase().includes(deferredSearch.toLowerCase());
+      const matchesComplexity = !selectedComplexity || crm.filters.complexity === selectedComplexity;
+      return matchesSearch && matchesComplexity;
+    });
+  }, [crms, deferredSearch, selectedComplexity]);
+
+  // Prefetch top 6 visible cards on mount
+  useEffect(() => {
+    if (!prefetchedTop.current && filteredCRMs.length > 0) {
+      const topItems = filteredCRMs.slice(0, 6);
+      topItems.forEach((crm) => {
+        router.prefetch(`/compare-crm/${crm.slug}`);
+      });
+      prefetchedTop.current = true;
+    }
+  }, [filteredCRMs, router]);
 
   return (
     <>
@@ -77,7 +95,7 @@ export function CRMFilter({ crms }: CRMFilterProps) {
       <section className="container mx-auto px-4 pb-16 lg:px-8 lg:pb-24">
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filteredCRMs.map((crm) => (
-            <Link key={crm.slug} href={`/compare-crm/${crm.slug}`}>
+            <PrefetchLink key={crm.slug} href={`/compare-crm/${crm.slug}`}>
               <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer">
                 <CardHeader>
                   <div className="flex items-center gap-3 mb-2">
@@ -100,7 +118,7 @@ export function CRMFilter({ crms }: CRMFilterProps) {
                   </p>
                 </CardContent>
               </Card>
-            </Link>
+            </PrefetchLink>
           ))}
         </div>
       </section>

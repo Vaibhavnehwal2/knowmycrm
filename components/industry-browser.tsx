@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
-import Link from 'next/link';
+import { useState, useMemo, useDeferredValue, useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
+import { PrefetchLink } from '@/components/prefetch-link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -15,16 +16,33 @@ interface IndustryBrowserProps {
 }
 
 export function IndustryBrowser({ industries, categories }: IndustryBrowserProps) {
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
+  const deferredSearch = useDeferredValue(searchQuery);
+  const prefetchedTop = useRef(false);
 
-  const filteredIndustries = industries.filter((industry) => {
-    const matchesSearch = 
-      industry.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      industry.summary.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = activeCategory === 'All' || industry.category === activeCategory;
-    return matchesSearch && matchesCategory;
-  });
+  // Memoize filtered results for performance
+  const filteredIndustries = useMemo(() => {
+    return industries.filter((industry) => {
+      const matchesSearch = 
+        industry.name.toLowerCase().includes(deferredSearch.toLowerCase()) ||
+        industry.summary.toLowerCase().includes(deferredSearch.toLowerCase());
+      const matchesCategory = activeCategory === 'All' || industry.category === activeCategory;
+      return matchesSearch && matchesCategory;
+    });
+  }, [industries, deferredSearch, activeCategory]);
+
+  // Prefetch top 8 visible industries on mount
+  useEffect(() => {
+    if (!prefetchedTop.current && filteredIndustries.length > 0) {
+      const topItems = filteredIndustries.slice(0, 8);
+      topItems.forEach((industry) => {
+        router.prefetch(`/industries/${industry.slug}`);
+      });
+      prefetchedTop.current = true;
+    }
+  }, [filteredIndustries, router]);
 
   return (
     <div className="space-y-8">
@@ -56,7 +74,7 @@ export function IndustryBrowser({ industries, categories }: IndustryBrowserProps
           
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {filteredIndustries.map((industry) => (
-              <Link key={industry.slug} href={`/industries/${industry.slug}`}>
+              <PrefetchLink key={industry.slug} href={`/industries/${industry.slug}`}>
                 <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer">
                   <CardHeader>
                     <div className="flex items-start justify-between mb-2">
@@ -73,7 +91,7 @@ export function IndustryBrowser({ industries, categories }: IndustryBrowserProps
                     </CardDescription>
                   </CardContent>
                 </Card>
-              </Link>
+              </PrefetchLink>
             ))}
           </div>
 

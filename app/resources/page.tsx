@@ -1,8 +1,13 @@
-import Link from 'next/link';
 import { getAllPosts } from '@/lib/mdx';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, FileText, Download } from 'lucide-react';
+import { ResourcesList } from '@/components/resources-list';
+import { PrefetchLink } from '@/components/prefetch-link';
+import Link from 'next/link';
+
+export const dynamic = 'force-static';
+export const revalidate = 86400;
 
 export default function ResourcesPage() {
   const posts = getAllPosts();
@@ -21,7 +26,7 @@ export default function ResourcesPage() {
       </section>
 
       <section className="container mx-auto px-4 pb-8 lg:px-8">
-        <Link href="/resources/crm-erp-selection-checklist">
+        <PrefetchLink href="/resources/crm-erp-selection-checklist">
           <Card className="border-2 border-primary hover:shadow-lg transition-shadow cursor-pointer">
             <CardHeader>
               <div className="flex items-start justify-between">
@@ -38,34 +43,12 @@ export default function ResourcesPage() {
               </div>
             </CardHeader>
           </Card>
-        </Link>
+        </PrefetchLink>
       </section>
 
       <section className="container mx-auto px-4 pb-16 lg:px-8 lg:pb-24">
         <h2 className="text-2xl font-bold text-gray-900 mb-8">Latest Articles</h2>
-        <div className="grid gap-8 md:grid-cols-2">
-          {posts.map((post) => (
-            <Link key={post.slug} href={`/resources/${post.slug}`}>
-              <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer">
-                <CardHeader>
-                  <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
-                    <FileText className="h-4 w-4" />
-                    <span>{post.readTime}</span>
-                    <span>•</span>
-                    <span>{new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
-                  </div>
-                  <CardTitle className="text-xl">{post.title}</CardTitle>
-                  <CardDescription className="mt-2">{post.excerpt}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-center text-sm text-primary font-medium">
-                    Read article <ArrowRight className="ml-2 h-4 w-4" />
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
-          ))}
-        </div>
+        <ResourcesList posts={posts} />
       </section>
 
       <section className="bg-primary py-16">
@@ -77,11 +60,11 @@ export default function ResourcesPage() {
             Take our Fit Wizard and get a personalized shortlist.
           </p>
           <div className="mt-8">
-            <Link href="/wizard">
-              <Button size="lg" variant="secondary">
+            <Button size="lg" variant="secondary" asChild>
+              <Link href="/wizard">
                 Start Fit Wizard <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
