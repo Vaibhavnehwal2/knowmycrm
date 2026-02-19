@@ -1,9 +1,12 @@
 import Link from 'next/link';
 import { getAllIndustries, getUniqueCategories } from '@/lib/data';
 import { IndustryBrowser } from '@/components/industry-browser';
+import { FeaturedIndustries } from '@/components/featured-industries';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowRight } from 'lucide-react';
+
+export const dynamic = 'force-static';
+export const revalidate = 86400;
 
 export default function IndustriesPage() {
   const allIndustries = getAllIndustries();
@@ -36,25 +39,7 @@ export default function IndustriesPage() {
             <p className="text-gray-600">Popular industries with specific CRM & ERP needs</p>
           </div>
           
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {featuredIndustries.map((industry) => (
-              <Link key={industry.slug} href={`/industries/${industry.slug}`}>
-                <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer">
-                  <CardHeader>
-                    <div className="flex items-start justify-between mb-2">
-                      <CardTitle className="text-lg">{industry.name}</CardTitle>
-                      <ArrowRight className="h-5 w-5 text-primary shrink-0" />
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-sm">
-                      {industry.summary}
-                    </CardDescription>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
+          <FeaturedIndustries industries={featuredIndustries} />
         </div>
       </section>
 
@@ -80,16 +65,16 @@ export default function IndustriesPage() {
             Answer 8 questions about your workflows and we'll send you a shortlist.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/wizard">
-              <Button size="lg" variant="secondary">
+            <Button size="lg" variant="secondary" asChild>
+              <Link href="/wizard">
                 Start Fit Wizard <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
-            <Link href="/resources/crm-erp-selection-checklist">
-              <Button size="lg" variant="outline" className="bg-white hover:bg-gray-100 text-primary border-white">
+              </Link>
+            </Button>
+            <Button size="lg" variant="outline" className="bg-white hover:bg-gray-100 text-primary border-white" asChild>
+              <Link href="/resources/crm-erp-selection-checklist">
                 Download Checklist
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
