@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { NavPrefetchLink } from '@/components/nav-prefetch-link';
 import { MobileMenu } from '@/components/mobile-menu';
 
 const navigation = [
@@ -24,23 +25,23 @@ export function Header() {
         
         <div className="hidden lg:flex lg:gap-x-8">
           {navigation.map((item) => (
-            <Link
+            <NavPrefetchLink
               key={item.name}
               href={item.href}
               className="text-sm font-medium text-gray-700 hover:text-primary transition-colors"
             >
               {item.name}
-            </Link>
+            </NavPrefetchLink>
           ))}
         </div>
 
         <div className="hidden lg:flex lg:gap-x-3">
-          <Link href="/wizard">
-            <Button>Start Fit Wizard</Button>
-          </Link>
-          <Link href="/book">
-            <Button variant="outline">Book a Call</Button>
-          </Link>
+          <Button asChild>
+            <Link href="/wizard">Start Fit Wizard</Link>
+          </Button>
+          <Button variant="outline" asChild>
+            <Link href="/book">Book a Call</Link>
+          </Button>
         </div>
 
         <div className="flex lg:hidden">
