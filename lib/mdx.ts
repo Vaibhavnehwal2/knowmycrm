@@ -22,6 +22,8 @@ export function getAllPosts(): BlogPost[] {
         date: data.date,
         author: data.author,
         readTime: data.readTime,
+        category: data.category || 'Guide',
+        tags: data.tags || [],
       };
     });
 
