@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Test the KnowMyCRM marketing website API endpoint and verify the site is working properly"
+user_problem_statement: "Test the KnowMyCRM marketing website API endpoint and verify the Fit Wizard is working properly with Web-to-Lead integration"
 
 backend:
   - task: "POST /api/leads endpoint - Accept lead data from different sources"
@@ -128,8 +128,115 @@ backend:
         - working: true
           agent: "testing"
           comment: "GET endpoint working correctly, returns success:true, count and leads array. Successfully retrieved 4 stored leads from memory with proper UUID ids and timestamps."
+  
+  - task: "CRM Recommendation Engine - Salesforce must always be included"
+    implemented: true
+    working: "NA"
+    file: "/app/lib/fitment.ts"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Implemented recommendCRM function that always includes Salesforce as one of the two recommendations. Uses deterministic scoring to pick the best second CRM. Ensures exactly 3 reasons per recommendation."
+  
+  - task: "ERP Recommendation Engine - Top 2 by scoring"
+    implemented: true
+    working: "NA"
+    file: "/app/lib/fitment.ts"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Implemented recommendERP function that scores and picks top 2 ERPs based on business inputs. Ensures exactly 3 reasons per recommendation."
+  
+  - task: "Web-to-Lead Config and Adapter"
+    implemented: true
+    working: "NA"
+    file: "/app/lib/webToLeadConfig.ts"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Implemented Salesforce Web-to-Lead configuration with: webToLeadUrl, oid placeholder, retURL to /wizard/success, standard field mappings, formatWizardDescription function to serialize all wizard data into description field. Currently oid is empty so it falls back to dev mode (/api/leads)."
 
 frontend:
+  - task: "Wizard Landing Page - CRM/ERP Selection"
+    implemented: true
+    working: true
+    file: "/app/app/wizard/page.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "main"
+          comment: "Screenshot verified - shows two cards for CRM and ERP path selection with proper descriptions and CTAs."
+  
+  - task: "Wizard CRM Path - 7 Steps + Results"
+    implemented: true
+    working: "NA"
+    file: "/app/app/wizard/page.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Implemented 7 CRM steps: Business Basics, Sales Motion, Functional Needs, Integrations, Governance, Constraints, Contact. Progress stepper visible. localStorage persistence implemented."
+  
+  - task: "Wizard ERP Path - 7 Steps + Results"
+    implemented: true
+    working: "NA"
+    file: "/app/app/wizard/page.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Implemented 7 ERP steps: Business Basics, Operating Model, Core Modules, Complexity, Integrations, Constraints, Contact. Conditional fields based on business type (manufacturing shows production/BOM)."
+  
+  - task: "Wizard Results Screen - Exactly 2 Recommendations"
+    implemented: true
+    working: "NA"
+    file: "/app/app/wizard/page.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Results screen shows exactly 2 recommendation cards with brand icons, complexity badges, 3 reasons each, and optional watchouts in details/summary block. CTA buttons for Book a Call and Get Shortlist + Demo Script."
+  
+  - task: "Web-to-Lead Submit Component"
+    implemented: true
+    working: "NA"
+    file: "/app/components/wizard/web-to-lead-submit.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Implemented hidden form submission to Salesforce Web-to-Lead. Falls back to /api/leads with warning message when oid not configured. Uses formatWizardDescription to serialize all wizard data."
+  
+  - task: "Wizard Success Page"
+    implemented: true
+    working: true
+    file: "/app/app/wizard/success/page.tsx"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "main"
+          comment: "Screenshot verified - shows success confirmation, what happens next steps, and CTAs for Home, Compare CRMs, and Book a Call."
 
 metadata:
   created_by: "testing_agent"
