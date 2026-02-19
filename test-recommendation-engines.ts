@@ -342,9 +342,9 @@ async function main() {
   // FINAL RESULTS
   // ============================================================
   
-  console.log("\n" + "=" * 60);
+  console.log("\n" + "=".repeat(60));
   console.log("🏁 RECOMMENDATION ENGINE TEST SUMMARY");
-  console.log("=" * 60);
+  console.log("=".repeat(60));
   
   const totalTests = Object.keys(testResults).length;
   const passedTests = Object.values(testResults).filter(result => result).length;
