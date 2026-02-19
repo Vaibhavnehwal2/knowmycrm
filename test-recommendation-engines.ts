@@ -113,7 +113,7 @@ function validateERPRecommendation(
 
 async function main() {
   console.log("🚀 TESTING RECOMMENDATION ENGINES DIRECTLY");
-  console.log("=" * 60);
+  console.log("=".repeat(60));
   
   let testResults: { [key: string]: boolean } = {};
   
