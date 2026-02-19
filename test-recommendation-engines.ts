@@ -235,7 +235,7 @@ async function main() {
   // ============================================================
   
   console.log("\n🔍 TESTING ERP RECOMMENDATION ENGINE");
-  console.log("=" * 50);
+  console.log("=".repeat(50));
   
   // Test Case 1: Manufacturing scenario
   console.log("\n📝 Test Case 1: Manufacturing ERP scenario");
