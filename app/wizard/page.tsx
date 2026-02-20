@@ -497,13 +497,13 @@ export default function WizardPage() {
       <div className="container mx-auto max-w-4xl px-4 py-12">
         <div className="text-center mb-12">
           <div className="flex justify-center mb-8">
-            <div className="bg-gray-900 rounded-xl px-6 py-4">
+            <div className="bg-gray-900 rounded-xl px-8 py-6">
               <Image 
                 src="/brand/knowmycrm-logo-large.png" 
                 alt="KnowMyCRM - Find the Right CRM & ERP" 
-                width={400} 
-                height={100}
-                className="h-20 w-auto"
+                width={500} 
+                height={125}
+                className="h-24 w-auto"
                 priority
               />
             </div>
