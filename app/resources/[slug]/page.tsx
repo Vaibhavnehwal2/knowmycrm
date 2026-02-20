@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { getPostBySlug, getAllPosts } from '@/lib/mdx';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Calendar, Clock } from 'lucide-react';
@@ -9,6 +10,11 @@ import { ChecklistLeadMagnet } from '@/components/checklist-lead-magnet';
 export const dynamic = 'force-static';
 export const dynamicParams = false;
 export const revalidate = 86400;
+
+// Helper to check if URL is external
+function isExternalUrl(url: string): boolean {
+  return url.startsWith('http://') || url.startsWith('https://');
+}
 
 export async function generateStaticParams() {
   const posts = getAllPosts();
@@ -39,6 +45,20 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
               <ArrowLeft className="mr-2 h-4 w-4" /> Back to Resources
             </Button>
           </Link>
+
+          {/* Cover Image */}
+          {post.frontmatter.coverImage && (
+            <div className="relative w-full h-64 md:h-80 mb-8 rounded-lg overflow-hidden bg-gray-100">
+              <Image
+                src={post.frontmatter.coverImage}
+                alt={post.frontmatter.title}
+                fill
+                className="object-cover"
+                unoptimized={isExternalUrl(post.frontmatter.coverImage)}
+                priority
+              />
+            </div>
+          )}
 
           <header className="mb-8">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl mb-4">
