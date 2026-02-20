@@ -1,8 +1,6 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 
 export type BrandLogoVariant = 'full' | 'icon' | 'wordmark';
@@ -23,22 +21,35 @@ const sizeClasses: Record<BrandLogoSize, string> = {
   lg: 'h-10',  // 40px
 };
 
-// Image dimensions for Next.js (aspect ratio ~4:1 for full logo)
-const dimensions: Record<BrandLogoSize, { width: number; height: number }> = {
-  sm: { width: 96, height: 24 },
-  md: { width: 128, height: 32 },
-  lg: { width: 160, height: 40 },
-};
-
-// Text fallback sizes
+// Text sizes for the wordmark part
 const textSizeClasses: Record<BrandLogoSize, string> = {
-  sm: 'text-lg',
-  md: 'text-xl',
-  lg: 'text-2xl',
+  sm: 'text-base',
+  md: 'text-lg',
+  lg: 'text-xl',
 };
 
-// Use S3-hosted logo for reliability across all deployments
-const LOGO_URL = 'https://kmc-logos.s3.eu-north-1.amazonaws.com/brand/knowmycrm-logo-cropped.png';
+// KnowMyCRM Logo as inline SVG + Text - guaranteed to render on all deployments
+function LogoIcon({ className = '' }: { className?: string }) {
+  return (
+    <svg 
+      className={className}
+      viewBox="0 0 48 48" 
+      fill="none" 
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      {/* Globe/World icon representing global CRM */}
+      <circle cx="24" cy="24" r="20" fill="#3B82F6" />
+      <ellipse cx="24" cy="24" rx="20" ry="8" stroke="white" strokeWidth="1.5" fill="none" />
+      <ellipse cx="24" cy="24" rx="8" ry="20" stroke="white" strokeWidth="1.5" fill="none" />
+      <line x1="4" y1="24" x2="44" y2="24" stroke="white" strokeWidth="1.5" />
+      <line x1="24" y1="4" x2="24" y2="44" stroke="white" strokeWidth="1.5" />
+      {/* Person/User icon overlay */}
+      <circle cx="32" cy="14" r="8" fill="#F97316" />
+      <circle cx="32" cy="11" r="3" fill="white" />
+      <path d="M27 18C27 15.5 29 14 32 14C35 14 37 15.5 37 18" stroke="white" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+    </svg>
+  );
+}
 
 export function BrandLogo({
   variant = 'full',
@@ -47,47 +58,17 @@ export function BrandLogo({
   priority = false,
   linkToHome = false,
 }: BrandLogoProps) {
-  const [imageError, setImageError] = useState(false);
   const sizeClass = sizeClasses[size];
-  const { width, height } = dimensions[size];
+  const textSizeClass = textSizeClasses[size];
   
-  // Text fallback element - styled to look professional
-  const textFallback = (
-    <span className={cn(
-      'font-bold inline-flex items-center',
-      textSizeClasses[size],
-      className
-    )}>
-      <span className="text-primary">KnowMy</span>
-      <span className="text-gray-700">CRM</span>
-    </span>
-  );
-
-  // If image errored, show text fallback
-  if (imageError) {
-    if (linkToHome) {
-      return (
-        <Link 
-          href="/" 
-          className="inline-flex items-center hover:opacity-90 transition-opacity"
-        >
-          {textFallback}
-        </Link>
-      );
-    }
-    return textFallback;
-  }
-
-  const imageElement = (
-    <img
-      src={LOGO_URL}
-      alt="KnowMyCRM"
-      width={width}
-      height={height}
-      className={cn('w-auto object-contain', sizeClass, className)}
-      onError={() => setImageError(true)}
-      loading={priority ? 'eager' : 'lazy'}
-    />
+  const logoContent = (
+    <div className={cn('inline-flex items-center gap-2', className)}>
+      <LogoIcon className={cn(sizeClass, 'w-auto')} />
+      <span className={cn('font-bold', textSizeClass)}>
+        <span className="text-primary">KnowMy</span>
+        <span className="text-gray-700">CRM</span>
+      </span>
+    </div>
   );
 
   if (linkToHome) {
@@ -96,12 +77,12 @@ export function BrandLogo({
         href="/" 
         className="inline-flex items-center hover:opacity-90 transition-opacity"
       >
-        {imageElement}
+        {logoContent}
       </Link>
     );
   }
 
-  return imageElement;
+  return logoContent;
 }
 
 export default BrandLogo;
