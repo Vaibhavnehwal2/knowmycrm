@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 
 export type BrandLogoVariant = 'full' | 'icon' | 'wordmark';
@@ -45,24 +45,46 @@ export function BrandLogo({
   linkToHome = false,
 }: BrandLogoProps) {
   const [imageError, setImageError] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const sizeClass = sizeClasses[size];
   const { width, height } = dimensions[size];
   
   // Use the cropped logo (no whitespace)
   const logoSrc = '/brand/knowmycrm-logo-cropped.png';
   
-  // Fallback text element when image fails to load
+  // Ensure we're mounted on client before checking image
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  
+  // Text fallback element - styled to look professional
   const textFallback = (
     <span className={cn(
-      'font-bold text-primary',
+      'font-bold inline-flex items-center',
       textSizeClasses[size],
       className
     )}>
-      KnowMy<span className="text-gray-700">CRM</span>
+      <span className="text-primary">KnowMy</span>
+      <span className="text-gray-700">CRM</span>
     </span>
   );
 
-  const imageElement = imageError ? textFallback : (
+  // If image errored, show text fallback
+  if (imageError) {
+    if (linkToHome) {
+      return (
+        <Link 
+          href="/" 
+          className="inline-flex items-center hover:opacity-90 transition-opacity"
+        >
+          {textFallback}
+        </Link>
+      );
+    }
+    return textFallback;
+  }
+
+  const imageElement = (
     <Image
       src={logoSrc}
       alt="KnowMyCRM"
@@ -71,6 +93,7 @@ export function BrandLogo({
       className={cn('w-auto object-contain', sizeClass, className)}
       priority={priority}
       onError={() => setImageError(true)}
+      unoptimized // Use unoptimized to avoid Next.js image optimization issues with static files
     />
   );
 
