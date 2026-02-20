@@ -23,11 +23,11 @@ import {
 import { recommendCRM, recommendERP, type WizardResult, type Recommendation } from '@/lib/fitment';
 import industriesData from '@/data/industries.json';
 
-// Salesforce Web-to-Lead Configuration
+// Salesforce Web-to-Lead Configuration - PRODUCTION
 const SF_CONFIG = {
-  formAction: 'https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00DWr00000A30k5',
-  oid: '00DWr00000A30k5',
-  kmcPayloadFieldId: '00NWr000002xsG9',
+  formAction: 'https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00Dam00001ZRIBb',
+  oid: '00Dam00001ZRIBb',
+  kmcPayloadFieldId: '00NWQ00000DZVEL',
 };
 
 // Fallback timeout (8 seconds)
