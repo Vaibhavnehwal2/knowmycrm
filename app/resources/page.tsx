@@ -1,10 +1,9 @@
 import { getAllPosts } from '@/lib/mdx';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, FileText, Download } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { ResourcesList } from '@/components/resources-list';
-import { PrefetchLink } from '@/components/prefetch-link';
 import Link from 'next/link';
+import { ChecklistLeadMagnet } from '@/components/checklist-lead-magnet';
 
 export const dynamic = 'force-static';
 export const revalidate = 86400;
@@ -25,25 +24,9 @@ export default function ResourcesPage() {
         </div>
       </section>
 
+      {/* Checklist Lead Magnet - Prominent CTA */}
       <section className="container mx-auto px-4 pb-8 lg:px-8">
-        <PrefetchLink href="/resources/crm-erp-selection-checklist">
-          <Card className="border-2 border-primary hover:shadow-lg transition-shadow cursor-pointer">
-            <CardHeader>
-              <div className="flex items-start justify-between">
-                <div className="flex items-center gap-3">
-                  <Download className="h-8 w-8 text-primary" />
-                  <div>
-                    <CardTitle className="text-2xl">CRM/ERP Selection Checklist</CardTitle>
-                    <CardDescription className="mt-2">
-                      Download our comprehensive checklist to audit your selection process
-                    </CardDescription>
-                  </div>
-                </div>
-                <ArrowRight className="h-6 w-6 text-primary" />
-              </div>
-            </CardHeader>
-          </Card>
-        </PrefetchLink>
+        <ChecklistLeadMagnet variant="inline-card" />
       </section>
 
       <section className="container mx-auto px-4 pb-16 lg:px-8 lg:pb-24">
