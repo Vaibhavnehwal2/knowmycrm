@@ -1,7 +1,9 @@
 import { getAllPosts } from '@/lib/mdx';
+import { getLatestLinkedInPosts } from '@/lib/linkedin';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import { ResourcesList } from '@/components/resources-list';
+import { LinkedInSection } from '@/components/linkedin-section';
 import Link from 'next/link';
 import { ChecklistLeadMagnet } from '@/components/checklist-lead-magnet';
 
@@ -10,6 +12,7 @@ export const revalidate = 86400;
 
 export default function ResourcesPage() {
   const posts = getAllPosts();
+  const linkedInPosts = getLatestLinkedInPosts(6);
 
   return (
     <div className="flex flex-col">
