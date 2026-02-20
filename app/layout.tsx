@@ -9,6 +9,24 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'KnowMyCRM - Find the right CRM & ERP fit',
   description: 'Get expert help choosing the right CRM and ERP, with shortlists, demo scripts, and partner introductions.',
+  icons: {
+    icon: '/brand/knowmycrm-logo.png',
+    shortcut: '/brand/knowmycrm-logo.png',
+    apple: '/brand/knowmycrm-logo.png',
+  },
+  openGraph: {
+    title: 'KnowMyCRM - Find the right CRM & ERP fit',
+    description: 'Get expert help choosing the right CRM and ERP, with shortlists, demo scripts, and partner introductions.',
+    images: ['/brand/knowmycrm-logo.png'],
+    type: 'website',
+    siteName: 'KnowMyCRM',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'KnowMyCRM - Find the right CRM & ERP fit',
+    description: 'Get expert help choosing the right CRM and ERP, with shortlists, demo scripts, and partner introductions.',
+    images: ['/brand/knowmycrm-logo.png'],
+  },
 };
 
 export default function RootLayout({
