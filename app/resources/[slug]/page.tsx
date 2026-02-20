@@ -41,15 +41,13 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
             </Button>
           </Link>
 
-          {/* Cover Image */}
+          {/* Cover Image - using BlogCoverImage with object-contain for full visibility */}
           {post.frontmatter.coverImage && (
-            <div className="relative w-full h-64 md:h-80 mb-8 rounded-lg overflow-hidden bg-gray-100">
-              <Image
+            <div className="mb-8">
+              <BlogCoverImage
                 src={post.frontmatter.coverImage}
                 alt={post.frontmatter.title}
-                fill
-                className="object-cover"
-                unoptimized={isExternalUrl(post.frontmatter.coverImage)}
+                variant="hero"
                 priority
               />
             </div>
