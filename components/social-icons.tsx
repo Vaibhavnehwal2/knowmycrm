@@ -28,4 +28,38 @@ export function WhatsAppIcon({ className = 'h-5 w-5' }: { className?: string }) 
   );
 }
 
-export default { LinkedInIcon, WhatsAppIcon };
+// India Flag SVG
+export function IndiaFlag({ className = 'h-5 w-5' }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 640 480" aria-label="India">
+      <path fill="#f93" d="M0 0h640v160H0z"/>
+      <path fill="#fff" d="M0 160h640v160H0z"/>
+      <path fill="#128807" d="M0 320h640v160H0z"/>
+      <g transform="matrix(3.2 0 0 3.2 320 240)">
+        <circle r="20" fill="#008"/>
+        <circle r="17.5" fill="#fff"/>
+        <circle r="3.5" fill="#008"/>
+        <g fill="#008">
+          {[...Array(24)].map((_, i) => (
+            <rect key={i} x="-0.9" y="-17.5" width="1.8" height="7" transform={`rotate(${i * 15})`}/>
+          ))}
+        </g>
+      </g>
+    </svg>
+  );
+}
+
+// Romania Flag SVG
+export function RomaniaFlag({ className = 'h-5 w-5' }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 640 480" aria-label="Romania">
+      <g fillRule="evenodd" strokeWidth="1pt">
+        <path fill="#00319c" d="M0 0h213.3v480H0z"/>
+        <path fill="#ffde00" d="M213.3 0h213.4v480H213.3z"/>
+        <path fill="#de2110" d="M426.7 0H640v480H426.7z"/>
+      </g>
+    </svg>
+  );
+}
+
+export default { LinkedInIcon, WhatsAppIcon, IndiaFlag, RomaniaFlag };
