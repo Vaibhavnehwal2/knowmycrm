@@ -5,6 +5,9 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 
+// Import logo statically - this bundles it with the app build
+import logoImage from '@/public/brand/knowmycrm-logo-cropped.png';
+
 export type BrandLogoVariant = 'full' | 'icon' | 'wordmark';
 export type BrandLogoSize = 'sm' | 'md' | 'lg';
 
@@ -23,13 +26,6 @@ const sizeClasses: Record<BrandLogoSize, string> = {
   lg: 'h-10',  // 40px
 };
 
-// Image dimensions for Next.js (aspect ratio ~4:1 for full logo)
-const dimensions: Record<BrandLogoSize, { width: number; height: number }> = {
-  sm: { width: 96, height: 24 },
-  md: { width: 128, height: 32 },
-  lg: { width: 160, height: 40 },
-};
-
 // Text fallback sizes
 const textSizeClasses: Record<BrandLogoSize, string> = {
   sm: 'text-lg',
@@ -46,10 +42,6 @@ export function BrandLogo({
 }: BrandLogoProps) {
   const [imageError, setImageError] = useState(false);
   const sizeClass = sizeClasses[size];
-  const { width, height } = dimensions[size];
-  
-  // Use the existing logo from public folder
-  const logoSrc = '/brand/knowmycrm-logo-cropped.png';
   
   // Text fallback element
   const textFallback = (
@@ -76,10 +68,8 @@ export function BrandLogo({
 
   const imageElement = (
     <Image
-      src={logoSrc}
+      src={logoImage}
       alt="KnowMyCRM"
-      width={width}
-      height={height}
       className={cn('w-auto object-contain', sizeClass, className)}
       priority={priority}
       onError={() => setImageError(true)}
