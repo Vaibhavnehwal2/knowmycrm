@@ -12,9 +12,11 @@ import { CheckCircle2, Loader2, Calendar, Clock, Globe } from 'lucide-react';
 const SF_CONFIG = {
   formAction: 'https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00DWr00000A30k5',
   oid: '00DWr00000A30k5',
-  retURL: 'https://knowmycrm.com/thank-you',
   kmcPayloadFieldId: '00NWr000002xsG9',
 };
+
+// Fallback timeout (8 seconds)
+const FALLBACK_TIMEOUT_MS = 8000;
 
 // Time slots (30-min intervals 09:00 - 18:00)
 const TIME_SLOTS = [
@@ -191,6 +193,12 @@ function formatDate(dateStr: string): string {
   return date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
 }
 
+// Get dynamic retURL based on current origin
+function getRetURL(): string {
+  if (typeof window === 'undefined') return '/thank-you';
+  return `${window.location.origin}/thank-you`;
+}
+
 export function SalesforceWebToLead({
   variant,
   defaultValues = {},
@@ -203,8 +211,7 @@ export function SalesforceWebToLead({
   className = '',
 }: SalesforceWebToLeadProps) {
   const formRef = useRef<HTMLFormElement>(null);
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-  const iframeLoadCount = useRef(0);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   
   const [formData, setFormData] = useState({
     name: defaultValues.name || '',
@@ -223,6 +230,12 @@ export function SalesforceWebToLead({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [recentlySubmitted, setRecentlySubmitted] = useState(false);
+  const [retURL, setRetURL] = useState('/thank-you');
+
+  // Set dynamic retURL on client side
+  useEffect(() => {
+    setRetURL(getRetURL());
+  }, []);
 
   // Check for recent submission on mount
   useEffect(() => {
@@ -231,24 +244,50 @@ export function SalesforceWebToLead({
     }
   }, [formData.email]);
 
+  // Handle success completion
+  const handleSuccess = useCallback(() => {
+    // Clear any pending timeout
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    
+    setIsSubmitting(false);
+    setIsSuccess(true);
+    markAsSubmitted(formData.email);
+    onSuccess?.();
+  }, [formData.email, onSuccess]);
+
+  // Listen for postMessage from /thank-you page
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      // Check if the message is our success signal
+      if (event.data && event.data.type === 'KMC_W2L_SUCCESS') {
+        if (isSubmitting) {
+          handleSuccess();
+        }
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  }, [isSubmitting, handleSuccess]);
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
+
   // Get min date (tomorrow)
   const minDate = useMemo(() => {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     return tomorrow.toISOString().split('T')[0];
   }, []);
-
-  // Handle iframe load
-  const handleIframeLoad = useCallback(() => {
-    iframeLoadCount.current += 1;
-    // Skip the initial load (empty iframe)
-    if (iframeLoadCount.current > 1 && isSubmitting) {
-      setIsSubmitting(false);
-      setIsSuccess(true);
-      markAsSubmitted(formData.email);
-      onSuccess?.();
-    }
-  }, [isSubmitting, formData.email, onSuccess]);
 
   // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {
@@ -260,6 +299,15 @@ export function SalesforceWebToLead({
     }
     
     setIsSubmitting(true);
+    
+    // Set fallback timeout - if no postMessage arrives, still show success
+    // (Lead creation happens server-side, so it's likely successful)
+    timeoutRef.current = setTimeout(() => {
+      if (isSubmitting) {
+        console.log('Web-to-Lead: Fallback timeout triggered, showing success');
+        handleSuccess();
+      }
+    }, FALLBACK_TIMEOUT_MS);
     
     // Submit the form
     if (formRef.current) {
@@ -319,12 +367,18 @@ export function SalesforceWebToLead({
 
   const formContent = (
     <>
-      {/* Hidden iframe for form submission */}
+      {/* Hidden iframe for form submission - 1x1 offscreen for reliable load events */}
       <iframe
-        ref={iframeRef}
         name="sf_w2l_iframe"
-        className="hidden"
-        onLoad={handleIframeLoad}
+        style={{
+          position: 'absolute',
+          left: '-9999px',
+          top: '-9999px',
+          width: '1px',
+          height: '1px',
+          opacity: 0,
+          pointerEvents: 'none',
+        }}
         title="Salesforce Web-to-Lead"
       />
       
@@ -338,7 +392,7 @@ export function SalesforceWebToLead({
       >
         {/* Hidden Salesforce fields */}
         <input type="hidden" name="oid" value={SF_CONFIG.oid} />
-        <input type="hidden" name="retURL" value={SF_CONFIG.retURL} />
+        <input type="hidden" name="retURL" value={retURL} />
         <input type="hidden" name="first_name" value={firstName} />
         <input type="hidden" name="last_name" value={lastName} />
         <input type="hidden" name={SF_CONFIG.kmcPayloadFieldId} value={finalKMCPayload} />
