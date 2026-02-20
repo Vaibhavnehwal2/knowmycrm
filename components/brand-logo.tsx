@@ -49,8 +49,8 @@ export function BrandLogo({
   const sizeClass = sizeClasses[size];
   const { width, height } = dimensions[size];
   
-  // Use the cropped logo (no whitespace)
-  const logoSrc = '/brand/knowmycrm-logo-cropped.png';
+  // Use the cropped logo with cache-bust version (no whitespace)
+  const logoSrc = '/brand/knowmycrm-logo-cropped-v2.png';
   
   // Ensure we're mounted on client before checking image
   useEffect(() => {
