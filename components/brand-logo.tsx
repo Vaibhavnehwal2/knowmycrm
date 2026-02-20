@@ -41,8 +41,9 @@ export function BrandLogo({
       alt="KnowMyCRM"
       width={width}
       height={height}
-      className={cn('w-auto', sizeClass, className)}
+      className={cn('w-auto object-contain', sizeClass, className)}
       priority={variant === 'header'}
+      unoptimized
     />
   );
 
