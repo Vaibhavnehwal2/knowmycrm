@@ -583,15 +583,13 @@ export function SalesforceWebToLead({
               <CardDescription>{description || defaultDescription}</CardDescription>
             )}
           </div>
-          <div className="bg-gray-900 rounded-md px-2.5 py-1.5 shrink-0">
-            <Image 
-              src="/brand/knowmycrm-logo-large.png" 
-              alt="KnowMyCRM" 
-              width={140} 
-              height={35}
-              className="h-8 w-auto"
-            />
-          </div>
+          <Image 
+            src="/brand/knowmycrm-logo-white.png" 
+            alt="KnowMyCRM" 
+            width={140} 
+            height={35}
+            className="h-9 w-auto shrink-0"
+          />
         </div>
       </CardHeader>
       <CardContent>{formContent}</CardContent>
