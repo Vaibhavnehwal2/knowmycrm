@@ -99,10 +99,9 @@ export function getAllBlogs(): BlogPost[] {
  * Get a single blog post by slug
  */
 export function getBlogBySlug(slug: string): BlogPostWithContent | null {
-  const blogsDir = getBlogsDirectory();
-  const fullPath = path.join(blogsDir, `${slug}.mdx`);
+  const fullPath = findMdxFile(slug);
   
-  if (!fs.existsSync(fullPath)) {
+  if (!fullPath) {
     return null;
   }
   
