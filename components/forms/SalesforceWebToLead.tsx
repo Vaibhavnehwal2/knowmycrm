@@ -1,13 +1,13 @@
 'use client';
 
 import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { CheckCircle2, Loader2, Calendar, Clock, Globe } from 'lucide-react';
+import { BrandLogo } from '@/components/brand-logo';
 
 // Salesforce Web-to-Lead Configuration - PRODUCTION
 const SF_CONFIG = {
@@ -574,23 +574,16 @@ export function SalesforceWebToLead({
   }
 
   return (
-    <Card className={className}>
-      <CardHeader className="pb-4">
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex-1">
-            <CardTitle>{title || defaultTitle}</CardTitle>
-            {(description || defaultDescription) && (
-              <CardDescription>{description || defaultDescription}</CardDescription>
-            )}
-          </div>
-          <Image 
-            src="/brand/knowmycrm-logo-white.png" 
-            alt="KnowMyCRM" 
-            width={140} 
-            height={35}
-            className="h-9 w-auto shrink-0"
-          />
-        </div>
+    <Card className={`relative ${className}`}>
+      {/* Subtle brand stamp at top-right */}
+      <div className="absolute top-3 right-3">
+        <BrandLogo variant="card" />
+      </div>
+      <CardHeader className="pb-4 pr-24">
+        <CardTitle>{title || defaultTitle}</CardTitle>
+        {(description || defaultDescription) && (
+          <CardDescription>{description || defaultDescription}</CardDescription>
+        )}
       </CardHeader>
       <CardContent>{formContent}</CardContent>
     </Card>
