@@ -195,15 +195,10 @@ function formatDate(dateStr: string): string {
   return date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
 }
 
-// Get dynamic retURL based on current origin (with fallback to production)
+// Get dynamic retURL based on current origin (domain-agnostic for all environments)
 function getRetURL(): string {
   if (typeof window === 'undefined') return SF_CONFIG.retURL;
-  // Use current origin for local dev, but production URL for deployed
-  const origin = window.location.origin;
-  if (origin.includes('localhost') || origin.includes('preview.emergentagent.com')) {
-    return `${origin}/thank-you`;
-  }
-  return SF_CONFIG.retURL;
+  return `${window.location.origin}/thank-you`;
 }
 
 export function SalesforceWebToLead({
