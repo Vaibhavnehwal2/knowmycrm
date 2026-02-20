@@ -36,7 +36,7 @@ export function Header() {
             <NavPrefetchLink
               key={item.name}
               href={item.href}
-              className="text-sm font-medium text-gray-700 hover:text-primary transition-colors"
+              className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
             >
               {item.name}
             </NavPrefetchLink>
@@ -44,10 +44,10 @@ export function Header() {
         </div>
 
         <div className="hidden lg:flex lg:gap-x-3">
-          <Button asChild>
+          <Button asChild className="bg-primary hover:bg-primary/90">
             <Link href="/wizard">Start Fit Wizard</Link>
           </Button>
-          <Button variant="outline" asChild>
+          <Button variant="outline" asChild className="border-gray-600 text-white hover:bg-gray-800">
             <Link href="/book">Book a Call</Link>
           </Button>
         </div>
