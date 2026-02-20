@@ -214,21 +214,48 @@ export default function WizardPage() {
     return arr.includes(value) ? arr.filter(v => v !== value) : [...arr, value];
   };
 
-  // Handle iframe load for Salesforce submission
-  const handleIframeLoad = useCallback(() => {
-    iframeLoadCount.current += 1;
-    // Skip the initial load (empty iframe)
-    if (iframeLoadCount.current > 1 && isSubmitting) {
-      setIsSubmitting(false);
-      setLeadSubmitted(true);
-      // Mark as submitted in localStorage
-      const email = state.wizardType === 'crm' ? state.crmAnswers.email : state.erpAnswers.email;
-      localStorage.setItem('kmc_wizard_submitted_email', email);
-      localStorage.setItem('kmc_wizard_submitted_type', state.wizardType || '');
-      localStorage.setItem('kmc_lastLeadEmail', email);
-      localStorage.setItem('kmc_lastLeadAt', Date.now().toString());
+  // Handle success completion
+  const handleSubmissionSuccess = useCallback(() => {
+    // Clear any pending timeout
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
     }
-  }, [isSubmitting, state.wizardType, state.crmAnswers.email, state.erpAnswers.email]);
+    
+    setIsSubmitting(false);
+    setLeadSubmitted(true);
+    
+    // Mark as submitted in localStorage
+    const email = state.wizardType === 'crm' ? state.crmAnswers.email : state.erpAnswers.email;
+    localStorage.setItem('kmc_wizard_submitted_email', email);
+    localStorage.setItem('kmc_wizard_submitted_type', state.wizardType || '');
+    localStorage.setItem('kmc_lastLeadEmail', email);
+    localStorage.setItem('kmc_lastLeadAt', Date.now().toString());
+  }, [state.wizardType, state.crmAnswers.email, state.erpAnswers.email]);
+
+  // Listen for postMessage from /thank-you page
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      // Check if the message is our success signal
+      if (event.data && event.data.type === 'KMC_W2L_SUCCESS') {
+        if (isSubmitting) {
+          handleSubmissionSuccess();
+        }
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  }, [isSubmitting, handleSubmissionSuccess]);
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   // Calculate results and submit lead
   const calculateResultsAndSubmit = () => {
@@ -243,6 +270,13 @@ export default function WizardPage() {
     // Submit lead via Salesforce Web-to-Lead
     if (!leadSubmitted) {
       setIsSubmitting(true);
+      
+      // Set fallback timeout - if no postMessage arrives, still show success
+      timeoutRef.current = setTimeout(() => {
+        console.log('Wizard Web-to-Lead: Fallback timeout triggered, showing success');
+        handleSubmissionSuccess();
+      }, FALLBACK_TIMEOUT_MS);
+      
       // Small delay to ensure form is ready
       setTimeout(() => {
         if (formRef.current) {
