@@ -1,12 +1,9 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Download, CheckCircle2, ArrowRight } from 'lucide-react';
-import { SalesforceWebToLead } from '@/components/forms/SalesforceWebToLead';
 
 export type ChecklistLeadMagnetVariant = 'inline-card' | 'section-cta' | 'compact';
 
@@ -26,8 +23,6 @@ export function ChecklistLeadMagnet({
   variant = 'inline-card',
   className = '' 
 }: ChecklistLeadMagnetProps) {
-  const [isOpen, setIsOpen] = useState(false);
-
   // Inline card variant - CTA that links to checklist page
   if (variant === 'inline-card') {
     return (
@@ -52,37 +47,15 @@ export function ChecklistLeadMagnet({
     );
   }
 
-  // Compact variant - small button that opens modal
+  // Compact variant - small button that links to checklist page
   if (variant === 'compact') {
     return (
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogTrigger asChild>
-          <Button variant="outline" className={className}>
-            <Download className="mr-2 h-4 w-4" />
-            Download Checklist
-          </Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <Download className="h-5 w-5 text-primary" />
-              CRM/ERP Selection Checklist
-            </DialogTitle>
-          </DialogHeader>
-          <SalesforceWebToLead
-            variant="checklist"
-            showCard={false}
-            kmcPayload={{
-              source: 'checklist',
-              asset: 'crm-erp-selection-checklist',
-              intent: 'download_checklist_modal',
-            }}
-            onSuccess={() => {
-              setTimeout(() => setIsOpen(false), 3000);
-            }}
-          />
-        </DialogContent>
-      </Dialog>
+      <Button variant="outline" className={className} asChild>
+        <Link href="/resources/crm-erp-selection-checklist">
+          <Download className="mr-2 h-4 w-4" />
+          Download Checklist
+        </Link>
+      </Button>
     );
   }
 
@@ -110,35 +83,12 @@ export function ChecklistLeadMagnet({
             </li>
           ))}
         </ul>
-        <Dialog open={isOpen} onOpenChange={setIsOpen}>
-          <DialogTrigger asChild>
-            <Button className="w-full">
-              <Download className="mr-2 h-4 w-4" />
-              Download Free Checklist
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle className="flex items-center gap-2">
-                <Download className="h-5 w-5 text-primary" />
-                Download Checklist
-              </DialogTitle>
-            </DialogHeader>
-            <SalesforceWebToLead
-              variant="checklist"
-              showCard={false}
-              description="Enter your details to get the checklist sent to your email."
-              kmcPayload={{
-                source: 'checklist',
-                asset: 'crm-erp-selection-checklist',
-                intent: 'download_checklist_section_cta',
-              }}
-              onSuccess={() => {
-                setTimeout(() => setIsOpen(false), 3000);
-              }}
-            />
-          </DialogContent>
-        </Dialog>
+        <Button className="w-full" asChild>
+          <Link href="/resources/crm-erp-selection-checklist">
+            <Download className="mr-2 h-4 w-4" />
+            Download Free Checklist
+          </Link>
+        </Button>
       </CardContent>
     </Card>
   );
