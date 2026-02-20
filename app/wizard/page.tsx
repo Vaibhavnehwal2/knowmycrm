@@ -1341,12 +1341,18 @@ export default function WizardPage() {
 
   return (
     <div className="container mx-auto max-w-3xl px-4 py-8">
-      {/* Hidden iframe for Salesforce submission */}
+      {/* Hidden iframe for Salesforce submission - 1x1 offscreen for reliable message events */}
       <iframe
-        ref={iframeRef}
         name="sf_wizard_iframe"
-        className="hidden"
-        onLoad={handleIframeLoad}
+        style={{
+          position: 'absolute',
+          left: '-9999px',
+          top: '-9999px',
+          width: '1px',
+          height: '1px',
+          opacity: 0,
+          pointerEvents: 'none',
+        }}
         title="Salesforce Web-to-Lead"
       />
       
@@ -1359,7 +1365,7 @@ export default function WizardPage() {
         className="hidden"
       >
         <input type="hidden" name="oid" value={SF_CONFIG.oid} />
-        <input type="hidden" name="retURL" value={SF_CONFIG.retURL} />
+        <input type="hidden" name="retURL" value={retURL} />
         <input type="hidden" name="first_name" value={firstName} />
         <input type="hidden" name="last_name" value={lastName} />
         <input type="hidden" name="email" value={contactInfo.email} />
