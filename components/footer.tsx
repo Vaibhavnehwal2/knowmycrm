@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import { Separator } from '@/components/ui/separator';
+import { BrandLogo } from '@/components/brand-logo';
 
 export function Footer() {
   return (
@@ -9,16 +9,13 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
           <div className="lg:col-span-2">
             <Link href="/" className="inline-block">
-              <Image 
-                src="/brand/knowmycrm-logo-white.png" 
-                alt="KnowMyCRM - Find the Right CRM & ERP" 
-                width={320} 
-                height={80}
-                className="h-16 w-auto"
-              />
+              <BrandLogo variant="footer" />
             </Link>
-            <p className="mt-6 text-sm text-gray-600 max-w-md">
-              Selection support + partner introductions for CRM and ERP decisions. Vendor-neutral, no sponsorship bias.
+            <p className="mt-4 text-sm font-medium text-gray-700">
+              Selection support + partner introductions for CRM and ERP decisions.
+            </p>
+            <p className="mt-2 text-sm text-gray-600 max-w-md">
+              Vendor-neutral, no sponsorship bias. We help you find the right fit.
             </p>
           </div>
           

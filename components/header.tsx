@@ -1,8 +1,8 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { NavPrefetchLink } from '@/components/nav-prefetch-link';
 import { MobileMenu } from '@/components/mobile-menu';
+import { BrandLogo } from '@/components/brand-logo';
 
 const navigation = [
   { name: 'Home', href: '/' },
@@ -17,18 +17,9 @@ const navigation = [
 export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
-      <nav className="container mx-auto flex h-24 max-w-7xl items-center justify-between px-4 md:px-6" aria-label="Global">
+      <nav className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-6" aria-label="Global">
         <div className="flex items-center">
-          <Link href="/" className="flex items-center hover:opacity-90 transition-opacity">
-            <Image 
-              src="/brand/knowmycrm-logo-white.png" 
-              alt="KnowMyCRM - Find the Right CRM & ERP" 
-              width={320} 
-              height={80}
-              className="h-16 w-auto"
-              priority
-            />
-          </Link>
+          <BrandLogo variant="header" linkToHome />
         </div>
         
         <div className="hidden lg:flex lg:gap-x-8">
