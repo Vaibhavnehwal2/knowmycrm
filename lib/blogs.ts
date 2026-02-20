@@ -67,35 +67,27 @@ function findMdxFile(slug: string): string | null {
  * Sorted by publishedAt desc
  */
 export function getAllBlogs(): BlogPost[] {
-  const blogsDir = getBlogsDirectory();
+  const mdxFiles = getAllMdxFiles();
   
-  if (!fs.existsSync(blogsDir)) {
-    return [];
-  }
-  
-  const fileNames = fs.readdirSync(blogsDir);
-  const posts = fileNames
-    .filter(fileName => fileName.endsWith('.mdx'))
-    .map(fileName => {
-      const slug = fileName.replace(/\.mdx$/, '');
-      const fullPath = path.join(blogsDir, fileName);
-      const fileContents = fs.readFileSync(fullPath, 'utf8');
-      const { data } = matter(fileContents);
+  const posts = mdxFiles.map(({ filePath, fileName }) => {
+    const slug = fileName.replace(/\.mdx$/, '');
+    const fileContents = fs.readFileSync(filePath, 'utf8');
+    const { data } = matter(fileContents);
 
-      return {
-        slug,
-        title: data.title || 'Untitled',
-        excerpt: data.excerpt || '',
-        // Support both old 'date' and new 'publishedAt' field names
-        publishedAt: data.publishedAt || data.date || new Date().toISOString(),
-        updatedAt: data.updatedAt || data.updated,
-        author: data.author || 'KnowMyCRM Team',
-        readTime: data.readTime || '5 min read',
-        category: data.category || 'Guide',
-        coverImage: data.coverImage,
-        tags: data.tags || [],
-      };
-    });
+    return {
+      slug,
+      title: data.title || 'Untitled',
+      excerpt: data.excerpt || '',
+      // Support both old 'date' and new 'publishedAt' field names
+      publishedAt: data.publishedAt || data.date || new Date().toISOString(),
+      updatedAt: data.updatedAt || data.updated,
+      author: data.author || 'KnowMyCRM Team',
+      readTime: data.readTime || '5 min read',
+      category: data.category || 'Guide',
+      coverImage: data.coverImage,
+      tags: data.tags || [],
+    };
+  });
 
   // Sort by publishedAt descending
   return posts.sort((a, b) => 
