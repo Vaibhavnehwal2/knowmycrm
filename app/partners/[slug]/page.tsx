@@ -1,11 +1,17 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { getAllPartners, getPartnerWithContent } from '@/lib/partners';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { ArrowLeft, ExternalLink, Building2, MapPin, Tag } from 'lucide-react';
 import { compileMDX } from 'next-mdx-remote/rsc';
+
+// Helper to check if URL is external (S3, etc.)
+function isExternalUrl(url: string): boolean {
+  return url.startsWith('http://') || url.startsWith('https://');
+}
 
 export const dynamic = 'force-static';
 export const dynamicParams = false;
