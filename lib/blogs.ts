@@ -22,21 +22,44 @@ export interface BlogPostWithContent extends BlogPost {
 
 // Support both old location (content/resources) and new location (content/blogs)
 const blogsDirectories = [
+  path.join(process.cwd(), 'content/resources'), // Check old location first for backward compatibility
   path.join(process.cwd(), 'content/blogs'),
-  path.join(process.cwd(), 'content/resources'),
 ];
 
 /**
- * Get the blogs directory that exists
+ * Get all MDX files from all blogs directories
  */
-function getBlogsDirectory(): string {
+function getAllMdxFiles(): { filePath: string; fileName: string }[] {
+  const files: { filePath: string; fileName: string }[] = [];
+  
   for (const dir of blogsDirectories) {
     if (fs.existsSync(dir)) {
-      return dir;
+      const fileNames = fs.readdirSync(dir);
+      fileNames
+        .filter(fileName => fileName.endsWith('.mdx'))
+        .forEach(fileName => {
+          files.push({
+            filePath: path.join(dir, fileName),
+            fileName,
+          });
+        });
     }
   }
-  // Return first option as default
-  return blogsDirectories[0];
+  
+  return files;
+}
+
+/**
+ * Find MDX file by slug across all directories
+ */
+function findMdxFile(slug: string): string | null {
+  for (const dir of blogsDirectories) {
+    const fullPath = path.join(dir, `${slug}.mdx`);
+    if (fs.existsSync(fullPath)) {
+      return fullPath;
+    }
+  }
+  return null;
 }
 
 /**
