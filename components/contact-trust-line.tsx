@@ -1,7 +1,7 @@
 'use client';
 
 import { Phone } from 'lucide-react';
-import { WhatsAppIcon } from '@/components/social-icons';
+import { WhatsAppIcon, IndiaFlag, RomaniaFlag } from '@/components/social-icons';
 
 interface ContactTrustLineProps {
   className?: string;
@@ -33,16 +33,18 @@ export function ContactTrustLine({ className = '', showWhatsApp = true }: Contac
         <span className="flex items-center gap-1.5">
           <a
             href={`tel:${CONTACT.india.raw}`}
-            className="text-primary hover:underline font-medium"
+            className="text-primary hover:underline font-medium inline-flex items-center gap-1"
           >
-            🇮🇳 {CONTACT.india.display}
+            <IndiaFlag className="h-3 w-4 rounded-sm" />
+            {CONTACT.india.display}
           </a>
           <span className="text-gray-400">/</span>
           <a
             href={`tel:${CONTACT.romania.raw}`}
-            className="text-primary hover:underline font-medium"
+            className="text-primary hover:underline font-medium inline-flex items-center gap-1"
           >
-            🇷🇴 {CONTACT.romania.display}
+            <RomaniaFlag className="h-3 w-4 rounded-sm" />
+            {CONTACT.romania.display}
           </a>
         </span>
       </div>
@@ -58,18 +60,20 @@ export function ContactTrustLine({ className = '', showWhatsApp = true }: Contac
               href={CONTACT.india.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#25D366] hover:underline font-medium"
+              className="text-[#25D366] hover:underline font-medium inline-flex items-center gap-1"
             >
-              🇮🇳 India
+              <IndiaFlag className="h-3 w-4 rounded-sm" />
+              India
             </a>
             <span className="text-gray-400">/</span>
             <a
               href={CONTACT.romania.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#25D366] hover:underline font-medium"
+              className="text-[#25D366] hover:underline font-medium inline-flex items-center gap-1"
             >
-              🇷🇴 Romania
+              <RomaniaFlag className="h-3 w-4 rounded-sm" />
+              Romania
             </a>
           </span>
         </div>
