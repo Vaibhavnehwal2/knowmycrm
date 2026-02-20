@@ -87,6 +87,10 @@ export default function BookPage() {
               intent: 'consultation',
             }}
           />
+          {/* Trust line */}
+          <div className="mt-6">
+            <ContactTrustLine />
+          </div>
         </div>
       </div>
     </div>
