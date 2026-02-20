@@ -344,12 +344,18 @@ export default function WizardPage() {
   if (results) {
     return (
       <div className="container mx-auto max-w-5xl px-4 py-12">
-        {/* Hidden iframe for Salesforce submission */}
+        {/* Hidden iframe for Salesforce submission - 1x1 offscreen for reliable load events */}
         <iframe
-          ref={iframeRef}
           name="sf_wizard_iframe"
-          className="hidden"
-          onLoad={handleIframeLoad}
+          style={{
+            position: 'absolute',
+            left: '-9999px',
+            top: '-9999px',
+            width: '1px',
+            height: '1px',
+            opacity: 0,
+            pointerEvents: 'none',
+          }}
           title="Salesforce Web-to-Lead"
         />
         
