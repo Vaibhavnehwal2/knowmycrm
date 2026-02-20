@@ -23,30 +23,30 @@ export function Footer() {
           </div>
           
           <div>
-            <h3 className="text-sm font-semibold text-gray-900 mb-4">Platform</h3>
+            <h3 className="text-sm font-semibold text-white mb-4">Platform</h3>
             <ul className="space-y-3">
               <li>
-                <Link href="/wizard" className="text-sm text-gray-600 hover:text-primary transition-colors">
+                <Link href="/wizard" className="text-sm text-gray-400 hover:text-white transition-colors">
                   Fit Wizard
                 </Link>
               </li>
               <li>
-                <Link href="/compare-crm" className="text-sm text-gray-600 hover:text-primary transition-colors">
+                <Link href="/compare-crm" className="text-sm text-gray-400 hover:text-white transition-colors">
                   Compare CRM
                 </Link>
               </li>
               <li>
-                <Link href="/compare-erp" className="text-sm text-gray-600 hover:text-primary transition-colors">
+                <Link href="/compare-erp" className="text-sm text-gray-400 hover:text-white transition-colors">
                   Compare ERP
                 </Link>
               </li>
               <li>
-                <Link href="/services" className="text-sm text-gray-600 hover:text-primary transition-colors">
+                <Link href="/services" className="text-sm text-gray-400 hover:text-white transition-colors">
                   Services
                 </Link>
               </li>
               <li>
-                <Link href="/partners" className="text-sm text-gray-600 hover:text-primary transition-colors">
+                <Link href="/partners" className="text-sm text-gray-400 hover:text-white transition-colors">
                   Partners
                 </Link>
               </li>
@@ -54,30 +54,30 @@ export function Footer() {
           </div>
           
           <div>
-            <h3 className="text-sm font-semibold text-gray-900 mb-4">Company</h3>
+            <h3 className="text-sm font-semibold text-white mb-4">Company</h3>
             <ul className="space-y-3">
               <li>
-                <Link href="/about" className="text-sm text-gray-600 hover:text-primary transition-colors">
+                <Link href="/about" className="text-sm text-gray-400 hover:text-white transition-colors">
                   About
                 </Link>
               </li>
               <li>
-                <Link href="/resources" className="text-sm text-gray-600 hover:text-primary transition-colors">
+                <Link href="/resources" className="text-sm text-gray-400 hover:text-white transition-colors">
                   Resources
                 </Link>
               </li>
               <li>
-                <Link href="/book" className="text-sm text-gray-600 hover:text-primary transition-colors">
+                <Link href="/book" className="text-sm text-gray-400 hover:text-white transition-colors">
                   Book a Call
                 </Link>
               </li>
               <li>
-                <Link href="/privacy" className="text-sm text-gray-600 hover:text-primary transition-colors">
+                <Link href="/privacy" className="text-sm text-gray-400 hover:text-white transition-colors">
                   Privacy
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="text-sm text-gray-600 hover:text-primary transition-colors">
+                <Link href="/terms" className="text-sm text-gray-400 hover:text-white transition-colors">
                   Terms
                 </Link>
               </li>
@@ -85,7 +85,7 @@ export function Footer() {
           </div>
         </div>
         
-        <Separator className="my-8" />
+        <Separator className="my-8 bg-gray-700" />
         
         <div className="space-y-4">
           <p className="text-xs text-gray-500">
