@@ -27,9 +27,11 @@ import industriesData from '@/data/industries.json';
 const SF_CONFIG = {
   formAction: 'https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00DWr00000A30k5',
   oid: '00DWr00000A30k5',
-  retURL: 'https://knowmycrm.com/thank-you',
   kmcPayloadFieldId: '00NWr000002xsG9',
 };
+
+// Fallback timeout (8 seconds)
+const FALLBACK_TIMEOUT_MS = 8000;
 
 // Industry options
 const industries = industriesData.map(i => ({ value: i.slug, label: i.name }));
