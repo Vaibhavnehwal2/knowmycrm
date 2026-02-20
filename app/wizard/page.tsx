@@ -139,11 +139,18 @@ export default function WizardPage() {
   
   // Refs for Salesforce form submission
   const formRef = useRef<HTMLFormElement>(null);
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-  const iframeLoadCount = useRef(0);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  
+  // Dynamic retURL
+  const [retURL, setRetURL] = useState('/thank-you');
 
   // Load saved state on mount
   useEffect(() => {
+    // Set dynamic retURL on client side
+    if (typeof window !== 'undefined') {
+      setRetURL(`${window.location.origin}/thank-you`);
+    }
+    
     const saved = loadWizardState();
     if (saved) {
       setState(saved);
