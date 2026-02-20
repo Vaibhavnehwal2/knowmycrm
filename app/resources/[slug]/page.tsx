@@ -8,7 +8,7 @@ import { compileMDX } from 'next-mdx-remote/rsc';
 import { ChecklistLeadMagnet } from '@/components/checklist-lead-magnet';
 
 export const dynamic = 'force-static';
-export const dynamicParams = false;
+export const dynamicParams = true;
 export const revalidate = 86400;
 
 // Helper to check if URL is external
