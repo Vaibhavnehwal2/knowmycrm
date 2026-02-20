@@ -12,15 +12,15 @@ interface BrandLogoProps {
 }
 
 const sizeClasses: Record<BrandLogoVariant, string> = {
-  header: 'h-10 md:h-12', // 40px mobile, 48px desktop - clearly visible
-  footer: 'h-10', // 40px for footer
-  card: 'h-6', // 24px subtle stamp
+  header: 'h-16 md:h-20', // 64px mobile, 80px desktop - compensate for image whitespace
+  footer: 'h-14', // 56px for footer
+  card: 'h-10', // 40px stamp
 };
 
 const dimensions: Record<BrandLogoVariant, { width: number; height: number }> = {
-  header: { width: 320, height: 80 },
-  footer: { width: 280, height: 70 },
-  card: { width: 120, height: 30 },
+  header: { width: 400, height: 100 },
+  footer: { width: 320, height: 80 },
+  card: { width: 160, height: 40 },
 };
 
 export function BrandLogo({
