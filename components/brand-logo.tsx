@@ -37,6 +37,9 @@ const textSizeClasses: Record<BrandLogoSize, string> = {
   lg: 'text-2xl',
 };
 
+// Use S3-hosted logo for reliability across all deployments
+const LOGO_URL = 'https://kmc-logos.s3.eu-north-1.amazonaws.com/brand/knowmycrm-logo-cropped.png';
+
 export function BrandLogo({
   variant = 'full',
   size = 'md',
@@ -45,17 +48,8 @@ export function BrandLogo({
   linkToHome = false,
 }: BrandLogoProps) {
   const [imageError, setImageError] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const sizeClass = sizeClasses[size];
   const { width, height } = dimensions[size];
-  
-  // Use the cropped logo with cache-bust version (no whitespace)
-  const logoSrc = '/brand/knowmycrm-logo-cropped-v2.png';
-  
-  // Ensure we're mounted on client before checking image
-  useEffect(() => {
-    setMounted(true);
-  }, []);
   
   // Text fallback element - styled to look professional
   const textFallback = (
@@ -85,15 +79,14 @@ export function BrandLogo({
   }
 
   const imageElement = (
-    <Image
-      src={logoSrc}
+    <img
+      src={LOGO_URL}
       alt="KnowMyCRM"
       width={width}
       height={height}
       className={cn('w-auto object-contain', sizeClass, className)}
-      priority={priority}
       onError={() => setImageError(true)}
-      unoptimized // Use unoptimized to avoid Next.js image optimization issues with static files
+      loading={priority ? 'eager' : 'lazy'}
     />
   );
 
