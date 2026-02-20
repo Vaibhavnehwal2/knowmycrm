@@ -2,38 +2,43 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
-export type BrandLogoVariant = 'header' | 'footer' | 'card';
+export type BrandLogoVariant = 'full' | 'icon' | 'wordmark';
+export type BrandLogoSize = 'sm' | 'md' | 'lg';
 
 interface BrandLogoProps {
   variant?: BrandLogoVariant;
+  size?: BrandLogoSize;
   className?: string;
-  showWordmark?: boolean;
+  priority?: boolean;
   linkToHome?: boolean;
 }
 
-const sizeClasses: Record<BrandLogoVariant, string> = {
-  header: 'h-16 md:h-20', // 64px mobile, 80px desktop - compensate for image whitespace
-  footer: 'h-14', // 56px for footer
-  card: 'h-10', // 40px stamp
+// Height classes for each size
+const sizeClasses: Record<BrandLogoSize, string> = {
+  sm: 'h-6',   // 24px
+  md: 'h-8',   // 32px
+  lg: 'h-10',  // 40px
 };
 
-const dimensions: Record<BrandLogoVariant, { width: number; height: number }> = {
-  header: { width: 400, height: 100 },
-  footer: { width: 320, height: 80 },
-  card: { width: 160, height: 40 },
+// Image dimensions for Next.js (aspect ratio ~4:1 for full logo)
+const dimensions: Record<BrandLogoSize, { width: number; height: number }> = {
+  sm: { width: 96, height: 24 },
+  md: { width: 128, height: 32 },
+  lg: { width: 160, height: 40 },
 };
 
 export function BrandLogo({
-  variant = 'header',
+  variant = 'full',
+  size = 'md',
   className = '',
-  showWordmark = true,
+  priority = false,
   linkToHome = false,
 }: BrandLogoProps) {
-  const sizeClass = sizeClasses[variant];
-  const { width, height } = dimensions[variant];
+  const sizeClass = sizeClasses[size];
+  const { width, height } = dimensions[size];
   
-  // The full logo includes the wordmark
-  const logoSrc = '/brand/knowmycrm-logo.png';
+  // Use the cropped logo (no whitespace)
+  const logoSrc = '/brand/knowmycrm-logo-cropped.png';
   
   const imageElement = (
     <Image
@@ -42,8 +47,7 @@ export function BrandLogo({
       width={width}
       height={height}
       className={cn('w-auto object-contain', sizeClass, className)}
-      priority={variant === 'header'}
-      unoptimized
+      priority={priority}
     />
   );
 
