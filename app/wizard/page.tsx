@@ -477,7 +477,7 @@ export default function WizardPage() {
           className="hidden"
         >
           <input type="hidden" name="oid" value={SF_CONFIG.oid} />
-          <input type="hidden" name="retURL" value={SF_CONFIG.retURL} />
+          <input type="hidden" name="retURL" value={retURL} />
           <input type="hidden" name="first_name" value={firstName} />
           <input type="hidden" name="last_name" value={lastName} />
           <input type="hidden" name="email" value={contactInfo.email} />
