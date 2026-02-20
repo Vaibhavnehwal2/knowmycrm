@@ -14,8 +14,8 @@ const SF_CONFIG = {
   formAction: 'https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00Dam00001ZRIBb',
   oid: '00Dam00001ZRIBb',
   kmcPayloadFieldId: '00NWQ00000DZVEL',
-  // Production retURL - must be HTTPS with no prefix issues
-  retURL: 'https://knowmycrm.com/thank-you',
+  // Fallback retURL (only used for SSR, client uses getRetURL() which is domain-agnostic)
+  retURL: '/thank-you',
 };
 
 // Fallback timeout (6 seconds - slightly shorter for better UX)
