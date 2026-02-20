@@ -1,12 +1,30 @@
 import Link from 'next/link';
 import { Separator } from '@/components/ui/separator';
 import { BrandLogo } from '@/components/brand-logo';
+import { Phone, MapPin } from 'lucide-react';
+
+// Contact info - single source of truth for client-side footer
+const CONTACT = {
+  india: {
+    name: 'India',
+    phone: '+91 9315156055',
+    phoneRaw: '+919315156055',
+    address: 'Urbtech NPX, P5/522, Sector 153, Noida, UP 201304',
+  },
+  romania: {
+    name: 'Romania',
+    phone: '+40 754 324 179',
+    phoneRaw: '+40754324179',
+    address: 'Strada BUZEȘTI, Nr. 75-77, Camera 7, Etaj 9, București',
+  },
+};
 
 export function Footer() {
   return (
     <footer className="border-t bg-gray-50">
       <div className="container mx-auto max-w-7xl px-4 py-12 md:px-6">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-5">
+          {/* Brand */}
           <div className="lg:col-span-2">
             <Link href="/" className="inline-block">
               <BrandLogo size="lg" />
@@ -19,6 +37,7 @@ export function Footer() {
             </p>
           </div>
           
+          {/* Platform */}
           <div>
             <h3 className="text-sm font-semibold text-gray-900 mb-4">Platform</h3>
             <ul className="space-y-3">
@@ -50,6 +69,7 @@ export function Footer() {
             </ul>
           </div>
           
+          {/* Company */}
           <div>
             <h3 className="text-sm font-semibold text-gray-900 mb-4">Company</h3>
             <ul className="space-y-3">
@@ -61,6 +81,11 @@ export function Footer() {
               <li>
                 <Link href="/resources" className="text-sm text-gray-600 hover:text-primary transition-colors">
                   Resources
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="text-sm text-gray-600 hover:text-primary transition-colors">
+                  Contact
                 </Link>
               </li>
               <li>
@@ -79,6 +104,44 @@ export function Footer() {
                 </Link>
               </li>
             </ul>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h3 className="text-sm font-semibold text-gray-900 mb-4">Contact</h3>
+            <div className="space-y-4">
+              {/* India */}
+              <div>
+                <div className="text-sm font-medium text-gray-800 mb-1.5">🇮🇳 {CONTACT.india.name}</div>
+                <a
+                  href={`tel:${CONTACT.india.phoneRaw}`}
+                  className="flex items-center gap-1.5 text-sm text-gray-600 hover:text-primary transition-colors mb-1"
+                >
+                  <Phone className="h-3.5 w-3.5" />
+                  {CONTACT.india.phone}
+                </a>
+                <div className="flex items-start gap-1.5 text-xs text-gray-500">
+                  <MapPin className="h-3 w-3 shrink-0 mt-0.5" />
+                  <span>{CONTACT.india.address}</span>
+                </div>
+              </div>
+              
+              {/* Romania */}
+              <div>
+                <div className="text-sm font-medium text-gray-800 mb-1.5">🇷🇴 {CONTACT.romania.name}</div>
+                <a
+                  href={`tel:${CONTACT.romania.phoneRaw}`}
+                  className="flex items-center gap-1.5 text-sm text-gray-600 hover:text-primary transition-colors mb-1"
+                >
+                  <Phone className="h-3.5 w-3.5" />
+                  {CONTACT.romania.phone}
+                </a>
+                <div className="flex items-start gap-1.5 text-xs text-gray-500">
+                  <MapPin className="h-3 w-3 shrink-0 mt-0.5" />
+                  <span>{CONTACT.romania.address}</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         
