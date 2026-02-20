@@ -1,0 +1,104 @@
+'use client';
+
+import { MapPin, Phone } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+
+export interface Address {
+  line1: string;
+  line2?: string;
+  city: string;
+  state?: string;
+  postalCode?: string;
+  country: string;
+}
+
+export interface Location {
+  name: string;
+  address: Address;
+  phone: string;
+  phoneRaw: string;
+}
+
+interface ContactCardProps {
+  location: Location;
+  variant?: 'default' | 'compact';
+}
+
+export function ContactCard({ location, variant = 'default' }: ContactCardProps) {
+  const { name, address, phone, phoneRaw } = location;
+
+  if (variant === 'compact') {
+    return (
+      <div className="space-y-2">
+        <h4 className="font-semibold text-gray-900 text-sm">{name}</h4>
+        <div className="space-y-1.5">
+          <a
+            href={`tel:${phoneRaw}`}
+            className="flex items-center gap-2 text-sm text-gray-600 hover:text-primary transition-colors"
+          >
+            <Phone className="h-3.5 w-3.5 shrink-0" />
+            <span>{phone}</span>
+          </a>
+          <div className="flex items-start gap-2 text-sm text-gray-600">
+            <MapPin className="h-3.5 w-3.5 shrink-0 mt-0.5" />
+            <div className="leading-relaxed">
+              <div>{address.line1}</div>
+              {address.line2 && <div>{address.line2}</div>}
+              <div>
+                {address.city}
+                {address.state && `, ${address.state}`}
+                {address.postalCode && ` ${address.postalCode}`}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <Card className="h-full">
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <span className="text-2xl">{name === 'India' ? '🇮🇳' : '🇷🇴'}</span>
+          {name}
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <a
+          href={`tel:${phoneRaw}`}
+          className="flex items-center gap-3 p-3 bg-primary/5 rounded-lg hover:bg-primary/10 transition-colors group"
+        >
+          <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
+            <Phone className="h-5 w-5 text-primary" />
+          </div>
+          <div>
+            <div className="text-sm text-gray-500">Phone</div>
+            <div className="font-semibold text-gray-900">{phone}</div>
+          </div>
+        </a>
+        
+        <div className="flex items-start gap-3">
+          <div className="p-2 bg-gray-100 rounded-lg">
+            <MapPin className="h-5 w-5 text-gray-600" />
+          </div>
+          <div>
+            <div className="text-sm text-gray-500 mb-1">Address</div>
+            <div className="text-gray-900 leading-relaxed">
+              <div>{address.line1}</div>
+              {address.line2 && <div>{address.line2}</div>}
+              <div>
+                {address.city}
+                {address.state && `, ${address.state}`}
+              </div>
+              {address.postalCode && <div>{address.postalCode}</div>}
+              <div className="font-medium">{address.country}</div>
+            </div>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+export default ContactCard;

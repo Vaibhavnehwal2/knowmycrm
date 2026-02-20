@@ -1,0 +1,31 @@
+{
+  "companyName": "KnowMyCRM",
+  "locations": {
+    "india": {
+      "name": "India",
+      "address": {
+        "line1": "Urbtech NPX, P5/522",
+        "line2": "Noida-Greater Noida Expy, Sector 153",
+        "city": "Noida",
+        "state": "Uttar Pradesh",
+        "postalCode": "201304",
+        "country": "India"
+      },
+      "phone": "+91 9315156055",
+      "phoneRaw": "+919315156055"
+    },
+    "romania": {
+      "name": "Romania",
+      "address": {
+        "line1": "Strada BUZEŞTI, Nr. 75-77",
+        "line2": "Camera 7, Etaj 9",
+        "city": "Bucureşti Sectorul 1",
+        "state": "",
+        "postalCode": "",
+        "country": "Romania"
+      },
+      "phone": "+40 754 324 179",
+      "phoneRaw": "+40754324179"
+    }
+  }
+}
