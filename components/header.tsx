@@ -16,20 +16,18 @@ const navigation = [
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
-      <nav className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-6" aria-label="Global">
+    <header className="sticky top-0 z-50 w-full border-b bg-gray-900">
+      <nav className="container mx-auto flex h-20 max-w-7xl items-center justify-between px-4 md:px-6" aria-label="Global">
         <div className="flex items-center">
-          <Link href="/" className="flex items-center gap-2 hover:opacity-90 transition-opacity">
-            <div className="bg-gray-900 rounded-md px-2 py-1">
-              <Image 
-                src="/brand/knowmycrm-logo-full.png" 
-                alt="KnowMyCRM - Find the Right CRM & ERP" 
-                width={180} 
-                height={45}
-                className="h-10 w-auto"
-                priority
-              />
-            </div>
+          <Link href="/" className="flex items-center hover:opacity-90 transition-opacity">
+            <Image 
+              src="/brand/knowmycrm-logo-large.png" 
+              alt="KnowMyCRM - Find the Right CRM & ERP" 
+              width={280} 
+              height={70}
+              className="h-14 w-auto"
+              priority
+            />
           </Link>
         </div>
         
