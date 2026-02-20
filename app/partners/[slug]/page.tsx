@@ -72,9 +72,21 @@ export default async function PartnerDetailPage({ params }: { params: { slug: st
           </Link>
 
           <div className="flex items-start gap-6">
-            {/* Logo placeholder */}
-            <div className="p-4 bg-white rounded-xl shadow-sm border shrink-0">
-              <Building2 className="h-12 w-12 text-gray-400" />
+            {/* Logo */}
+            <div className="p-4 bg-white rounded-xl shadow-sm border shrink-0 w-20 h-20 flex items-center justify-center overflow-hidden">
+              {partner.logoUrl ? (
+                <Image
+                  src={partner.logoUrl}
+                  alt={`${partner.name} logo`}
+                  width={64}
+                  height={64}
+                  className="object-contain w-full h-full"
+                  unoptimized={isExternalUrl(partner.logoUrl)}
+                  priority
+                />
+              ) : (
+                <Building2 className="h-12 w-12 text-gray-400" />
+              )}
             </div>
 
             <div className="flex-1">
