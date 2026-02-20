@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
+import { useState, useRef, useEffect, useMemo, useCallback, useId } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -14,10 +14,12 @@ const SF_CONFIG = {
   formAction: 'https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00Dam00001ZRIBb',
   oid: '00Dam00001ZRIBb',
   kmcPayloadFieldId: '00NWQ00000DZVEL',
+  // Production retURL - must be HTTPS with no prefix issues
+  retURL: 'https://knowmycrm.com/thank-you',
 };
 
-// Fallback timeout (8 seconds)
-const FALLBACK_TIMEOUT_MS = 8000;
+// Fallback timeout (6 seconds - slightly shorter for better UX)
+const FALLBACK_TIMEOUT_MS = 6000;
 
 // Time slots (30-min intervals 09:00 - 18:00)
 const TIME_SLOTS = [
@@ -56,7 +58,7 @@ export interface WebToLeadDefaultValues {
 }
 
 export interface KMCPayload {
-  source: WebToLeadVariant;
+  source: WebToLeadVariant | string;
   schemaVersion: string;
   pageUrl: string;
   referrer: string;
@@ -153,7 +155,6 @@ function buildKMCPayload(basePayload: Partial<KMCPayload>, variant: WebToLeadVar
   
   // Truncate if too long (30k limit)
   if (jsonString.length > 30000) {
-    // Remove non-critical fields
     const trimmedPayload = { ...fullPayload };
     if (trimmedPayload.answers) {
       trimmedPayload.answers = { note: 'truncated due to size' };
@@ -194,10 +195,15 @@ function formatDate(dateStr: string): string {
   return date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
 }
 
-// Get dynamic retURL based on current origin
+// Get dynamic retURL based on current origin (with fallback to production)
 function getRetURL(): string {
-  if (typeof window === 'undefined') return '/thank-you';
-  return `${window.location.origin}/thank-you`;
+  if (typeof window === 'undefined') return SF_CONFIG.retURL;
+  // Use current origin for local dev, but production URL for deployed
+  const origin = window.location.origin;
+  if (origin.includes('localhost') || origin.includes('preview.emergentagent.com')) {
+    return `${origin}/thank-you`;
+  }
+  return SF_CONFIG.retURL;
 }
 
 export function SalesforceWebToLead({
@@ -211,8 +217,13 @@ export function SalesforceWebToLead({
   showCard = true,
   className = '',
 }: SalesforceWebToLeadProps) {
+  // Generate unique ID for this instance to avoid iframe name collisions
+  const instanceId = useId();
+  const iframeName = `sf_w2l_iframe_${instanceId.replace(/:/g, '_')}`;
+  
   const formRef = useRef<HTMLFormElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const isSubmittingRef = useRef(false); // Use ref to track submitting state in timeout
   
   const [formData, setFormData] = useState({
     name: defaultValues.name || '',
@@ -230,20 +241,26 @@ export function SalesforceWebToLead({
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [recentlySubmitted, setRecentlySubmitted] = useState(false);
-  const [retURL, setRetURL] = useState('/thank-you');
+  const [isMounted, setIsMounted] = useState(false);
+  const [retURL, setRetURL] = useState(SF_CONFIG.retURL);
 
-  // Set dynamic retURL on client side
+  // Track mounted state
   useEffect(() => {
+    setIsMounted(true);
     setRetURL(getRetURL());
+    
+    // Reset form state on mount (handles client-side navigation)
+    setIsSubmitting(false);
+    setIsSuccess(false);
+    isSubmittingRef.current = false;
+    
+    return () => {
+      setIsMounted(false);
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
   }, []);
-
-  // Check for recent submission on mount
-  useEffect(() => {
-    if (formData.email && wasRecentlySubmitted(formData.email)) {
-      setRecentlySubmitted(true);
-    }
-  }, [formData.email]);
 
   // Handle success completion
   const handleSuccess = useCallback(() => {
@@ -253,18 +270,23 @@ export function SalesforceWebToLead({
       timeoutRef.current = null;
     }
     
+    isSubmittingRef.current = false;
     setIsSubmitting(false);
     setIsSuccess(true);
     markAsSubmitted(formData.email);
+    
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[Web-to-Lead] Success - Lead submitted');
+    }
+    
     onSuccess?.();
   }, [formData.email, onSuccess]);
 
   // Listen for postMessage from /thank-you page
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
-      // Check if the message is our success signal
       if (event.data && event.data.type === 'KMC_W2L_SUCCESS') {
-        if (isSubmitting) {
+        if (isSubmittingRef.current) {
           handleSuccess();
         }
       }
@@ -272,16 +294,7 @@ export function SalesforceWebToLead({
 
     window.addEventListener('message', handleMessage);
     return () => window.removeEventListener('message', handleMessage);
-  }, [isSubmitting, handleSuccess]);
-
-  // Cleanup timeout on unmount
-  useEffect(() => {
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-  }, []);
+  }, [handleSuccess]);
 
   // Get min date (tomorrow)
   const minDate = useMemo(() => {
@@ -290,33 +303,7 @@ export function SalesforceWebToLead({
     return tomorrow.toISOString().split('T')[0];
   }, []);
 
-  // Handle form submission
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (recentlySubmitted) {
-      setIsSuccess(true);
-      return;
-    }
-    
-    setIsSubmitting(true);
-    
-    // Set fallback timeout - if no postMessage arrives, still show success
-    // (Lead creation happens server-side, so it's likely successful)
-    timeoutRef.current = setTimeout(() => {
-      if (isSubmitting) {
-        console.log('Web-to-Lead: Fallback timeout triggered, showing success');
-        handleSuccess();
-      }
-    }, FALLBACK_TIMEOUT_MS);
-    
-    // Submit the form
-    if (formRef.current) {
-      formRef.current.submit();
-    }
-  };
-
-  // Build the KMC payload based on variant
+  // Build the KMC payload
   const finalKMCPayload = useMemo(() => {
     const payload: Partial<KMCPayload> = { ...kmcPayload };
     
@@ -328,6 +315,50 @@ export function SalesforceWebToLead({
     
     return buildKMCPayload(payload, variant);
   }, [variant, kmcPayload, formData.preferredDate, formData.preferredTimeSlot, formData.preferredTimezone]);
+
+  // Handle form submission
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Check if already submitted recently
+    if (formData.email && wasRecentlySubmitted(formData.email)) {
+      setIsSuccess(true);
+      return;
+    }
+    
+    // Prevent double submission
+    if (isSubmittingRef.current) {
+      return;
+    }
+    
+    isSubmittingRef.current = true;
+    setIsSubmitting(true);
+    
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[Web-to-Lead] Submitting form:', {
+        action: SF_CONFIG.formAction,
+        oid: SF_CONFIG.oid,
+        retURL,
+        payloadLength: finalKMCPayload.length,
+        iframeName,
+      });
+    }
+    
+    // Set fallback timeout using ref to check actual state
+    timeoutRef.current = setTimeout(() => {
+      if (isSubmittingRef.current) {
+        if (process.env.NODE_ENV === 'development') {
+          console.log('[Web-to-Lead] Fallback timeout triggered, showing success');
+        }
+        handleSuccess();
+      }
+    }, FALLBACK_TIMEOUT_MS);
+    
+    // Submit the form
+    if (formRef.current) {
+      formRef.current.submit();
+    }
+  };
 
   // Split name
   const { firstName, lastName } = splitName(formData.name);
@@ -360,17 +391,36 @@ export function SalesforceWebToLead({
         </div>
         <h3 className="text-xl font-semibold text-gray-900 mb-2">Thanks — we're on it!</h3>
         <p className="text-gray-600">
-          We'll email you within 24 hours with the shortlist + evaluation checklist.
+          {variant === 'checklist' 
+            ? "We'll email you the checklist within 24 hours."
+            : "We'll email you within 24 hours with the shortlist + evaluation checklist."}
         </p>
+      </div>
+    );
+  }
+
+  // Don't render form until client is mounted (prevents hydration issues)
+  if (!isMounted) {
+    return (
+      <div className={`py-8 ${className}`}>
+        <div className="animate-pulse space-y-4">
+          <div className="h-4 bg-gray-200 rounded w-1/4" />
+          <div className="h-10 bg-gray-200 rounded" />
+          <div className="h-4 bg-gray-200 rounded w-1/4" />
+          <div className="h-10 bg-gray-200 rounded" />
+          <div className="h-4 bg-gray-200 rounded w-1/4" />
+          <div className="h-10 bg-gray-200 rounded" />
+          <div className="h-10 bg-gray-200 rounded" />
+        </div>
       </div>
     );
   }
 
   const formContent = (
     <>
-      {/* Hidden iframe for form submission - 1x1 offscreen for reliable load events */}
+      {/* Hidden iframe for form submission - unique name per instance */}
       <iframe
-        name="sf_w2l_iframe"
+        name={iframeName}
         style={{
           position: 'absolute',
           left: '-9999px',
@@ -387,7 +437,7 @@ export function SalesforceWebToLead({
         ref={formRef}
         action={SF_CONFIG.formAction}
         method="POST"
-        target="sf_w2l_iframe"
+        target={iframeName}
         onSubmit={handleSubmit}
         className="space-y-4"
       >
@@ -400,9 +450,9 @@ export function SalesforceWebToLead({
         
         {/* Visible form fields */}
         <div className="space-y-2">
-          <Label htmlFor="name">Name *</Label>
+          <Label htmlFor={`name-${instanceId}`}>Name *</Label>
           <Input
-            id="name"
+            id={`name-${instanceId}`}
             required
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -411,9 +461,9 @@ export function SalesforceWebToLead({
         </div>
         
         <div className="space-y-2">
-          <Label htmlFor="email">Email *</Label>
+          <Label htmlFor={`email-${instanceId}`}>Email *</Label>
           <Input
-            id="email"
+            id={`email-${instanceId}`}
             name="email"
             type="email"
             required
@@ -424,9 +474,9 @@ export function SalesforceWebToLead({
         </div>
         
         <div className="space-y-2">
-          <Label htmlFor="company">Company *</Label>
+          <Label htmlFor={`company-${instanceId}`}>Company *</Label>
           <Input
-            id="company"
+            id={`company-${instanceId}`}
             name="company"
             required
             value={formData.company}
@@ -438,9 +488,9 @@ export function SalesforceWebToLead({
         {/* Wizard-specific: Role */}
         {variant === 'wizard' && (
           <div className="space-y-2">
-            <Label htmlFor="role">Role</Label>
+            <Label htmlFor={`role-${instanceId}`}>Role</Label>
             <Input
-              id="role"
+              id={`role-${instanceId}`}
               value={formData.role}
               onChange={(e) => setFormData({ ...formData, role: e.target.value })}
               placeholder="Sales Director"
@@ -450,105 +500,100 @@ export function SalesforceWebToLead({
         
         {/* Optional fields for wizard and book */}
         {(variant === 'wizard' || variant === 'book') && (
-          <>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="phone">Phone</Label>
-                <Input
-                  id="phone"
-                  name="phone"
-                  type="tel"
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  placeholder="+1 234 567 8900"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="website">Website</Label>
-                <Input
-                  id="website"
-                  name="url"
-                  type="url"
-                  value={formData.website}
-                  onChange={(e) => setFormData({ ...formData, website: e.target.value })}
-                  placeholder="https://company.com"
-                />
-              </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor={`phone-${instanceId}`}>Phone</Label>
+              <Input
+                id={`phone-${instanceId}`}
+                name="phone"
+                type="tel"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                placeholder="+1 234 567 8900"
+              />
             </div>
-          </>
+            <div className="space-y-2">
+              <Label htmlFor={`website-${instanceId}`}>Website</Label>
+              <Input
+                id={`website-${instanceId}`}
+                name="url"
+                type="url"
+                value={formData.website}
+                onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+                placeholder="https://company.com"
+              />
+            </div>
+          </div>
         )}
         
         {/* Book-specific: Date, Time, Timezone */}
         {variant === 'book' && (
-          <>
-            <div className="border-t pt-4 mt-4">
-              <h4 className="font-medium text-gray-900 mb-3 flex items-center gap-2">
-                <Calendar className="h-4 w-4" /> Preferred Meeting Time
-              </h4>
+          <div className="border-t pt-4 mt-4">
+            <h4 className="font-medium text-gray-900 mb-3 flex items-center gap-2">
+              <Calendar className="h-4 w-4" /> Preferred Meeting Time
+            </h4>
+            
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor={`preferredDate-${instanceId}`}>Preferred Date *</Label>
+                <Input
+                  id={`preferredDate-${instanceId}`}
+                  type="date"
+                  required
+                  min={minDate}
+                  value={formData.preferredDate}
+                  onChange={(e) => setFormData({ ...formData, preferredDate: e.target.value })}
+                />
+                {formData.preferredDate && (
+                  <p className="text-xs text-gray-500">{formatDate(formData.preferredDate)}</p>
+                )}
+              </div>
               
-              <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="preferredDate">Preferred Date *</Label>
-                  <Input
-                    id="preferredDate"
-                    type="date"
-                    required
-                    min={minDate}
-                    value={formData.preferredDate}
-                    onChange={(e) => setFormData({ ...formData, preferredDate: e.target.value })}
-                  />
-                  {formData.preferredDate && (
-                    <p className="text-xs text-gray-500">{formatDate(formData.preferredDate)}</p>
-                  )}
+                  <Label className="flex items-center gap-1">
+                    <Clock className="h-3 w-3" /> Time Slot *
+                  </Label>
+                  <Select
+                    value={formData.preferredTimeSlot}
+                    onValueChange={(value) => setFormData({ ...formData, preferredTimeSlot: value })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select time" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {TIME_SLOTS.map((slot) => (
+                        <SelectItem key={slot} value={slot}>
+                          {slot}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
                 
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label className="flex items-center gap-1">
-                      <Clock className="h-3 w-3" /> Time Slot *
-                    </Label>
-                    <Select
-                      value={formData.preferredTimeSlot}
-                      onValueChange={(value) => setFormData({ ...formData, preferredTimeSlot: value })}
-                      required
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select time" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {TIME_SLOTS.map((slot) => (
-                          <SelectItem key={slot} value={slot}>
-                            {slot}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label className="flex items-center gap-1">
-                      <Globe className="h-3 w-3" /> Timezone
-                    </Label>
-                    <Select
-                      value={formData.preferredTimezone}
-                      onValueChange={(value) => setFormData({ ...formData, preferredTimezone: value })}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select timezone" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {TIMEZONES.map((tz) => (
-                          <SelectItem key={tz} value={tz}>
-                            {tz.replace('_', ' ')}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
+                <div className="space-y-2">
+                  <Label className="flex items-center gap-1">
+                    <Globe className="h-3 w-3" /> Timezone
+                  </Label>
+                  <Select
+                    value={formData.preferredTimezone}
+                    onValueChange={(value) => setFormData({ ...formData, preferredTimezone: value })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select timezone" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {TIMEZONES.map((tz) => (
+                        <SelectItem key={tz} value={tz}>
+                          {tz.replace('_', ' ')}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
             </div>
-          </>
+          </div>
         )}
         
         <Button 
