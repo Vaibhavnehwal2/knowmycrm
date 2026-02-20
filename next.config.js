@@ -7,7 +7,7 @@ const isContainerEnv = process.env.CI === 'true' || process.env.EMERGENT_PREVIEW
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone',
+  // Removed 'standalone' output to ensure /public files are served correctly
   images: {
     unoptimized: true,
     // Allow S3 and other common image hosts
