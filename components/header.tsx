@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { NavPrefetchLink } from '@/components/nav-prefetch-link';
 import { MobileMenu } from '@/components/mobile-menu';
@@ -18,8 +19,15 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
       <nav className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-6" aria-label="Global">
         <div className="flex items-center">
-          <Link href="/" className="text-xl font-bold text-gray-900 hover:text-primary transition-colors">
-            KnowMyCRM
+          <Link href="/" className="flex items-center gap-2 hover:opacity-90 transition-opacity">
+            <Image 
+              src="/brand/knowmycrm-logo.png" 
+              alt="KnowMyCRM" 
+              width={160} 
+              height={40}
+              className="h-8 w-auto"
+              priority
+            />
           </Link>
         </div>
         
