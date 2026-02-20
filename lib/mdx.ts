@@ -7,10 +7,10 @@ import type { BlogPost } from '@/types';
 /**
  * Get all posts (backward compatible API)
  */
-export function getAllPosts(): BlogPost[] {
+export function getAllPosts(): (BlogPost & { coverImage?: string })[] {
   const blogs = getAllBlogs();
   
-  // Transform to match old BlogPost type
+  // Transform to match old BlogPost type + coverImage
   return blogs.map(blog => ({
     slug: blog.slug,
     title: blog.title,
@@ -21,6 +21,7 @@ export function getAllPosts(): BlogPost[] {
     readTime: blog.readTime,
     category: (blog.category || 'Guide') as BlogPost['category'],
     tags: blog.tags || [],
+    coverImage: blog.coverImage,
   }));
 }
 
