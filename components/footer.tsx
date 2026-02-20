@@ -9,7 +9,7 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
           <div className="lg:col-span-2">
             <Link href="/" className="inline-block">
-              <BrandLogo variant="footer" />
+              <BrandLogo size="lg" />
             </Link>
             <p className="mt-4 text-sm font-medium text-gray-700">
               Selection support + partner introductions for CRM and ERP decisions.
