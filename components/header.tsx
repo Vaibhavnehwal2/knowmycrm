@@ -20,14 +20,16 @@ export function Header() {
       <nav className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-6" aria-label="Global">
         <div className="flex items-center">
           <Link href="/" className="flex items-center gap-2 hover:opacity-90 transition-opacity">
-            <Image 
-              src="/brand/knowmycrm-logo.png" 
-              alt="KnowMyCRM" 
-              width={160} 
-              height={40}
-              className="h-8 w-auto"
-              priority
-            />
+            <div className="bg-gray-900 rounded-md px-2 py-1">
+              <Image 
+                src="/brand/knowmycrm-logo-full.png" 
+                alt="KnowMyCRM - Find the Right CRM & ERP" 
+                width={180} 
+                height={45}
+                className="h-10 w-auto"
+                priority
+              />
+            </div>
           </Link>
         </div>
         
