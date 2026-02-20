@@ -8,11 +8,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { CheckCircle2, Loader2, Calendar, Clock, Globe } from 'lucide-react';
 
-// Salesforce Web-to-Lead Configuration
+// Salesforce Web-to-Lead Configuration - PRODUCTION
 const SF_CONFIG = {
-  formAction: 'https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00DWr00000A30k5',
-  oid: '00DWr00000A30k5',
-  kmcPayloadFieldId: '00NWr000002xsG9',
+  formAction: 'https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00Dam00001ZRIBb',
+  oid: '00Dam00001ZRIBb',
+  kmcPayloadFieldId: '00NWQ00000DZVEL',
 };
 
 // Fallback timeout (8 seconds)
