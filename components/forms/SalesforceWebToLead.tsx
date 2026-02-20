@@ -576,20 +576,22 @@ export function SalesforceWebToLead({
   return (
     <Card className={className}>
       <CardHeader className="pb-4">
-        <div className="flex items-start justify-between">
-          <div>
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex-1">
             <CardTitle>{title || defaultTitle}</CardTitle>
             {(description || defaultDescription) && (
               <CardDescription>{description || defaultDescription}</CardDescription>
             )}
           </div>
-          <Image 
-            src="/brand/knowmycrm-logo.png" 
-            alt="KnowMyCRM" 
-            width={80} 
-            height={20}
-            className="h-5 w-auto opacity-60"
-          />
+          <div className="bg-gray-900 rounded px-1.5 py-0.5 shrink-0">
+            <Image 
+              src="/brand/knowmycrm-logo-full.png" 
+              alt="KnowMyCRM" 
+              width={100} 
+              height={25}
+              className="h-6 w-auto"
+            />
+          </div>
         </div>
       </CardHeader>
       <CardContent>{formContent}</CardContent>
