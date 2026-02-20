@@ -32,6 +32,9 @@ export default function ResourcesPage() {
         <ChecklistLeadMagnet variant="inline-card" />
       </section>
 
+      {/* From LinkedIn Section */}
+      <LinkedInSection posts={linkedInPosts} />
+
       <section className="container mx-auto px-4 pb-16 lg:px-8 lg:pb-24">
         <h2 className="text-2xl font-bold text-gray-900 mb-8">Latest Articles</h2>
         <ResourcesList posts={posts} />
