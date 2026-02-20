@@ -4,21 +4,21 @@ import { Separator } from '@/components/ui/separator';
 
 export function Footer() {
   return (
-    <footer className="border-t bg-gray-50">
+    <footer className="border-t bg-gray-900 text-white">
       <div className="container mx-auto max-w-7xl px-4 py-12 md:px-6">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
           <div className="lg:col-span-2">
             <Link href="/" className="inline-block">
               <Image 
-                src="/brand/knowmycrm-logo.png" 
-                alt="KnowMyCRM" 
-                width={140} 
-                height={35}
-                className="h-7 w-auto"
+                src="/brand/knowmycrm-logo-full.png" 
+                alt="KnowMyCRM - Find the Right CRM & ERP" 
+                width={220} 
+                height={55}
+                className="h-14 w-auto"
               />
             </Link>
-            <p className="mt-4 text-sm text-gray-600 max-w-md">
-              Selection support + partner introductions for CRM and ERP decisions.
+            <p className="mt-4 text-sm text-gray-400 max-w-md">
+              Selection support + partner introductions for CRM and ERP decisions. Vendor-neutral, no sponsorship bias.
             </p>
           </div>
           
