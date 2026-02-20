@@ -17,15 +17,15 @@ const navigation = [
 export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-gray-900">
-      <nav className="container mx-auto flex h-20 max-w-7xl items-center justify-between px-4 md:px-6" aria-label="Global">
+      <nav className="container mx-auto flex h-24 max-w-7xl items-center justify-between px-4 md:px-6" aria-label="Global">
         <div className="flex items-center">
           <Link href="/" className="flex items-center hover:opacity-90 transition-opacity">
             <Image 
               src="/brand/knowmycrm-logo-large.png" 
               alt="KnowMyCRM - Find the Right CRM & ERP" 
-              width={280} 
-              height={70}
-              className="h-14 w-auto"
+              width={360} 
+              height={90}
+              className="h-[72px] w-auto"
               priority
             />
           </Link>
