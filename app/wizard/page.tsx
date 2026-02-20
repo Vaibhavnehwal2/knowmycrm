@@ -417,9 +417,9 @@ export default function WizardPage() {
         </div>
 
         <Card className="relative bg-gradient-to-r from-blue-50 to-blue-100 border-primary/20 mb-8">
-          {/* Brand stamp */}
-          <div className="absolute top-3 right-3">
-            <BrandLogo variant="card" />
+          {/* Brand header row */}
+          <div className="absolute top-4 right-4">
+            <BrandLogo size="sm" />
           </div>
           <CardContent className="py-8">
             <div className="text-center">
