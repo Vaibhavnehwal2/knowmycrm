@@ -43,13 +43,12 @@ interface ContactCardProps {
 export function ContactCard({ location, variant = 'default' }: ContactCardProps) {
   const { name, address, phone, phoneRaw } = location;
   const whatsappUrl = location.whatsapp || WHATSAPP_URLS[name];
-  const flag = name === 'India' ? '🇮🇳' : '🇷🇴';
 
   if (variant === 'compact') {
     return (
       <div className="space-y-2">
         <h4 className="font-semibold text-gray-900 text-sm flex items-center gap-1.5">
-          <span>{flag}</span>
+          <CountryFlag country={name} className="h-4 w-5 rounded-sm shadow-sm" />
           <span>{name}</span>
         </h4>
         <div className="space-y-1.5">
@@ -92,7 +91,7 @@ export function ContactCard({ location, variant = 'default' }: ContactCardProps)
     <Card className="h-full">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <span className="text-2xl">{flag}</span>
+          <CountryFlag country={name} className="h-6 w-8 rounded-sm shadow-sm" />
           {name}
         </CardTitle>
       </CardHeader>
