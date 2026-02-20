@@ -497,14 +497,7 @@ export default function WizardPage() {
       <div className="container mx-auto max-w-4xl px-4 py-12">
         <div className="text-center mb-12">
           <div className="flex justify-center mb-8">
-            <Image 
-              src="/brand/knowmycrm-logo-white.png" 
-              alt="KnowMyCRM - Find the Right CRM & ERP" 
-              width={480} 
-              height={120}
-              className="h-24 w-auto"
-              priority
-            />
+            <BrandLogo variant="header" className="h-8 md:h-10" />
           </div>
           <h1 className="text-4xl font-bold text-gray-900 mb-4">CRM/ERP Fit Wizard</h1>
           <p className="text-lg text-gray-600">
