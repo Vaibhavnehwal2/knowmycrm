@@ -14,6 +14,11 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
+        hostname: 'kmc-logos.s3.eu-north-1.amazonaws.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
         hostname: '*.s3.amazonaws.com',
       },
       {
