@@ -501,7 +501,7 @@ export default function WizardPage() {
       <div className="container mx-auto max-w-4xl px-4 py-12">
         <div className="text-center mb-12">
           <div className="flex justify-center mb-8">
-            <BrandLogo variant="header" className="h-12 md:h-16" />
+            <BrandLogo size="lg" />
           </div>
           <h1 className="text-4xl font-bold text-gray-900 mb-4">CRM/ERP Fit Wizard</h1>
           <p className="text-lg text-gray-600">
