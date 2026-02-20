@@ -12,12 +12,12 @@ export function Footer() {
               <Image 
                 src="/brand/knowmycrm-logo-large.png" 
                 alt="KnowMyCRM - Find the Right CRM & ERP" 
-                width={320} 
-                height={80}
-                className="h-16 w-auto"
+                width={400} 
+                height={100}
+                className="h-20 w-auto"
               />
             </Link>
-            <p className="mt-4 text-sm text-gray-400 max-w-md">
+            <p className="mt-6 text-sm text-gray-400 max-w-md">
               Selection support + partner introductions for CRM and ERP decisions. Vendor-neutral, no sponsorship bias.
             </p>
           </div>
