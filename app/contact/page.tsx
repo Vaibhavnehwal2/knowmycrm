@@ -1,14 +1,17 @@
 import Link from 'next/link';
 import { Metadata } from 'next';
-import { Phone, Mail, ArrowRight, MessageSquare } from 'lucide-react';
+import { ArrowRight, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ContactCard } from '@/components/contact-card';
+import { LinkedInIcon } from '@/components/social-icons';
 import { getCompanyContact } from '@/lib/company';
 
 export const metadata: Metadata = {
   title: 'Contact Us | KnowMyCRM',
   description: 'Get in touch with KnowMyCRM. Offices in India and Romania. Call us or book a consultation.',
 };
+
+const LINKEDIN_URL = 'https://www.linkedin.com/company/knowmycrm';
 
 export default function ContactPage() {
   const contact = getCompanyContact();
@@ -47,44 +50,63 @@ export default function ContactPage() {
               Other Ways to Connect
             </h2>
             
-            <div className="grid gap-6 md:grid-cols-2">
+            <div className="grid gap-6 md:grid-cols-3">
               {/* Book a Call */}
               <div className="bg-white rounded-xl p-6 border border-gray-200 hover:shadow-md transition-shadow">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-primary/10 rounded-lg">
+                <div className="flex flex-col items-center text-center">
+                  <div className="p-3 bg-primary/10 rounded-lg mb-4">
                     <MessageSquare className="h-6 w-6 text-primary" />
                   </div>
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-gray-900 mb-1">Book a Consultation</h3>
-                    <p className="text-sm text-gray-600 mb-4">
-                      Schedule a 30-minute call with our CRM/ERP selection experts.
-                    </p>
-                    <Button asChild size="sm">
-                      <Link href="/book">
-                        Schedule Call <ArrowRight className="ml-2 h-4 w-4" />
-                      </Link>
-                    </Button>
-                  </div>
+                  <h3 className="font-semibold text-gray-900 mb-2">Book a Consultation</h3>
+                  <p className="text-sm text-gray-600 mb-4">
+                    Schedule a 30-minute call with our experts.
+                  </p>
+                  <Button asChild size="sm" className="w-full">
+                    <Link href="/book">
+                      Schedule Call <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
                 </div>
               </div>
 
               {/* Fit Wizard */}
               <div className="bg-white rounded-xl p-6 border border-gray-200 hover:shadow-md transition-shadow">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-green-100 rounded-lg">
+                <div className="flex flex-col items-center text-center">
+                  <div className="p-3 bg-green-100 rounded-lg mb-4">
                     <ArrowRight className="h-6 w-6 text-green-600" />
                   </div>
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-gray-900 mb-1">Try the Fit Wizard</h3>
-                    <p className="text-sm text-gray-600 mb-4">
-                      Get instant CRM recommendations based on your requirements.
-                    </p>
-                    <Button asChild variant="outline" size="sm">
-                      <Link href="/wizard">
-                        Start Wizard <ArrowRight className="ml-2 h-4 w-4" />
-                      </Link>
-                    </Button>
+                  <h3 className="font-semibold text-gray-900 mb-2">Try the Fit Wizard</h3>
+                  <p className="text-sm text-gray-600 mb-4">
+                    Get instant CRM recommendations.
+                  </p>
+                  <Button asChild variant="outline" size="sm" className="w-full">
+                    <Link href="/wizard">
+                      Start Wizard <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+
+              {/* LinkedIn */}
+              <div className="bg-white rounded-xl p-6 border border-gray-200 hover:shadow-md transition-shadow">
+                <div className="flex flex-col items-center text-center">
+                  <div className="p-3 bg-[#0A66C2]/10 rounded-lg mb-4">
+                    <LinkedInIcon className="h-6 w-6 text-[#0A66C2]" />
                   </div>
+                  <h3 className="font-semibold text-gray-900 mb-2">Follow on LinkedIn</h3>
+                  <p className="text-sm text-gray-600 mb-4">
+                    Stay updated with insights and news.
+                  </p>
+                  <Button asChild variant="outline" size="sm" className="w-full">
+                    <a 
+                      href={LINKEDIN_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <LinkedInIcon className="mr-2 h-4 w-4" />
+                      Follow Us
+                    </a>
+                  </Button>
                 </div>
               </div>
             </div>
@@ -92,7 +114,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Map or Additional Info */}
+      {/* Footer info */}
       <section className="container mx-auto px-4 py-16 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-gray-600">
