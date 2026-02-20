@@ -3,7 +3,7 @@
     "slug": "accenture",
     "name": "Accenture",
     "shortDescription": "Enterprise CRM/ERP programs, integrations, and governance at global scale.",
-    "logoUrl": "/partners/accenture-logo.png",
+    "logoUrl": "https://kmc-logos.s3.eu-north-1.amazonaws.com/partners/accenture.png",
     "websiteUrl": "https://www.accenture.com",
     "focus": ["CRM", "ERP"],
     "regions": ["Global"],
@@ -141,5 +141,16 @@
     "regions": ["North America"],
     "tags": ["Digital", "Transformation", "Implementation"],
     "sortOrder": 13
+  },
+  {
+    "slug": "fortech-syngenuity",
+    "name": "Fortech Syngenuity",
+    "shortDescription": "Certified Salesforce partner in CEE delivering end-to-end consulting, implementation, and managed services.",
+    "logoUrl": "https://kmc-logos.s3.eu-north-1.amazonaws.com/partners/fortech-syngenuity.png",
+    "websiteUrl": "https://fortechsyngenuity.com/",
+    "focus": ["CRM"],
+    "regions": ["Europe", "Romania"],
+    "tags": ["Salesforce", "Implementation", "Managed Services", "Integration"],
+    "sortOrder": 14
   }
 ]
