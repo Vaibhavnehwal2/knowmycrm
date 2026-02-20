@@ -1,0 +1,145 @@
+[
+  {
+    "slug": "accenture",
+    "name": "Accenture",
+    "shortDescription": "Enterprise CRM/ERP programs, integrations, and governance at global scale.",
+    "logoUrl": "/partners/accenture-logo.png",
+    "websiteUrl": "https://www.accenture.com",
+    "focus": ["CRM", "ERP"],
+    "regions": ["Global"],
+    "tags": ["Enterprise", "Global Delivery", "Systems Integration"],
+    "sortOrder": 1
+  },
+  {
+    "slug": "deloitte",
+    "name": "Deloitte",
+    "shortDescription": "Transformation and implementation delivery at scale for enterprise clients.",
+    "logoUrl": "/partners/deloitte-logo.png",
+    "websiteUrl": "https://www.deloitte.com",
+    "focus": ["CRM", "ERP"],
+    "regions": ["Global"],
+    "tags": ["Enterprise", "Transformation", "Advisory"],
+    "sortOrder": 2
+  },
+  {
+    "slug": "pwc",
+    "name": "PwC",
+    "shortDescription": "Advisory and implementation with focus on controls and compliance.",
+    "logoUrl": "/partners/pwc-logo.png",
+    "websiteUrl": "https://www.pwc.com",
+    "focus": ["CRM", "ERP"],
+    "regions": ["Global"],
+    "tags": ["Enterprise", "Compliance", "Advisory"],
+    "sortOrder": 3
+  },
+  {
+    "slug": "kpmg",
+    "name": "KPMG",
+    "shortDescription": "Process and systems implementation for enterprise programs.",
+    "logoUrl": "/partners/kpmg-logo.png",
+    "websiteUrl": "https://kpmg.com",
+    "focus": ["CRM", "ERP"],
+    "regions": ["Global"],
+    "tags": ["Enterprise", "Process", "Advisory"],
+    "sortOrder": 4
+  },
+  {
+    "slug": "ey",
+    "name": "EY",
+    "shortDescription": "Operations modernization and systems delivery for enterprises.",
+    "logoUrl": "/partners/ey-logo.png",
+    "websiteUrl": "https://www.ey.com",
+    "focus": ["CRM", "ERP"],
+    "regions": ["Global"],
+    "tags": ["Enterprise", "Modernization", "Operations"],
+    "sortOrder": 5
+  },
+  {
+    "slug": "capgemini",
+    "name": "Capgemini",
+    "shortDescription": "Systems integration and delivery teams across regions.",
+    "logoUrl": "/partners/capgemini-logo.png",
+    "websiteUrl": "https://www.capgemini.com",
+    "focus": ["CRM", "ERP"],
+    "regions": ["Global"],
+    "tags": ["Enterprise", "Systems Integration", "Global Delivery"],
+    "sortOrder": 6
+  },
+  {
+    "slug": "ibm-consulting",
+    "name": "IBM Consulting",
+    "shortDescription": "Enterprise consulting and integration-heavy implementations.",
+    "logoUrl": "/partners/ibm-logo.png",
+    "websiteUrl": "https://www.ibm.com/consulting",
+    "focus": ["CRM", "ERP"],
+    "regions": ["Global"],
+    "tags": ["Enterprise", "Integration", "Consulting"],
+    "sortOrder": 7
+  },
+  {
+    "slug": "cognizant",
+    "name": "Cognizant",
+    "shortDescription": "Delivery at scale with managed services capabilities.",
+    "logoUrl": "/partners/cognizant-logo.png",
+    "websiteUrl": "https://www.cognizant.com",
+    "focus": ["CRM", "ERP"],
+    "regions": ["Global", "India", "North America", "Europe"],
+    "tags": ["Managed Services", "Scale", "Global Delivery"],
+    "sortOrder": 8
+  },
+  {
+    "slug": "infosys",
+    "name": "Infosys",
+    "shortDescription": "Implementation, integration, and support models at scale.",
+    "logoUrl": "/partners/infosys-logo.png",
+    "websiteUrl": "https://www.infosys.com",
+    "focus": ["CRM", "ERP"],
+    "regions": ["Global", "India", "Europe", "North America"],
+    "tags": ["Integration", "Support", "Scale"],
+    "sortOrder": 9
+  },
+  {
+    "slug": "wipro",
+    "name": "Wipro",
+    "shortDescription": "Delivery with long-term support and managed services.",
+    "logoUrl": "/partners/wipro-logo.png",
+    "websiteUrl": "https://www.wipro.com",
+    "focus": ["CRM", "ERP"],
+    "regions": ["Global", "India", "Europe", "North America"],
+    "tags": ["Managed Services", "Support", "Delivery"],
+    "sortOrder": 10
+  },
+  {
+    "slug": "tcs",
+    "name": "Tata Consultancy Services (TCS)",
+    "shortDescription": "Large delivery capability for multi-country rollouts.",
+    "logoUrl": "/partners/tcs-logo.png",
+    "websiteUrl": "https://www.tcs.com",
+    "focus": ["CRM", "ERP"],
+    "regions": ["Global", "India", "Europe", "North America"],
+    "tags": ["Global Rollout", "Scale", "Multi-Country"],
+    "sortOrder": 11
+  },
+  {
+    "slug": "slalom",
+    "name": "Slalom",
+    "shortDescription": "Mid-enterprise transformation with adoption focus.",
+    "logoUrl": "/partners/slalom-logo.png",
+    "websiteUrl": "https://www.slalom.com",
+    "focus": ["CRM"],
+    "regions": ["North America", "Europe"],
+    "tags": ["Mid-Market", "Transformation", "Adoption"],
+    "sortOrder": 12
+  },
+  {
+    "slug": "perficient",
+    "name": "Perficient",
+    "shortDescription": "Digital transformation and implementation services.",
+    "logoUrl": "/partners/perficient-logo.png",
+    "websiteUrl": "https://www.perficient.com",
+    "focus": ["CRM", "ERP"],
+    "regions": ["North America"],
+    "tags": ["Digital", "Transformation", "Implementation"],
+    "sortOrder": 13
+  }
+]

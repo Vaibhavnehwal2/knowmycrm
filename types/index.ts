@@ -79,12 +79,20 @@ export interface BlogPost {
   tags: string[];
 }
 
+// Enhanced Partner type for content-managed partners
 export interface Partner {
+  slug: string;
   name: string;
-  website: string;
+  shortDescription: string;
+  logoUrl?: string;
+  websiteUrl: string;
   focus: string[];
   regions: string[];
-  notes: string;
+  tags?: string[];
+  sortOrder?: number;
+  // Legacy fields for backwards compatibility
+  website?: string;
+  notes?: string;
 }
 
 export interface Industry {
