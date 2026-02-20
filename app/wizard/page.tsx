@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useMemo, useDeferredValue, useRef, useCallback } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -12,6 +11,7 @@ import { Progress } from '@/components/ui/progress';
 import { Checkbox } from '@/components/ui/checkbox';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { BrandIcon } from '@/components/brand-icon';
+import { BrandLogo } from '@/components/brand-logo';
 import { 
   ArrowRight, ArrowLeft, Check, Building2, Package, 
   Users, Globe, TrendingUp, Settings, Link2, Shield, 
