@@ -10,11 +10,11 @@ export function Footer() {
           <div className="lg:col-span-2">
             <Link href="/" className="inline-block">
               <Image 
-                src="/brand/knowmycrm-logo-full.png" 
+                src="/brand/knowmycrm-logo-large.png" 
                 alt="KnowMyCRM - Find the Right CRM & ERP" 
-                width={220} 
-                height={55}
-                className="h-14 w-auto"
+                width={320} 
+                height={80}
+                className="h-16 w-auto"
               />
             </Link>
             <p className="mt-4 text-sm text-gray-400 max-w-md">
