@@ -12,14 +12,14 @@ interface BrandLogoProps {
 }
 
 const sizeClasses: Record<BrandLogoVariant, string> = {
-  header: 'h-8 md:h-10', // 32px mobile, 40px desktop
-  footer: 'h-9', // 36px for footer
+  header: 'h-10 md:h-12', // 40px mobile, 48px desktop - clearly visible
+  footer: 'h-10', // 40px for footer
   card: 'h-6', // 24px subtle stamp
 };
 
 const dimensions: Record<BrandLogoVariant, { width: number; height: number }> = {
-  header: { width: 280, height: 70 },
-  footer: { width: 240, height: 60 },
+  header: { width: 320, height: 80 },
+  footer: { width: 280, height: 70 },
   card: { width: 120, height: 30 },
 };
 
