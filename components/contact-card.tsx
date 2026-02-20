@@ -2,7 +2,7 @@
 
 import { MapPin, Phone } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { WhatsAppIcon } from '@/components/social-icons';
+import { WhatsAppIcon, IndiaFlag, RomaniaFlag } from '@/components/social-icons';
 
 export interface Address {
   line1: string;
@@ -26,6 +26,14 @@ const WHATSAPP_URLS: Record<string, string> = {
   'India': 'https://wa.me/919315156055',
   'Romania': 'https://wa.me/40754324179',
 };
+
+// Flag component selector
+function CountryFlag({ country, className = 'h-6 w-8' }: { country: string; className?: string }) {
+  if (country === 'India') {
+    return <IndiaFlag className={className} />;
+  }
+  return <RomaniaFlag className={className} />;
+}
 
 interface ContactCardProps {
   location: Location;
