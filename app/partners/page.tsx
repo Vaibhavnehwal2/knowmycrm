@@ -1,9 +1,11 @@
-import { PartnerDirectory } from '@/components/partner-directory';
-import partnersData from '@/data/partners.json';
-import type { Partner } from '@/types';
+import { getAllPartners } from '@/lib/partners';
+import { PartnerCardGrid } from '@/components/partner-card-grid';
+
+export const dynamic = 'force-static';
+export const revalidate = 86400;
 
 export default function PartnersPage() {
-  const partners = partnersData as Partner[];
+  const partners = getAllPartners();
 
   return (
     <div className="flex flex-col">
@@ -15,7 +17,8 @@ export default function PartnersPage() {
               Implementation Partners
             </h1>
             <p className="text-lg text-gray-600 mb-4">
-              These are sample partner links for now. They are not endorsements. Replace with your curated list later.
+              Browse our curated directory of CRM and ERP implementation partners. 
+              Click on any partner to learn more about their capabilities and expertise.
             </p>
             <p className="text-sm text-gray-500">
               All trademarks and logos are property of their respective owners. Used for identification only.
@@ -27,7 +30,7 @@ export default function PartnersPage() {
       {/* Partner Directory */}
       <section className="py-16 sm:py-20">
         <div className="container mx-auto max-w-6xl px-4 md:px-6">
-          <PartnerDirectory partners={partners} />
+          <PartnerCardGrid partners={partners} />
         </div>
       </section>
     </div>
