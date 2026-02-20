@@ -131,7 +131,7 @@ export function Footer() {
               {/* India */}
               <div>
                 <div className="text-sm font-medium text-gray-800 mb-1.5 flex items-center gap-1.5">
-                  <span>{CONTACT.india.flag}</span>
+                  <IndiaFlag className="h-4 w-5 rounded-sm shadow-sm" />
                   <span>{CONTACT.india.name}</span>
                 </div>
                 <div className="space-y-1">
@@ -161,7 +161,7 @@ export function Footer() {
               {/* Romania */}
               <div>
                 <div className="text-sm font-medium text-gray-800 mb-1.5 flex items-center gap-1.5">
-                  <span>{CONTACT.romania.flag}</span>
+                  <RomaniaFlag className="h-4 w-5 rounded-sm shadow-sm" />
                   <span>{CONTACT.romania.name}</span>
                 </div>
                 <div className="space-y-1">
