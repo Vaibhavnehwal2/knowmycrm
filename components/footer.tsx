@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Separator } from '@/components/ui/separator';
 
 export function Footer() {
@@ -7,8 +8,14 @@ export function Footer() {
       <div className="container mx-auto max-w-7xl px-4 py-12 md:px-6">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
           <div className="lg:col-span-2">
-            <Link href="/" className="text-xl font-bold text-gray-900">
-              KnowMyCRM
+            <Link href="/" className="inline-block">
+              <Image 
+                src="/brand/knowmycrm-logo.png" 
+                alt="KnowMyCRM" 
+                width={140} 
+                height={35}
+                className="h-7 w-auto"
+              />
             </Link>
             <p className="mt-4 text-sm text-gray-600 max-w-md">
               Selection support + partner introductions for CRM and ERP decisions.
