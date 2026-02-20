@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -11,6 +12,11 @@ import type { Partner } from '@/lib/partners';
 
 interface PartnerCardGridProps {
   partners: Partner[];
+}
+
+// Helper to check if URL is external (S3, etc.)
+function isExternalUrl(url: string): boolean {
+  return url.startsWith('http://') || url.startsWith('https://');
 }
 
 export function PartnerCardGrid({ partners }: PartnerCardGridProps) {
