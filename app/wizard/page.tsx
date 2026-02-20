@@ -494,16 +494,16 @@ export default function WizardPage() {
   // Step 0: Wizard Type Selection
   if (!state.wizardType || state.currentStep === 0) {
     return (
-      <div className="container mx-auto max-w-4xl px-4 py-16">
+      <div className="container mx-auto max-w-4xl px-4 py-12">
         <div className="text-center mb-12">
-          <div className="flex justify-center mb-6">
-            <div className="bg-gray-900 rounded-lg px-4 py-2">
+          <div className="flex justify-center mb-8">
+            <div className="bg-gray-900 rounded-xl px-6 py-4">
               <Image 
-                src="/brand/knowmycrm-logo-full.png" 
+                src="/brand/knowmycrm-logo-large.png" 
                 alt="KnowMyCRM - Find the Right CRM & ERP" 
-                width={240} 
-                height={60}
-                className="h-12 w-auto"
+                width={400} 
+                height={100}
+                className="h-20 w-auto"
                 priority
               />
             </div>
