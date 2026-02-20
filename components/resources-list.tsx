@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { PrefetchLink } from '@/components/prefetch-link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowRight, FileText } from 'lucide-react';
@@ -12,10 +13,16 @@ interface Post {
   excerpt: string;
   date: string;
   readTime: string;
+  coverImage?: string;
 }
 
 interface ResourcesListProps {
   posts: Post[];
+}
+
+// Helper to check if URL is external
+function isExternalUrl(url: string): boolean {
+  return url.startsWith('http://') || url.startsWith('https://');
 }
 
 export function ResourcesList({ posts }: ResourcesListProps) {
@@ -36,7 +43,19 @@ export function ResourcesList({ posts }: ResourcesListProps) {
     <div className="grid gap-8 md:grid-cols-2">
       {posts.map((post) => (
         <PrefetchLink key={post.slug} href={`/resources/${post.slug}`}>
-          <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer">
+          <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer overflow-hidden">
+            {/* Cover Image */}
+            {post.coverImage && (
+              <div className="relative h-48 w-full bg-gray-100">
+                <Image
+                  src={post.coverImage}
+                  alt={post.title}
+                  fill
+                  className="object-cover"
+                  unoptimized={isExternalUrl(post.coverImage)}
+                />
+              </div>
+            )}
             <CardHeader>
               <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
                 <FileText className="h-4 w-4" />
