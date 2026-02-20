@@ -98,8 +98,19 @@ export function PartnerCardGrid({ partners }: PartnerCardGridProps) {
             <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer group">
               <CardHeader>
                 <div className="flex items-start gap-3">
-                  <div className="p-2 bg-gray-100 rounded-lg shrink-0">
-                    <Building2 className="h-6 w-6 text-gray-600" />
+                  <div className="p-2 bg-gray-100 rounded-lg shrink-0 w-14 h-14 flex items-center justify-center overflow-hidden">
+                    {partner.logoUrl ? (
+                      <Image
+                        src={partner.logoUrl}
+                        alt={`${partner.name} logo`}
+                        width={48}
+                        height={48}
+                        className="object-contain w-full h-full"
+                        unoptimized={isExternalUrl(partner.logoUrl)}
+                      />
+                    ) : (
+                      <Building2 className="h-6 w-6 text-gray-600" />
+                    )}
                   </div>
                   <div className="flex-1 min-w-0">
                     <CardTitle className="text-lg group-hover:text-primary transition-colors flex items-center gap-2">
