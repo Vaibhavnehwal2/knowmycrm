@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { SalesforceWebToLead } from '@/components/forms/SalesforceWebToLead';
+import { ContactTrustLine } from '@/components/contact-trust-line';
 import { Phone, Clock, CheckCircle2 } from 'lucide-react';
 
 export default function BookPage() {
