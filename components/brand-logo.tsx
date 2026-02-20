@@ -1,5 +1,8 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 import { cn } from '@/lib/utils';
 
 export type BrandLogoVariant = 'full' | 'icon' | 'wordmark';
@@ -27,6 +30,13 @@ const dimensions: Record<BrandLogoSize, { width: number; height: number }> = {
   lg: { width: 160, height: 40 },
 };
 
+// Text fallback sizes
+const textSizeClasses: Record<BrandLogoSize, string> = {
+  sm: 'text-lg',
+  md: 'text-xl',
+  lg: 'text-2xl',
+};
+
 export function BrandLogo({
   variant = 'full',
   size = 'md',
@@ -34,13 +44,25 @@ export function BrandLogo({
   priority = false,
   linkToHome = false,
 }: BrandLogoProps) {
+  const [imageError, setImageError] = useState(false);
   const sizeClass = sizeClasses[size];
   const { width, height } = dimensions[size];
   
   // Use the cropped logo (no whitespace)
   const logoSrc = '/brand/knowmycrm-logo-cropped.png';
   
-  const imageElement = (
+  // Fallback text element when image fails to load
+  const textFallback = (
+    <span className={cn(
+      'font-bold text-primary',
+      textSizeClasses[size],
+      className
+    )}>
+      KnowMy<span className="text-gray-700">CRM</span>
+    </span>
+  );
+
+  const imageElement = imageError ? textFallback : (
     <Image
       src={logoSrc}
       alt="KnowMyCRM"
@@ -48,6 +70,7 @@ export function BrandLogo({
       height={height}
       className={cn('w-auto object-contain', sizeClass, className)}
       priority={priority}
+      onError={() => setImageError(true)}
     />
   );
 
