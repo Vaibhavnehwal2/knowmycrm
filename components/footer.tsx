@@ -2,13 +2,14 @@ import Link from 'next/link';
 import { Separator } from '@/components/ui/separator';
 import { BrandLogo } from '@/components/brand-logo';
 import { Phone, MapPin, MessageCircle } from 'lucide-react';
-import { LinkedInIcon, WhatsAppIcon } from '@/components/social-icons';
+import { LinkedInIcon, WhatsAppIcon, IndiaFlag, RomaniaFlag } from '@/components/social-icons';
 
-// Contact info - single source of truth for client-side footer
+const LINKEDIN_URL = 'https://www.linkedin.com/company/knowmycrm';
+
+// Contact info
 const CONTACT = {
   india: {
     name: 'India',
-    flag: '🇮🇳',
     phone: '+91 9315156055',
     phoneRaw: '+919315156055',
     whatsapp: 'https://wa.me/919315156055',
@@ -16,15 +17,12 @@ const CONTACT = {
   },
   romania: {
     name: 'Romania',
-    flag: '🇷🇴',
     phone: '+40 754 324 179',
     phoneRaw: '+40754324179',
     whatsapp: 'https://wa.me/40754324179',
     address: 'Strada BUZEȘTI, Nr. 75-77, Camera 7, Etaj 9, București',
   },
 };
-
-const LINKEDIN_URL = 'https://www.linkedin.com/company/knowmycrm';
 
 export function Footer() {
   return (
