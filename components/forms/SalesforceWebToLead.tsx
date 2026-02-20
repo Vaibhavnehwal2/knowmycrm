@@ -575,11 +575,11 @@ export function SalesforceWebToLead({
 
   return (
     <Card className={`relative ${className}`}>
-      {/* Subtle brand stamp at top-right */}
-      <div className="absolute top-3 right-3">
-        <BrandLogo variant="card" />
+      {/* Brand header row */}
+      <div className="absolute top-4 right-4">
+        <BrandLogo size="sm" />
       </div>
-      <CardHeader className="pb-4 pr-24">
+      <CardHeader className="pb-4 pr-20">
         <CardTitle>{title || defaultTitle}</CardTitle>
         {(description || defaultDescription) && (
           <CardDescription>{description || defaultDescription}</CardDescription>
