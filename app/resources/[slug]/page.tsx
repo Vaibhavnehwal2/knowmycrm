@@ -4,6 +4,7 @@ import { getPostBySlug, getAllPosts } from '@/lib/mdx';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Calendar, Clock } from 'lucide-react';
 import { compileMDX } from 'next-mdx-remote/rsc';
+import { ChecklistLeadMagnet } from '@/components/checklist-lead-magnet';
 
 export const dynamic = 'force-static';
 export const dynamicParams = false;
@@ -64,6 +65,11 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
 
           <div className="prose prose-lg max-w-none">
             {mdxContent}
+          </div>
+
+          {/* Checklist CTA at bottom of article */}
+          <div className="mt-12 pt-8 border-t">
+            <ChecklistLeadMagnet variant="section-cta" />
           </div>
         </div>
       </article>
