@@ -297,7 +297,10 @@ export default function WizardPage() {
     setState(initialWizardState);
     setResults(null);
     setLeadSubmitted(false);
-    iframeLoadCount.current = 0;
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
   };
 
   // Get contact info for form
