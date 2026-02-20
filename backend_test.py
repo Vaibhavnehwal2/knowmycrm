@@ -12,7 +12,7 @@ import sys
 import os
 
 # Base URL for API testing
-BASE_URL = "https://knowmy-fit-check.preview.emergentagent.com"
+BASE_URL = "https://crm-recommender.preview.emergentagent.com"
 API_BASE_URL = f"{BASE_URL}/api"
 
 def test_crm_recommendation_engine():
